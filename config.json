@@ -1,0 +1,9 @@
+{
+  "db": {
+    "name": "foobar",
+    "user": "root",
+    "password": "toor",
+    "host": "localhost"
+  },
+  "port": 8080
+}

@@ -4,9 +4,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var Maria = require('mariasql');
-GLOBAL.db = new Maria({host: '127.0.0.1', user: 'root', password: 'toor', db: 'foobar'});
+GLOBAL.config = require('./config.json');
+GLOBAL.db = new Maria({host: config.db.host,
+		       user: config.db.user,
+		       password: config.db.password,
+		       db: config.db.name});
 
-app.listen(8000);
+app.listen(process.env.PORT || config.port);
 app.use(bodyParser.json({type: '*/*'}));
 app.post('/register', function(req, res) {
   require('./models/user.js').register(req.body, function(e, r) {
