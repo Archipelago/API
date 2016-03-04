@@ -13,6 +13,7 @@ GLOBAL.db = new Maria({host: config.db.host,
 app.listen(process.env.PORT || config.port);
 app.use(bodyParser.json({type: '*/*'}));
 app.post('/register', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
   require('./models/user.js').register(req.body, function(e, r) {
     if (e) {
       res.statusCode = 400;
