@@ -43,14 +43,6 @@
  *       "status": "Error",
  *       "message": "Invalid bitmessage address"
  *     }
- *
- * @apiError (401) Unauthorized You must not be logged to use this method
- * @apiErrorExample Unauthorized
- *     HTTP/1.1 401 Unauthorized
- *     {
- *       "status": "Error",
- *       "message": "You must not be logged in to register an account"
- *     }
  */
 
 /**
