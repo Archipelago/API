@@ -33,12 +33,12 @@ app.post('/login', function(req, res) {
       var login = req.body.login.trim();
       if (users[login]
 	  && users[login].token)
-	sendResponse(res, 200, {Status: "OK", Token: users[login].token});
+	sendResponse(res, 200, {status: "OK", token: users[login].token});
       else {
 	var t = crypto.randomBytes(32).toString('hex');
 	users[login] = {token: t};
 	tokens[t] = login
-	sendResponse(res, 200, {Status: "OK", Token: t});
+	sendResponse(res, 200, {status: "OK", token: t});
       }
     }
   });
