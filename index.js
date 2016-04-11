@@ -22,6 +22,7 @@ function checkToken(req, res, next) {
     sendResponse(res, 401, {status: "Error", message: "Invalid token"})
   else {
     req.headers.login = tokens[req.headers.token];
+    req.body.token = req.headers.token;
     next(req, res);
   }
 }
@@ -53,5 +54,18 @@ app.post('/login', function(req, res) {
 	sendResponse(res, 200, {status: "OK", token: t});
       }
     }
+  });
+});
+
+app.post('/movie/add', function(req, res) {
+  checkToken(req, res, function(req, res) {
+    // TODO: add permission
+    require('./models/movie.js').add(req.body, function(e, r) {
+      if (e)
+	sendResponse(res, 400, {status: "Error", messae: e});
+      else {
+	sendResponse(res, 201, {status: "Created"});
+      }
+    });
   });
 });
