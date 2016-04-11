@@ -48,8 +48,8 @@ app.post('/login', function(req, res) {
 	sendResponse(res, 200, {status: "OK", token: users[login].token});
       else {
 	var t = crypto.randomBytes(32).toString('hex');
-	users[login] = {token: t};
-	tokens[t] = login
+	users[login] = {token: t, id: r[0].id};
+	tokens[t] = login;
 	sendResponse(res, 200, {status: "OK", token: t});
       }
     }

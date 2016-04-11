@@ -40,7 +40,7 @@ module.exports.login = function(infos, cb) {
   else if (infos.password === undefined)
     cb('Password must be provided');
   else {
-    db.query('SELECT `salt`, `password` FROM `Users` WHERE `login` = ?', [infos.login], function(e, r) {
+    db.query('SELECT `id`, `salt`, `password` FROM `Users` WHERE `login` = ?', [infos.login], function(e, r) {
       if (r.info.numRows != 1)
 	cb('User "' + infos.login + '" not found');
       else if (crypto.createHmac('sha256', r[0].salt + infos.password).digest('hex') != r[0].password)
