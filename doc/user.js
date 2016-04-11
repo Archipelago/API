@@ -28,21 +28,8 @@
  *       "status": "Created"
  *     }
  *
- * @apiError (400) AlreadyExists An user with this login already exists
- * @apiErrorExample AlreadyExists
- *     HTTP/1.1 400 Bad Request
- *     {
- *       "status": "Error",
- *       "message": "User \"foobar\" already exists"
- *     }
- *
- * @apiError (400) InvalidParameter An invalid parameter has been provided
- * @apiErrorExample InvalidParameter
- *     HTTP/1.1 400 Bad Request
- *     {
- *       "status": "Error",
- *       "message": "Invalid bitmessage address"
- *     }
+ * @apiUse InvalidParameter
+ * @apiUse AlreadyExists
  */
 
 /**
