@@ -14,6 +14,18 @@ GLOBAL.db = new Maria({host: config.db.host,
 GLOBAL.tokens = {};
 GLOBAL.users = {};
 
+function checkToken(req, res, next) {
+  delete req.headers.login;
+  if (req.headers.token === undefined)
+    sendResponse(res, 401, {status: "Error", message: "You need to be logged to do it"})
+  else if (tokens[req.headers.token] === undefined)
+    sendResponse(res, 401, {status: "Error", message: "Invalid token"})
+  else {
+    req.headers.login = tokens[req.headers.token];
+    next(req, res);
+  }
+}
+
 app.listen(process.env.PORT || config.port);
 app.use(bodyParser.json({type: '*/*'}));
 app.post('/register', function(req, res) {
