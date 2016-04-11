@@ -23,8 +23,8 @@
  * @apiParam {String} [original_title]
  * @apiParam {String} [other_title]
  * @apiParam {String} [gender]
- * @apiParam {String[]} [plot]
- * @apiParam {String[]} [informations]
+ * @apiParam {String} [plot]
+ * @apiParam {String} [informations]
  * @apiParamExample {json} Example:
  *     {
  *       "title": "foobar",
