@@ -1,6 +1,7 @@
+var rec_trim = require('../rec_trim');
+
 module.exports.add = function(infos, cb) {
-  for (i in infos)
-    infos[i] = infos[i].trim();
+  infos = rec_trim(infos);
 
   if (infos.title === undefined
       || infos.title.length == 0)

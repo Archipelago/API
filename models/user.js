@@ -1,8 +1,8 @@
 var crypto = require('crypto');
+var rec_tim = require('../rec_trim');
 
 module.exports.register = function(infos, cb) {
-  for (i in infos)
-    infos[i] = infos[i].trim();
+  infos = rec_trim(infos);
 
   if (infos.login === undefined)
     cb('Login must be provided');
