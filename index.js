@@ -6,13 +6,13 @@ var bodyParser = require('body-parser');
 var app = express();
 var Maria = require('mariasql');
 var sendResponse = require('./sendResponse');
-GLOBAL.config = require('./config.json');
-GLOBAL.db = new Maria({host: config.db.host,
+global.config = require('./config.json');
+global.db = new Maria({host: config.db.host,
 		       user: config.db.user,
 		       password: config.db.password,
 		       db: config.db.name});
-GLOBAL.tokens = {};
-GLOBAL.users = {};
+global.tokens = {};
+global.users = {};
 
 function checkToken(req, res, next) {
   delete req.headers.login;
