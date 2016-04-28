@@ -41,3 +41,16 @@ module.exports.add = function(infos, cb) {
     });
   }
 }
+
+module.exports.getById = function(id, cb) {
+  db.query('SELECT `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations` FROM `Movies` WHERE `id` = ?', [id], function(e, r) {
+    if (r.length < 1)
+      cb('No movie found with id "' + id + '"');
+    else {
+      for (i in r[0])
+	if (r[0][i] == null)
+	  delete r[0][i];
+      cb(e, r[0]);
+    }
+  });
+}

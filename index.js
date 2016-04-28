@@ -69,3 +69,12 @@ app.post('/movie/add', function(req, res) {
     });
   });
 });
+
+app.get('/movie/get/:id', function(req, res) {
+  require('./models/movie.js').getById(req.params.id, function(e, r) {
+    if (e)
+      sendResponse(res, 404, {status: "Error", message: e});
+    else
+      sendResponse(res, 200, r);
+  });
+});
