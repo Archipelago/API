@@ -30,3 +30,14 @@
  *       "message": "You must be logged in to perform this acion"
  *     }
  */
+
+/**
+ * @apiDefine NotFound
+ * @apiError (404) NotFound This element does not exist
+ * @apiErrorExample NotFound
+ *     HTTP/1.1 404 NotFound
+ *     {
+ *       "status": "Error",
+ *       "message": "Movie \"foobar\" does not exist"
+ *     }
+ */

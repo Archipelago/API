@@ -43,3 +43,25 @@
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
  */
+
+/**
+ * @api {get} /movie/get/:id Get a movie
+ * @apiName GetMovie
+ * @apiGroup Movie
+ * @apiDescription Get informations about a movie, depending on its id. Empty fields are not retrieved.
+ * @apiPermission logged
+ * @apiPermission unlogged
+ *
+ * @apiParam {Number} id The id of the wanted movie.
+ *
+ * @apiSuccess (200) {Object} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "title": "foobar",
+ *       "release_date": "1999-03-31",
+ *       "production_year": "1998"
+ *     }
+ *
+ * @apiUse NotFound
+ */
