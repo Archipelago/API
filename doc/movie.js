@@ -1,8 +1,4 @@
 /**
- * @apiDefine logged Logged users
- */
-
-/**
  * @api {post} /movie/add Add a movie
  * @apiName AddMovie
  * @apiGroup Movie

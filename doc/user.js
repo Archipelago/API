@@ -1,8 +1,4 @@
 /**
- * @apiDefine unlogged Unlogged users
- */
-
-/**
  * @api {post} /register Register an account
  * @apiName Register
  * @apiGroup User
