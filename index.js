@@ -62,7 +62,7 @@ app.post('/movie/add', function(req, res) {
     // TODO: add permission
     require('./models/movie.js').add(req.body, function(e, r) {
       if (e)
-	sendResponse(res, 400, {status: "Error", messae: e});
+	sendResponse(res, 400, {status: "Error", message: e});
       else {
 	sendResponse(res, 201, {status: "Created"});
       }
