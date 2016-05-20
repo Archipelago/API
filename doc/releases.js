@@ -39,3 +39,32 @@
  * @apiUse Unauthorized
  * @apiUse NotFound
  */
+
+/**
+ * @api {get} /movie/:id/releases Get movie releases
+ * @apiName GetRelease
+ * @apiGroup Release
+ * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived.
+ * @apiPermission logged
+ * @apiPermission unlogged
+ *
+ * @apiParam {Number} id The id of the wanted movie.
+ *
+ * @apiSuccess (200) {Object} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *         "name": "foobar.en.720p.AC3.x264",
+ *         "language": "en",
+ *         "audio_codec": "AC3",
+ *         "video_codec": "x264",
+ *         "source": "BDRiP",
+ *         "quality": "720p",
+ *         "container": "mkv",
+ *         "compression": "rar"
+ *       }
+ *     ]
+ *
+ * @apiUse NotFound
+ */
