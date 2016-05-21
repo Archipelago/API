@@ -13,6 +13,16 @@ global.db = new Maria({host: config.db.host,
 		       db: config.db.name});
 global.tokens = {};
 global.users = {};
+global.lists = {
+  'audioCodecs': [],
+  'videoCodecs': [],
+  'compressions': [],
+  'languages': [],
+  'qualities': [],
+  'sources': [],
+  'containers': []
+};
+
 
 function checkToken(req, res, next) {
   delete req.headers.login;
@@ -87,6 +97,14 @@ function listRoute(routeName) {
   });
 }
 
-var lists = ['audioCodecs', 'videoCodecs', 'compressions', 'languages', 'qualities', 'sources', 'containers'];
-for (i in lists)
-  listRoute(lists[i]);
+// TODO: find a way to update it.
+function initList(listName) {
+  require('./models/lists.js').get(listName[0].toUpperCase() + listName.slice(1), function(e, r) {
+    lists[listName] = r;
+  });
+}
+
+for (i in lists) {
+  initList(i);
+  listRoute(i);
+}
