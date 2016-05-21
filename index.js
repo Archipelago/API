@@ -78,3 +78,15 @@ app.get('/movie/get/:id', function(req, res) {
       sendResponse(res, 200, r);
   });
 });
+
+function listRoute(routeName) {
+  app.get('/list/' + routeName, function(req, res) {
+    require('./models/lists.js').getList(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
+      sendResponse(res, 200, r);
+    });
+  });
+}
+
+var lists = ['audioCodecs', 'videoCodecs', 'compressions', 'languages', 'qualities', 'sources', 'containers'];
+for (i in lists)
+  listRoute(lists[i]);
