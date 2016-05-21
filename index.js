@@ -81,7 +81,7 @@ app.get('/movie/get/:id', function(req, res) {
 
 function listRoute(routeName) {
   app.get('/list/' + routeName, function(req, res) {
-    require('./models/lists.js').getList(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
+    require('./models/lists.js').get(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
       sendResponse(res, 200, r);
     });
   });
