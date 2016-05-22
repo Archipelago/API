@@ -89,6 +89,19 @@ app.get('/movie/get/:id', function(req, res) {
   });
 });
 
+app.post('/movie/:id/release/add', function(req, res) {
+  checkToken(req, res, function(req, res) {
+    // TODO: add permission
+    req.body.id = req.params.id;
+    require('./models/releases.js').add(req.body, function(e, r) {
+      if (e)
+	sendResponse(res, e.match('found') ? 404 : 400, {status: "Error", message: e});
+      else
+	sendResponse(res, 201, {status: "Created"});
+    });
+  });
+});
+
 function listRoute(routeName) {
   app.get('/list/' + routeName, function(req, res) {
     require('./models/lists.js').get(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
