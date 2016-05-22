@@ -45,3 +45,26 @@ module.exports.add = function(infos, cb) {
     });
   }
 }
+
+module.exports.getByMovie = function(id, cb) {
+  //TODO: fin a way to know if movie exists
+  var query = 'SELECT `VideoReleases`.`name`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
+FROM `VideoReleases`\
+INNER JOIN `ListLanguages` ON `ListLanguages`.`id` = `VideoReleases`.`language_id`\
+INNER JOIN `ListAudioCodecs` ON `ListAudioCodecs`.`id` = `VideoReleases`.`audio_codec_id`\
+INNER JOIN `ListVideoCodecs` ON `ListVideoCodecs`.`id` = `VideoReleases`.`video_codec_id`\
+INNER JOIN `ListQualities` ON `ListQualities`.`id` = `VideoReleases`.`quality_id`\
+INNER JOIN `ListSources` ON `ListSources`.`id` = `VideoReleases`.`source_id`\
+INNER JOIN `ListContainers` ON `ListContainers`.`id` = `VideoReleases`.`container_id`\
+LEFT OUTER JOIN `ListCompressions` ON `ListCompressions`.`id` = `VideoReleases`.`compression_id`\
+INNER JOIN `Movies` ON `Movies`.`id` = `VideoReleases`.`element_id`\
+WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
+  db.query(query, [id], function(e, r) {
+    for (i in r) {
+      for (j in r[i])
+	if (r[i][j] == null)
+	  delete r[i][j];
+    }
+    cb(e, r);
+  });
+}
