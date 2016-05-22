@@ -2,7 +2,7 @@
  * @api {post} /movie/:id/release/add Add a release
  * @apiName AddRelease
  * @apiGroup Release
- * @apiDescription Add a new release to a movie, giving a lot of informations about it. All of this, except name, have to match one in the database. TODO : add routes to get their possible values. They are case insensitive.
+ * @apiDescription Add a new release to a movie, giving a lot of informations about it. All of this, except name, have to match one in the database. You can get there possibles values with <a href="#api-List">/list routes</a>. They are case insensitive.
  * @apiPermission logged
  *
  * @apiParam {Number} id The id of the movie you want to add a release.
