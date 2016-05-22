@@ -11,6 +11,8 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "file-size": "^1.0.0",
+    "filesize-parser": "^1.4.0",
     "mariasql": "^0.2.5"
   }
 }

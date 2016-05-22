@@ -8,6 +8,7 @@
  * @apiParam {Number} id The id of the movie you want to add a release.
  *
  * @apiParam {String} name
+ * @apiParam {String} size Note that "b" means "bits" while "B" means "Bytes". Note that 1KiB = 1024B while 1KB = 1000B.
  * @apiParam {String} language
  * @apiParam {String} audio_codec
  * @apiParam {String} video_codec
@@ -18,6 +19,7 @@
  * @apiParamExample {json} Example:
  *     {
  *       "name": "foobar.en.720p.AC3.x264",
+ *       "size": "2.1GiB",
  *       "language": "en",
  *       "audio_codec": "AC3",
  *       "video_codec": "x264",
@@ -44,7 +46,7 @@
  * @api {get} /movie/:id/releases Get movie releases
  * @apiName GetRelease
  * @apiGroup Release
- * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived.
+ * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived. The "size" field may differs from what you sent, because it's converted into MiB/GiB.
  * @apiPermission logged
  * @apiPermission unlogged
  *
@@ -56,6 +58,7 @@
  *     [
  *       {
  *         "name": "foobar.en.720p.AC3.x264",
+ *         "size": "2.1GiB",
  *         "language": "en",
  *         "audio_codec": "AC3",
  *         "video_codec": "x264",

@@ -1,3 +1,5 @@
+var filesize = require('file-size');
+var filesizeParser = require('filesize-parser');
 var rec_trim = require('../rec_trim');
 var listsCorres = {
   'audio_codec': 'audioCodecs',
@@ -15,7 +17,15 @@ module.exports.add = function(infos, cb) {
   if (infos.name === undefined
       || infos.name.length == 0)
     cb('Release name must be provided');
+  else if (infos.size === undefined)
+    cb('Release size must be provided');
   else {
+    try {
+      infos.size = filesizeParser(infos.size, {base: infos.size.match(/i/i) ? 2 : 10});
+    } catch(e) {
+      cb('"' + infos.size + '" does not appear to be a valid provided');
+      return;
+    }
     for (i in listsCorres) {
       if (infos[i] === undefined
 	  && i !== 'compression') {
@@ -39,7 +49,7 @@ module.exports.add = function(infos, cb) {
 	cb('No movie found with id "' + infos.id + '"');
       else {
 	infos.user_id = users[tokens[infos.token]].id;
-	db.query('INSERT INTO `VideoReleases`(`name`, `element_type`, `element_id`, `language_id`, `audio_codec_id`, `video_codec_id`, `source_id`, `quality_id`, `container_id`, `compression_id`, `user_id`) VALUES(:name, "Movies", :id, :language, :audio_codec, :video_codec, :source, :quality, :container, :compression, :user_id)', infos, function(e, r) {
+	db.query('INSERT INTO `VideoReleases`(`name`, `element_type`, `element_id`, `size`, `language_id`, `audio_codec_id`, `video_codec_id`, `source_id`, `quality_id`, `container_id`, `compression_id`, `user_id`) VALUES(:name, "Movies", :id, :size, :language, :audio_codec, :video_codec, :source, :quality, :container, :compression, :user_id)', infos, function(e, r) {
 	  cb(e, r);
 	});
       }
@@ -49,7 +59,7 @@ module.exports.add = function(infos, cb) {
 
 module.exports.getByMovie = function(id, cb) {
   //TODO: fin a way to know if movie exists
-  var query = 'SELECT `VideoReleases`.`name`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
+  var query = 'SELECT `VideoReleases`.`name`, `VideoReleases`.`size`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
 FROM `VideoReleases`\
 INNER JOIN `ListLanguages` ON `ListLanguages`.`id` = `VideoReleases`.`language_id`\
 INNER JOIN `ListAudioCodecs` ON `ListAudioCodecs`.`id` = `VideoReleases`.`audio_codec_id`\
@@ -65,6 +75,7 @@ WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
       for (j in r[i])
 	if (r[i][j] == null)
 	  delete r[i][j];
+      r[i].size = filesize(parseInt(r[i].size)).human().split(' ').join('');
     }
     cb(e, r);
   });
