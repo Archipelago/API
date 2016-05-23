@@ -1,5 +1,6 @@
 /**
  * @api {post} /register Register an account
+ * @apiVersion 0.1.0
  * @apiName Register
  * @apiGroup User
  * @apiDescription Register an account with a login, a password and some optional fields.
@@ -30,6 +31,7 @@
 
 /**
  * @api {post} /login Login into your account
+ * @apiVersion 0.1.0
  * @apiName Login
  * @apiGroup User
  * @apiDescription Login into your account. Returns a token that will be used to all your signed-in actions. You will have to provide it within the header Token.

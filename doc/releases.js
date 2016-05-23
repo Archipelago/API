@@ -1,5 +1,6 @@
 /**
  * @api {post} /movie/:id/release/add Add a release
+ * @apiVersion 0.1.0
  * @apiName AddRelease
  * @apiGroup Release
  * @apiDescription Add a new release to a movie, giving a lot of informations about it. All of this, except name, have to match one in the database. You can get there possibles values with <a href="#api-List">/list routes</a>. They are case insensitive.
@@ -44,6 +45,7 @@
 
 /**
  * @api {get} /movie/:id/releases Get movie releases
+ * @apiVersion 0.1.0
  * @apiName GetRelease
  * @apiGroup Release
  * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived. The "size" field may differs from what you sent, because it's converted into MiB/GiB.
