@@ -4,6 +4,7 @@
     "User",
     "Movie",
     "Release",
+    "Link",
     "List"
   ]
 }
