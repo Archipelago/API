@@ -54,7 +54,7 @@
  *
  * @apiParam {Number} id The id of the wanted movie.
  *
- * @apiSuccess (200) {Object} data
+ * @apiSuccess (200) {Object[]} releases
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 200 OK
  *     [
