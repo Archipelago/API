@@ -33,3 +33,30 @@
  * @apiUse Unauthorized
  * @apiUse NotFound
  */
+
+/**
+ * @api {get} /video_release/:id/links Get release links
+ * @apiVersion 0.1.0
+ * @apiName GetLink
+ * @apiGroup Link
+ * @apiDescription Get the list of all the links for a release, depending on its id.
+ * @apiPermission logged
+ * @apiPermission unlogged
+ *
+ * @apiParam {Number} id The id of the wanted release.
+ *
+ * @apiSuccess (200) {Array} links
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     [
+ *       "https://example.com/release.mkv",
+ *       [
+ *         "https://example.com/release.mkv.part1.rar",
+ *         "https://example.com/release.mkv.part2.rar",
+ *         "https://example.com/release.mkv.part3.rar"
+ *       ]
+ *     ]
+ *
+ * @apiUse NotFound
+ */
+
