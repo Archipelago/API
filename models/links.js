@@ -13,7 +13,8 @@ module.exports.add = function(links, cb) {
   for (i in links) {
     if (typeof links[i] === 'string')
       data['link' + i] = 1;
-    else if (links[i] instanceof Array)
+    else if (links[i] instanceof Array
+	     && links[i].length > 0)
       data['link' + i] = links[i].length;
     else {
       cb('Invalid parameter encountered');
