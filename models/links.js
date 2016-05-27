@@ -3,7 +3,11 @@ var rec_trim = require('../rec_trim');
 module.exports.add = function(links, cb) {
   infos = rec_trim(links);
 
-  // TODO: check with empty array or empty array array
+  if (links.length == 0) {
+    cb('Invalid parameter encountered');
+    return;
+  }
+
   var data = {
     release_type: 'movie',
     release_id: 1,
