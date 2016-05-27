@@ -111,6 +111,15 @@ app.get('/movie/:id/releases', function(req, res) {
   });
 });
 
+app.post('/video_release/:id/links/add', function(req, res) {
+  require('./models/links.js').add(req.body, function(e, r) {
+    if (e)
+      sendResponse(res, 404, {status: "Error", message: e});
+    else
+      sendResponse(res, 200, r);
+  });
+});
+
 function listRoute(routeName) {
   app.get('/list/' + routeName, function(req, res) {
     require('./models/lists.js').get(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
