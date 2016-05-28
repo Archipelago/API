@@ -48,7 +48,7 @@
  * @apiVersion 0.1.0
  * @apiName GetRelease
  * @apiGroup Release
- * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived. The "size" field may differs from what you sent, because it's converted into MiB/GiB.
+ * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived. The "size" field may differs from what you sent, because it's converted into MiB/GiB. It also returns the id of the release, which is used to retrieve links.
  * @apiPermission logged
  * @apiPermission unlogged
  *
@@ -59,6 +59,7 @@
  *     HTTP/1.1 200 OK
  *     [
  *       {
+ *         "id": 42,
  *         "name": "foobar.en.720p.AC3.x264",
  *         "size": "2.1GiB",
  *         "language": "en",

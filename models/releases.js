@@ -59,7 +59,7 @@ module.exports.add = function(infos, cb) {
 
 module.exports.getByMovie = function(id, cb) {
   //TODO: fin a way to know if movie exists
-  var query = 'SELECT `VideoReleases`.`name`, `VideoReleases`.`size`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
+  var query = 'SELECT `VideoReleases`.`id`, `VideoReleases`.`name`, `VideoReleases`.`size`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
 FROM `VideoReleases`\
 INNER JOIN `ListLanguages` ON `ListLanguages`.`id` = `VideoReleases`.`language_id`\
 INNER JOIN `ListAudioCodecs` ON `ListAudioCodecs`.`id` = `VideoReleases`.`audio_codec_id`\
