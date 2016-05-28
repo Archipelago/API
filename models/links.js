@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var rec_trim = require('../rec_trim');
 
 // TODO: this code need refactorisation
@@ -57,5 +58,23 @@ module.exports.add = function(infos, cb) {
 	cb(err, rows);
       }
     });
+  });
+}
+
+module.exports.getByRelease = function(id, cb) {
+  //TODO: fin a way to know if release exists
+  var query = 'SELECT `Links`.`url`, `Links`.`multilink_id` FROM `Links` \
+INNER JOIN `Multilinks` ON `Multilinks`.`id` = `Links`.`multilink_id` \
+WHERE `Multilinks`.`release_id` = ? AND `Multilinks`.`release_type` = "movie"';
+  db.query(query, [id], function(e, r) {
+    delete r.info;
+    r = _.reduce(r, function(r, v, k) {
+      (r[v.multilink_id] || (r[v.multilink_id] = [])).push(v.url);
+      return r;
+    }, {});
+    r = _.map(_.toArray(r), function(o) {
+      return o.length === 1 ? o[0] : o;
+    });
+    cb(e, r);
   });
 }
