@@ -112,11 +112,18 @@ app.get('/movie/:id/releases', function(req, res) {
 });
 
 app.post('/video_release/:id/links/add', function(req, res) {
-  require('./models/links.js').add(req.body, function(e, r) {
-    if (e)
-      sendResponse(res, 404, {status: "Error", message: e});
-    else
-      sendResponse(res, 200, r);
+  req.body = {links: req.body};
+  checkToken(req, res, function(req, res) {
+    // TODO: add permission
+    req.body.user_id = users[tokens[req.body.token]].id;
+    req.body.release_type = 'movie';
+    req.body.release_id = req.params.id;
+    require('./models/links.js').add(req.body, function(e, r) {
+      if (e)
+	sendResponse(res, 400, {status: "Error", message: e});
+      else
+	sendResponse(res, 201, {status: "Created"});
+    });
   });
 });
 
