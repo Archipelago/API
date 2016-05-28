@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var rec_trim = require('../rec_trim');
+let _ = require('lodash');
+let rec_trim = require('../rec_trim');
 
 // TODO: this code need refactorisation
 module.exports.add = function(infos, cb) {
@@ -10,8 +10,8 @@ module.exports.add = function(infos, cb) {
     return;
   }
 
-  var query = 'INSERT INTO `Multilinks`(`release_type`, `release_id`, `parts`, `user_id`) VALUES';
-  var links = infos.links;
+  let query = 'INSERT INTO `Multilinks`(`release_type`, `release_id`, `parts`, `user_id`) VALUES';
+  let links = infos.links;
   for (i in links) {
     if (typeof links[i] === 'string')
       infos['link' + i] = 1;
@@ -28,8 +28,8 @@ module.exports.add = function(infos, cb) {
   }
 
   db.query(query, infos, function(e, r) {
-    var query = 'INSERT IGNORE INTO `Links`(`url`, `multilink_id`, `part`, `user_id`) VALUES';
-    var linkNb = 0;
+    let query = 'INSERT IGNORE INTO `Links`(`url`, `multilink_id`, `part`, `user_id`) VALUES';
+    let linkNb = 0;
     for (i in links) {
       infos['multilink' + i] = parseInt(r.info.insertId) + parseInt(i);
       if (typeof links[i] === 'string') {
@@ -63,7 +63,7 @@ module.exports.add = function(infos, cb) {
 
 module.exports.getByRelease = function(id, cb) {
   //TODO: fin a way to know if release exists
-  var query = 'SELECT `Links`.`url`, `Links`.`multilink_id` FROM `Links` \
+  let query = 'SELECT `Links`.`url`, `Links`.`multilink_id` FROM `Links` \
 INNER JOIN `Multilinks` ON `Multilinks`.`id` = `Links`.`multilink_id` \
 WHERE `Multilinks`.`release_id` = ? AND `Multilinks`.`release_type` = "movie"';
   db.query(query, [id], function(e, r) {

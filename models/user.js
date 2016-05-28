@@ -1,5 +1,5 @@
-var crypto = require('crypto');
-var rec_trim = require('../rec_trim');
+let crypto = require('crypto');
+let rec_trim = require('../rec_trim');
 
 module.exports.register = function(infos, cb) {
   infos = rec_trim(infos);

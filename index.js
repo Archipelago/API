@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var crypto = require('crypto');
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-var Maria = require('mariasql');
-var sendResponse = require('./sendResponse');
+let crypto = require('crypto');
+let express = require('express');
+let bodyParser = require('body-parser');
+let app = express();
+let Maria = require('mariasql');
+let sendResponse = require('./sendResponse');
 global.config = require('./config.json');
 global.db = new Maria({host: config.db.host,
 		       user: config.db.user,
@@ -53,12 +53,12 @@ app.post('/login', function(req, res) {
     if (e)
       sendResponse(res, 400, {status: "Error", message: e});
     else {
-      var login = req.body.login.trim();
+      let login = req.body.login.trim();
       if (users[login]
 	  && users[login].token)
 	sendResponse(res, 200, {status: "OK", token: users[login].token});
       else {
-	var t = crypto.randomBytes(32).toString('hex');
+	let t = crypto.randomBytes(32).toString('hex');
 	users[login] = {token: t, id: r[0].id};
 	tokens[t] = login;
 	sendResponse(res, 200, {status: "OK", token: t});

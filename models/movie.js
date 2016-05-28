@@ -1,4 +1,4 @@
-var rec_trim = require('../rec_trim');
+let rec_trim = require('../rec_trim');
 
 module.exports.add = function(infos, cb) {
   infos = rec_trim(infos);
@@ -23,7 +23,7 @@ module.exports.add = function(infos, cb) {
 	   && !infos.image.match(/^https?:\/\/\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
     cb('Invalid image url');
   else {
-    var fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
+    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
     for (i in fields) {
       if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
 	cb("Invalid " + fields[i]);
