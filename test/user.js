@@ -43,6 +43,15 @@ exports.login = {
     });
   },
 
+  invalidLogin: function(test) {
+    request('/login', {
+      "login": crypto.randomBytes(16).toString('hex')
+    }, function(res) {
+      test.equal(res.statusCode, 400);
+      test.done();
+    });
+  },
+
   valid: function(test) {
     request('/login', {
       "login": "tmp" + hash,
