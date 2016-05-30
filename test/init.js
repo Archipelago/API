@@ -1,9 +1,15 @@
 let http = require('http');
 
-global.request = function(route, data, cb) {
-  if (cb === undefined) {
-    cb = data;
+global.request = function(route, token, data, cb) {
+  if (arguments.length == 2) {
+    cb = token;
     data = undefined;
+    token = undefined;
+  }
+  else if (arguments.length == 3) {
+    cb = data;
+    data = token;
+    token = undefined;
   }
   let options = {
     hostname: 'localhost',
@@ -17,6 +23,9 @@ global.request = function(route, data, cb) {
     options.method = 'POST';
     options.headers['Content-Type'] = 'application/json';
     options.headers['Content-Length'] = data.length;
+  }
+  if (token !== undefined) {
+    options.headers['Token'] = token;
   }
   let req = http.request(options, function(res) {
     let content = '';
