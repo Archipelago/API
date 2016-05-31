@@ -33,5 +33,29 @@ exports.add = {
       test.equal(res.statusCode, 400);
       test.done();
     });
+  }
+};
+
+//This assume that the movie with id 1 exists. We must retrieve the last movie inserted
+exports.get = {
+  unlogged: function(test) {
+    request('/movie/get/1', function(res) {
+      test.equal(res.statusCode, 200);
+      test.done();
+    });
   },
-}
+
+  logged: function(test) {
+    request('/movie/get/1', global.token, undefined, function(res) {
+      test.equal(res.statusCode, 200);
+      test.done();
+    });
+  },
+
+  notExisting: function(test) {
+    request('/movie/get/toto', global.token, undefined, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+};

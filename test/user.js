@@ -21,7 +21,7 @@ exports.register = {
       test.done();
     });
   }
-}
+};
 
 exports.login = {
   erroneousPassword: function(test) {
@@ -62,7 +62,7 @@ exports.login = {
       test.done();
     });
   }
-}
+};
 
 exports.token = {
   sameToken: function(test) {
@@ -91,4 +91,4 @@ exports.token = {
       });
     });
   }
-}
+};
