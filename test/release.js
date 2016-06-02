@@ -47,6 +47,7 @@ exports.get = {
 
   logged: function(test) {
     request('/movie/1/releases', global.token, undefined, function(res) {
+      global.videoReleaseId = res.body[0].id;
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);
       test.done();
