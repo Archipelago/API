@@ -13,7 +13,7 @@ global.request = function(route, token, data, cb) {
   }
   let options = {
     hostname: 'localhost',
-    port: 8080,
+    port: process.env.PORT || 8080,
     path: route,
     method: 'GET',
     headers: {}
