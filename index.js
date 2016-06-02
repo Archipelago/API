@@ -112,7 +112,7 @@ app.get('/movie/:id/releases', function(req, res) {
   });
 });
 
-app.post('/video_release/:id/links/add', function(req, res) {
+app.post('/video_release/:id/link/add', function(req, res) {
   req.body = {links: req.body};
   checkToken(req, res, function(req, res) {
     // TODO: add permission
