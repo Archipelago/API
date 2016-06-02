@@ -89,6 +89,7 @@ app.get('/movie/get/:id', function(req, res) {
   });
 });
 
+//TODO: fix it, server crash if invalid parameters are provided
 app.post('/movie/:id/release/add', function(req, res) {
   checkToken(req, res, function(req, res) {
     // TODO: add permission
