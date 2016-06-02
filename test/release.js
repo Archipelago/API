@@ -35,3 +35,21 @@ exports.add = {
     });
   }
 };
+
+exports.get = {
+  unlogged: function(test) {
+    request('/movie/1/releases', function(res) {
+      test.equal(res.body instanceof Array, true);
+      test.equal(res.statusCode, 200);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request('/movie/1/releases', global.token, undefined, function(res) {
+      test.equal(res.body instanceof Array, true);
+      test.equal(res.statusCode, 200);
+      test.done();
+    });
+  }
+};
