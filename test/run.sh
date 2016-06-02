@@ -11,11 +11,11 @@ tmpDbName=$dbName.test
 
 if ! mysql -u $username -p$password $tmpDbName <&-; then
     echo -n "Creating database \`$tmpDbName\`."
-    mysqldump -d --skip-comments -u $username -p$password $dbName | sed 's/ AUTO_INCREMENT=[0-9]*//g' > $tmpDbName
+    mysqldump -d --skip-comments -u $username -p$password $dbName | sed 's/ AUTO_INCREMENT=[0-9]*//g' > $tmpDbFile
     echo -n '.'
     mysql -u $username -p$password <<< "CREATE DATABASE \`$tmpDbName\`"
     echo -n '.'
-    mysql -u $username -p$password $tmpDbName < $tmpDbName
+    mysql -u $username -p$password $tmpDbName < $tmpDbFile
     echo '.'
 fi
 
