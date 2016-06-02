@@ -43,4 +43,22 @@ exports.add = {
       test.done();
     });
   }
-}
+};
+
+exports.get = {
+  unlogged: function(test) {
+    request('/video_release/' + global.videoReleaseId + '/links', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request('/video_release/' + global.videoReleaseId + '/links', global.token, undefined, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  }
+};
