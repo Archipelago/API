@@ -75,7 +75,7 @@
  */
 
 /**
- * @api {get} /list/qualities Containers
+ * @api {get} /list/containers Containers
  * @apiName ListContainers
  * @apiVersion 0.1.0
  * @apiGroup List
