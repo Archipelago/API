@@ -8,6 +8,7 @@ username=$(./option.js db.user)
 password=$(./option.js db.password)
 dbName=$(./option.js db.name)
 tmpDbName=$dbName.test
+port=$(./getPort.js)
 
 if ! mysql -u $username -p$password $tmpDbName <&-; then
     echo -n "Creating database \`$tmpDbName\`."
@@ -21,7 +22,6 @@ if ! mysql -u $username -p$password $tmpDbName <&-; then
     echo '.'
 fi
 
-# TODO: find a way to use an available port
 cat > $tmpConfigFile <<EOF
 {
   "db": {
@@ -30,12 +30,12 @@ cat > $tmpConfigFile <<EOF
     "password": "$password",
     "host": "localhost"
   },
-  "port": 8093
+  "port": $port
 }
 EOF
 
 CONFIG_FILE=$tmpConfigFile npm start & sleep 0.5
-PORT=8093 nodeunit init.js list.js user.js movie.js release.js link.js || ret=1
+PORT=$port nodeunit init.js list.js user.js movie.js release.js link.js || ret=1
 kill %1
 rm -f $tmpDbFile $tmpConfigFile
 exit $ret
