@@ -11,12 +11,12 @@
 
 /**
  * @apiDefine AlreadyExists
- * @apiError (400) AlreadyExists This movie already exists
+ * @apiError (400) AlreadyExists The element already exists
  * @apiErrorExample AlreadyExists
  *     HTTP/1.1 400 Bad Request
  *     {
  *       "status": "Error",
- *       "message": "Movie \"foobar\" already exists"
+ *       "message": "The element already exists"
  *     }
  */
 
@@ -33,11 +33,11 @@
 
 /**
  * @apiDefine NotFound
- * @apiError (404) NotFound This element does not exist
+ * @apiError (404) NotFound The element does not exist
  * @apiErrorExample NotFound
  *     HTTP/1.1 404 NotFound
  *     {
  *       "status": "Error",
- *       "message": "Movie \"foobar\" does not exist"
+ *       "message": "The element does not exist"
  *     }
  */
