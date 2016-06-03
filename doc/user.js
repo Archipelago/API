@@ -54,14 +54,6 @@
  *       "token": "1a3bf0c54ba8bf7e6020c2b048968f13cb5c13b391ab396566e1388448dec6a4"
  *     }
  *
- * @apiError (400) MissingField An invalid parameter has been provided
- * @apiErrorExample MissingField
- *     HTTP/1.1 Bad Request
- *     {
- *       "status": "Error",
- *       "message": "Login must be provided"
- *     }
- *
  * @apiError (400) UserDoesNotExist User does not exist
  * @apiErrorExample UserDoesNotExist
  *     HTTP/1.1 Bad Request
@@ -78,4 +70,6 @@
  *       "status": "Error",
  *       "message": "Invalid password"
  *     }
+ *
+ * @apiUse MissingParameter
  */

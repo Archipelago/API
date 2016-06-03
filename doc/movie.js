@@ -36,6 +36,7 @@
  *       "status": "Created"
  *     }
  *
+ * @apiUse MissingParameter
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
