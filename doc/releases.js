@@ -17,6 +17,7 @@
  * @apiParam {String} quality
  * @apiParam {String} container
  * @apiParam {String} [compression]
+ * @apiParam {String} [informations[]] Informations that does not fit in any of the fields above.
  * @apiParamExample {json} Example:
  *     {
  *       "name": "foobar.en.720p.AC3.x264",
@@ -28,6 +29,10 @@
  *       "quality": "720p",
  *       "container": "mkv",
  *       "compression": "rar",
+ *       "informations": [
+ *         "SUBFORCED",
+ *         "Director's cut"
+ *       ]
  *     }
  *
  * @apiSuccess (201) {String} status "Created"
@@ -69,7 +74,11 @@
  *         "source": "BDRiP",
  *         "quality": "720p",
  *         "container": "mkv",
- *         "compression": "rar"
+ *         "compression": "rar",
+ *         "informations": [
+ *           "SUBFORCED",
+ *           "Director's cut"
+ *         ]
  *       }
  *     ]
  *
