@@ -28,7 +28,8 @@ module.exports.add = function(infos, cb) {
     }
     for (i in listsCorres) {
       if (infos[i] === undefined
-	  && i !== 'compression') {
+	  && i !== 'compression'
+	  && i !== 'informations') {
 	cb('Parameter ' + i + ' is missing');
 	return;
       }
@@ -44,12 +45,15 @@ module.exports.add = function(infos, cb) {
 	}
       }
     }
+    if (infos.informations
+	&& infos.informations instanceof Array)
+      infos.informations = infos.informations.join(';');
     db.query('SELECT `title` FROM `Movies` WHERE `id` = ?', [infos.id], function(e, r) {
       if (r.length < 1)
 	cb('No movie found with id "' + infos.id + '"');
       else {
 	infos.user_id = users[tokens[infos.token]].id;
-	db.query('INSERT INTO `VideoReleases`(`name`, `element_type`, `element_id`, `size`, `language_id`, `audio_codec_id`, `video_codec_id`, `source_id`, `quality_id`, `container_id`, `compression_id`, `user_id`) VALUES(:name, "Movies", :id, :size, :language, :audio_codec, :video_codec, :source, :quality, :container, :compression, :user_id)', infos, function(e, r) {
+	db.query('INSERT INTO `VideoReleases`(`name`, `element_type`, `element_id`, `size`, `language_id`, `audio_codec_id`, `video_codec_id`, `source_id`, `quality_id`, `container_id`, `compression_id`, `informations`, `user_id`) VALUES(:name, "Movies", :id, :size, :language, :audio_codec, :video_codec, :source, :quality, :container, :compression, :informations, :user_id)', infos, function(e, r) {
 	  cb(e, r);
 	});
       }
