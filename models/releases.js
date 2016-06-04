@@ -63,7 +63,7 @@ module.exports.add = function(infos, cb) {
 
 module.exports.getByMovie = function(id, cb) {
   //TODO: fin a way to know if movie exists
-  let query = 'SELECT `VideoReleases`.`id`, `VideoReleases`.`name`, `VideoReleases`.`size`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`\
+  let query = 'SELECT `VideoReleases`.`id`, `VideoReleases`.`name`, `VideoReleases`.`size`, `ListLanguages`.`name` AS `language`, `ListAudioCodecs`.`name` AS `audio_codec`, `ListVideoCodecs`.`name` AS `video_codec`, `ListLanguages`.`name` AS `language`, `ListQualities`.`name` AS `quality`, `ListSources`.`name` AS `source`, `ListContainers`.`name` AS `container`, `ListCompressions`.`name` AS `compression`, `VideoReleases`.`informations`\
 FROM `VideoReleases`\
 INNER JOIN `ListLanguages` ON `ListLanguages`.`id` = `VideoReleases`.`language_id`\
 INNER JOIN `ListAudioCodecs` ON `ListAudioCodecs`.`id` = `VideoReleases`.`audio_codec_id`\
@@ -79,6 +79,8 @@ WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
       for (j in r[i])
 	if (r[i][j] == null)
 	  delete r[i][j];
+      if (r[i].informations)
+	r[i].informations = r[i].informations.split(';');
       r[i].size = filesize(parseInt(r[i].size)).human().split(' ').join('');
     }
     cb(e, r);
