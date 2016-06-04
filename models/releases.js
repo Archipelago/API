@@ -23,7 +23,7 @@ module.exports.add = function(infos, cb) {
     try {
       infos.size = filesizeParser(infos.size, {base: infos.size.match(/i/i) ? 2 : 10});
     } catch(e) {
-      cb('"' + infos.size + '" does not appear to be a valid provided');
+      cb('"' + infos.size + '" does not appear to be a valid size"');
       return;
     }
     for (i in listsCorres) {
