@@ -1,5 +1,5 @@
 /**
- * @api {post} /video_release/:id/link/add Add a link
+ * @api {post} /video_release/:id/link Add a link
  * @apiVersion 0.1.0
  * @apiName AddLink
  * @apiGroup Link

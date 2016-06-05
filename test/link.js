@@ -3,7 +3,7 @@ let hash = crypto.randomBytes(4).toString('hex');
 
 exports.add = {
   unlogged: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link/add', [
+    request('/video_release/' + global.videoReleaseId + '/link', [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -17,7 +17,7 @@ exports.add = {
   },
 
   valid: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link/add', global.token, [
+    request('/video_release/' + global.videoReleaseId + '/link', global.token, [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -31,7 +31,7 @@ exports.add = {
   },
 
   duplicate: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link/add', global.token, [
+    request('/video_release/' + global.videoReleaseId + '/link', global.token, [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",

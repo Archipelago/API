@@ -1,7 +1,7 @@
 let sendResponse = require('../sendResponse');
 
 module.exports = function(app) {
-  app.post('/video_release/:id/link/add', function(req, res) {
+  app.post('/video_release/:id/link', function(req, res) {
     req.body = {links: req.body};
     token.checkAuthentication(req, res, function(req, res) {
       // TODO: add permission
