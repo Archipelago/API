@@ -4,7 +4,7 @@ function randomElem(array) {
 
 exports.add = {
   unlogged: function(test) {
-    request('/movie/1/release/add', {
+    request('/movie/1/release', {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -20,7 +20,7 @@ exports.add = {
   },
 
   valid: function(test) {
-    request('/movie/1/release/add', global.token, {
+    request('/movie/1/release', global.token, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),

@@ -2,7 +2,7 @@ let sendResponse = require('../sendResponse');
 
 module.exports = function(app) {
   //TODO: fix it, server crash if invalid parameters are provided
-  app.post('/movie/:id/release/add', function(req, res) {
+  app.post('/movie/:id/release', function(req, res) {
     token.checkAuthentication(req, res, function(req, res) {
       // TODO: add permission
       req.body.id = req.params.id;

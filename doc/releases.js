@@ -1,5 +1,5 @@
 /**
- * @api {post} /movie/:id/release/add Add a release
+ * @api {post} /movie/:id/release Add a release
  * @apiVersion 0.1.0
  * @apiName AddRelease
  * @apiGroup Release
