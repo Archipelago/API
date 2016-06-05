@@ -11,6 +11,10 @@ module.exports = function() {
     return users[tokens[t]].id;
   }
 
+  this.getLogin = function(t) {
+    return users[tokens[t]].login;
+  }
+
   this.authenticate = function(res, id, login, permissions) {
     login = login.trim();
     if (users[login]
