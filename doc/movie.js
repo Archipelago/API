@@ -1,5 +1,5 @@
 /**
- * @api {post} /movie/add Add a movie
+ * @api {post} /movie Add a movie
  * @apiVersion 0.1.0
  * @apiName AddMovie
  * @apiGroup Movie
@@ -43,7 +43,7 @@
  */
 
 /**
- * @api {get} /movie/get/:id Get a movie
+ * @api {get} /movie/:id Get a movie
  * @apiVersion 0.1.0
  * @apiName GetMovie
  * @apiGroup Movie
