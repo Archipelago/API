@@ -46,7 +46,7 @@
  * @apiDefine MissingParameter
  * @apiError (400) MissingParameter A mandatory parameter is missing
  * @apiErrorExample MissingParameter
- *     HTTP/1.1 Bad Request
+ *     HTTP/1.1 400 Bad Request
  *     {
  *       "status": "Error",
  *       "message": "A mandatory parameter is missing"
