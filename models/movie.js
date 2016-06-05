@@ -32,7 +32,6 @@ module.exports.add = function(infos, cb) {
       else if (infos[fields[i]])
 	infos[fields[i]] = infos[fields[i]].join(";");
     }
-    infos.user_id = token.getId(infos.token);
     db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :actor, :gender, :composer, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
       if (e && e.code == 1062)
 	cb('Movie "' + infos.title + '" already exists');

@@ -29,10 +29,7 @@ module.exports = function() {
       sendResponse(res, 401, {status: "Error", message: "You need to be logged to do it"});
     else if (tokens[req.headers.token] === undefined)
       sendResponse(res, 401, {status: "Error", message: "Invalid token"});
-    else {
-      req.headers.login = tokens[req.headers.token].login;
-      req.body.token = req.headers.token;
+    else
       next(req, res);
-    }
   }
 }

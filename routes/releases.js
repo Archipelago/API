@@ -6,6 +6,7 @@ module.exports = function(app) {
     token.checkAuthentication(req, res, function(req, res) {
       // TODO: add permission
       req.body.id = req.params.id;
+      req.body.user_id = token.getId(req.headers.token);
       require('../models/releases.js').add(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, e.match('found') ? 404 : 400, {status: "Error", message: e});

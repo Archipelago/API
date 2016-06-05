@@ -5,7 +5,7 @@ module.exports = function(app) {
     req.body = {links: req.body};
     token.checkAuthentication(req, res, function(req, res) {
       // TODO: add permission
-      req.body.user_id = token.getId(req.body.token);
+      req.body.user_id = token.getId(req.headers.token);
       req.body.release_type = 'movie';
       req.body.release_id = req.params.id;
       require('../models/links.js').add(req.body, function(e, r) {

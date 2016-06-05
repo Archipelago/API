@@ -4,6 +4,7 @@ module.exports = function(app) {
   app.post('/movie/add', function(req, res) {
     token.checkAuthentication(req, res, function(req, res) {
       // TODO: add permission
+      req.body.user_id = token.getId(req.headers.token);
       require('../models/movie.js').add(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {status: "Error", message: e});
