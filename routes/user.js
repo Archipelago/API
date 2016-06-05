@@ -1,4 +1,3 @@
-let crypto = require('crypto');
 let sendResponse = require('../sendResponse');
 
 module.exports = function(app) {
@@ -16,16 +15,7 @@ module.exports = function(app) {
       if (e)
 	sendResponse(res, 400, {status: "Error", message: e});
       else {
-	let login = req.body.login.trim();
-	if (users[login]
-	    && users[login].token)
-	  sendResponse(res, 200, {status: "OK", token: users[login].token});
-	else {
-	  let t = crypto.randomBytes(32).toString('hex');
-	  users[login] = {token: t, id: r[0].id};
-	  tokens[t] = login;
-	  sendResponse(res, 200, {status: "OK", token: t});
-	}
+	token.authenticate(res, r[0].id, req.body.login, 0);
       }
     });
   });

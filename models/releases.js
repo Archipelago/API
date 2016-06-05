@@ -52,7 +52,7 @@ module.exports.add = function(infos, cb) {
       if (r.length < 1)
 	cb('No movie found with id "' + infos.id + '"');
       else {
-	infos.user_id = users[tokens[infos.token]].id;
+	infos.user_id = token.getId(infos.token);
 	db.query('INSERT INTO `VideoReleases`(`name`, `element_type`, `element_id`, `size`, `language_id`, `audio_codec_id`, `video_codec_id`, `source_id`, `quality_id`, `container_id`, `compression_id`, `informations`, `user_id`) VALUES(:name, "Movies", :id, :size, :language, :audio_codec, :video_codec, :source, :quality, :container, :compression, :informations, :user_id)', infos, function(e, r) {
 	  cb(e, r);
 	});
