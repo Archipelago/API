@@ -7,7 +7,7 @@ function getType(query) {
     type = type[type.length - 1];
   type = type.split(',');
   for (i in type) {
-    if (type === '*') {
+    if (type[i] === '*') {
       type = avail;
       break;
     }
