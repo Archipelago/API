@@ -29,3 +29,4 @@ require('./routes/movie.js')(app);
 require('./routes/releases.js')(app);
 require('./routes/links.js')(app);
 require('./routes/lists.js')(app);
+require('./routes/search.js')(app);
