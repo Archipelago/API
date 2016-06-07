@@ -41,6 +41,14 @@ module.exports.add = function(infos, cb) {
   }
 }
 
+module.exports.search = function(query, cb) {
+  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  db.query('SELECT `title`, `id`  FROM `Movies` WHERE `plot` LIKE :q OR `title` LIKE :q', {q: query}, function(e, r) {
+    delete r.info;
+    cb(e, r);
+  });
+}
+
 module.exports.getById = function(id, cb) {
   db.query('SELECT `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations` FROM `Movies` WHERE `id` = ?', [id], function(e, r) {
     if (r.length < 1)
