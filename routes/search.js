@@ -1,3 +1,4 @@
+let _ = require('lodash');
 let sendResponse = require('../sendResponse');
 // TODO : merge those two objects
 let avail = ['movie', 'release', 'link', 'user'];
@@ -34,13 +35,17 @@ function getType(query) {
 
 function searchTypes(query, types, cb) {
   let data = {};
+  let j = 0;
   for (i in types) {
     let type = types[i];
-    if (models[type].search)
+    if (models[type].search) {
+      ++j;
       models[type].search(query, function(e, r) {
 	data[type] = r;
-	cb(e, data);
+	if (_.size(data) === j)
+	  cb(e, data);
       });
+    }
   }
 }
 
