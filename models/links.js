@@ -78,3 +78,12 @@ WHERE `Multilinks`.`release_id` = ? AND `Multilinks`.`release_type` = "movie"';
     cb(e, r);
   });
 }
+
+module.exports.search = function(query, cb) {
+  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  db.query('SELECT `url`  FROM `Links` WHERE `url` LIKE :q', {q: query}, function(e, r) {
+    delete r.info;
+    r = _.map(r, 'url');
+    cb(e, r);
+  });
+}
