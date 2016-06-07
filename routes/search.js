@@ -32,11 +32,14 @@ function getType(query) {
   return type;
 }
 
-function searchTypes(query, type, cb) {
-  for (i in type) {
-    if (models[type[i]].search)
-      models[type[i]].search(query, function(e, r) {
-	console.log(r);
+function searchTypes(query, types, cb) {
+  let data = {};
+  for (i in types) {
+    let type = types[i];
+    if (models[type].search)
+      models[type].search(query, function(e, r) {
+	data[type] = r;
+	cb(e, data);
       });
   }
 }
@@ -49,8 +52,8 @@ module.exports = function(app) {
     else {
       try {
 	let type = getType(req.query);
-	searchTypes(query, type, function() {
-	  console.log(arguments);
+	searchTypes(query, type, function(e, r) {
+	  sendResponse(res, 200, r);
 	});
       } catch(e) {
 	console.log(e);
