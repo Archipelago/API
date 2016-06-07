@@ -50,3 +50,12 @@ module.exports.login = function(infos, cb) {
     });
   }
 }
+
+module.exports.search = function(query, cb) {
+  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q', {q: query}, function(e, r) {
+    delete r.info;
+    cb(e, r);
+  });
+
+}
