@@ -85,3 +85,11 @@ WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
     cb(e, r);
   });
 }
+
+module.exports.search = function(query, cb) {
+  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  db.query('SELECT `name`, `id`  FROM `VideoReleases` WHERE `name` LIKE :q', {q: query}, function(e, r) {
+    delete r.info;
+    cb(e, r);
+  });
+}
