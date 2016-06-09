@@ -18,12 +18,9 @@
  *       "bm": "BM-2cT6bVE4XnubEqXUQBf3GuZV1gjFMGrpFB"
  *     }
  *
- * @apiSuccess (201) {String} status "Created"
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 201 Created
- *     {
- *       "status": "Created"
- *     }
+ *     {}
  *
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists
@@ -45,12 +42,10 @@
  *       "password": "p4S5w0RD"
  *     }
  *
- * @apiSuccess(200) {json} status "OK"
  * @apiSuccess(200) {json} token The token that will be used for the next requests
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 200 OK
  *     {
- *       "status": "OK",
  *       "token": "1a3bf0c54ba8bf7e6020c2b048968f13cb5c13b391ab396566e1388448dec6a4"
  *     }
  *

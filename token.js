@@ -19,12 +19,12 @@ module.exports = function() {
     login = login.trim();
     if (users[login]
 	&& users[login].token)
-      sendResponse(res, 200, {status: "OK", token: users[login].token});
+      sendResponse(res, 200, {token: users[login].token});
     else {
       let t = crypto.randomBytes(32).toString('hex');
       users[login] = {token: t, id: parseInt(id), permissions: permissions}
       tokens[t] = login;
-      sendResponse(res, 200, {status: "OK", token: t});
+      sendResponse(res, 200, {token: t});
     }
   }
 
