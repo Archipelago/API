@@ -11,7 +11,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, e.match('found') ? 404 : 400, {status: "Error", message: e});
 	else
-	  sendResponse(res, 201, {status: "Created"});
+	  sendResponse(res, 201, {});
       });
     });
   });

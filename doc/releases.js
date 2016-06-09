@@ -35,12 +35,9 @@
  *       ]
  *     }
  *
- * @apiSuccess (201) {String} status "Created"
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 201 Created
- *     {
- *       "status": "Created"
- *     }
+ *     {}
  *
  * @apiUse MissingParameter
  * @apiUse InvalidParameter
