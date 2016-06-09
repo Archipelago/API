@@ -1,7 +1,5 @@
 let _ = require('lodash');
 let sendResponse = require('../sendResponse');
-// TODO : merge those two objects
-let avail = ['movie', 'release', 'link', 'user'];
 let models = {
   'movie': require('../models/movie'),
   'release': require('../models/releases'),
@@ -15,20 +13,10 @@ function getType(query) {
     type = type[type.length - 1];
   type = type.split(',');
   for (i in type) {
-    if (type[i] === '*') {
-      type = avail;
-      break;
-    }
-    else {
-      let found = false;
-      for (j in avail)
-	if (type[i] === avail[j]) {
-	  found = true;
-	  break;
-	}
-      if (!found)
-	throw 'Invalid type "' + type[i] + '" found';
-    }
+    if (type[i] === '*')
+      return _.keys(models);
+    else if (models[type[i]] === undefined)
+      throw 'Invalid type "' + type[i] + '" found';
   }
   return type;
 }
