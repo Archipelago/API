@@ -35,7 +35,7 @@ cat > $tmpConfigFile <<EOF
 EOF
 
 CONFIG_FILE=$tmpConfigFile npm start & sleep 0.5
-PORT=$port nodeunit init.js list.js user.js movie.js release.js link.js || ret=1
+PORT=$port nodeunit init.js list.js user.js movie.js release.js link.js search.js || ret=1
 kill %1
 rm -f $tmpDbFile $tmpConfigFile
 exit $ret
