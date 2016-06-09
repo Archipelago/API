@@ -61,7 +61,6 @@ module.exports = function(app) {
 	  sendResponse(res, 200, r);
 	});
       } catch(e) {
-	console.log(e);
 	sendResponse(res, 400, {status: "Error", message: e});
       }
     }
