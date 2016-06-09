@@ -12,7 +12,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, 400, {status: "Error", message: e});
 	else
-	  sendResponse(res, 201, {status: "Created"});
+	  sendResponse(res, 201, {});
       });
     });
   });
