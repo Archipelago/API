@@ -10,7 +10,7 @@ module.exports = function(app) {
       req.body.release_id = req.params.id;
       require('../models/links.js').add(req.body, function(e, r) {
 	if (e)
-	  sendResponse(res, 400, {status: "Error", message: e});
+	  sendResponse(res, 400, {message: e});
 	else
 	  sendResponse(res, 201, {});
       });
@@ -20,7 +20,7 @@ module.exports = function(app) {
   app.get('/video_release/:id/links', function(req, res) {
     require('../models/links.js').getByRelease(req.params.id, function(e, r) {
       if (e)
-	sendResponse(res, 404, {status: "Error", message: e});
+	sendResponse(res, 404, {message: e});
       else
 	sendResponse(res, 200, r);
     });

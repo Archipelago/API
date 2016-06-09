@@ -30,9 +30,9 @@ module.exports = function() {
 
   this.checkAuthentication = function(req, res, next) {
     if (req.headers.token === undefined)
-      sendResponse(res, 401, {status: "Error", message: "You need to be logged to do it"});
+      sendResponse(res, 401, {message: "You need to be logged to do it"});
     else if (tokens[req.headers.token] === undefined)
-      sendResponse(res, 401, {status: "Error", message: "Invalid token"});
+      sendResponse(res, 401, {message: "Invalid token"});
     else
       next(req, res);
   }

@@ -4,7 +4,6 @@
  * @apiErrorExample InvalidParameter
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "status": "Error",
  *       "message": "An invalid parameter has been provided"
  *     }
  */
@@ -15,7 +14,6 @@
  * @apiErrorExample AlreadyExists
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "status": "Error",
  *       "message": "The element already exists"
  *     }
  */
@@ -26,7 +24,6 @@
  * @apiErrorExample Unauthorized
  *     HTTP/1.1 401 Unauthorized
  *     {
- *       "status": "Error",
  *       "message": "You must be logged in to perform this acion"
  *     }
  */
@@ -37,7 +34,6 @@
  * @apiErrorExample NotFound
  *     HTTP/1.1 404 NotFound
  *     {
- *       "status": "Error",
  *       "message": "The element does not exist"
  *     }
  */
@@ -48,7 +44,6 @@
  * @apiErrorExample MissingParameter
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "status": "Error",
  *       "message": "A mandatory parameter is missing"
  *     }
  */
@@ -59,7 +54,6 @@
  * @apiErrorExample UserDoesNotExist
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "status": "Error",
  *       "message": "User \"foobar\" not found"
  *     }
  */
@@ -70,7 +64,6 @@
  * @apiErrorExample InvalidPassword
  *     HTTP/1.1 400 Bad Request
  *     {
- *       "status": "Error",
  *       "message": "Invalid password"
  *     }
  */

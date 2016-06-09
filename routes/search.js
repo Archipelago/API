@@ -41,7 +41,7 @@ module.exports = function(app) {
   app.get('/search', function(req, res) {
     let query = req.query.query || req.query.q;
     if (query === undefined)
-      sendResponse(res, 400, {status: "Error", message: 'Missing "query" parameter'});
+      sendResponse(res, 400, {message: 'Missing "query" parameter'});
     else {
       try {
 	let type = getType(req.query);
@@ -49,7 +49,7 @@ module.exports = function(app) {
 	  sendResponse(res, 200, r);
 	});
       } catch(e) {
-	sendResponse(res, 400, {status: "Error", message: e});
+	sendResponse(res, 400, {message: e});
       }
     }
   });
