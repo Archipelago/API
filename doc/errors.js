@@ -52,3 +52,25 @@
  *       "message": "A mandatory parameter is missing"
  *     }
  */
+
+/**
+ * @apiDefine UserDoesNotExist
+ * @apiError (400) UserDoesNotExist User does not exist
+ * @apiErrorExample UserDoesNotExist
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       "status": "Error",
+ *       "message": "User \"foobar\" not found"
+ *     }
+ */
+
+/**
+ * @apiDefine InvalidPassword
+ * @apiError (400) InvalidPassword Bad password provided
+ * @apiErrorExample InvalidPassword
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *       "status": "Error",
+ *       "message": "Invalid password"
+ *     }
+ */
