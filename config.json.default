@@ -1,6 +1,6 @@
 {
   "db": {
-    "name": "foobar",
+    "name": "archipelago",
     "user": "root",
     "password": "toor",
     "host": "localhost"
