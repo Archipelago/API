@@ -86,3 +86,28 @@
  *
  * @apiUse InvalidParameter
  */
+
+/**
+ * @api {get} /movies/lastReleases/:nb Get latest movies releases
+ * @apiVersion 0.2.0
+ * @apiName GetLastMovieReleases
+ * @apiGroup Movie
+ * @apiDescription Get movies with latests added releases
+ * @apiPermission logged
+ * @apiPermission unlogged
+ *
+ * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
+ *
+ * @apiSuccess (200) {Object[]} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *         "title": "foobar",
+ *         "release_date": "1999-03-31",
+ *         "production_year": "1998"
+ *       }
+ *     ]
+ *
+ * @apiUse InvalidParameter
+ */
