@@ -1,6 +1,6 @@
 /**
  * @api {post} /video_release/:id/link Add a link
- * @apiVersion 0.2.0
+ * @apiVersion 0.1.0
  * @apiName AddLink
  * @apiGroup Link
  * @apiDescription Add everal links to a release. You must provide an array containing either strings and/or arrays. Arrays are interpreted as several links for a single splitted release.
@@ -34,7 +34,7 @@
 
 /**
  * @api {get} /video_release/:id/links Get release links
- * @apiVersion 0.2.0
+ * @apiVersion 0.1.0
  * @apiName GetLink
  * @apiGroup Link
  * @apiDescription Get the list of all the links for a release, depending on its id.

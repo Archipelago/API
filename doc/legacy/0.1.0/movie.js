@@ -1,6 +1,6 @@
 /**
  * @api {post} /movie Add a movie
- * @apiVersion 0.2.0
+ * @apiVersion 0.1.0
  * @apiName AddMovie
  * @apiGroup Movie
  * @apiDescription Add a new movie. Title and release date are mandatory, and a lot of fields can be added (see below)
@@ -41,7 +41,7 @@
 
 /**
  * @api {get} /movie/:id Get a movie
- * @apiVersion 0.2.0
+ * @apiVersion 0.1.0
  * @apiName GetMovie
  * @apiGroup Movie
  * @apiDescription Get informations about a movie, depending on its id. Empty fields are not retrieved.

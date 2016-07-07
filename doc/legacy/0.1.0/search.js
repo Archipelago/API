@@ -1,6 +1,6 @@
 /**
  * @api {get} /search Search elements
- * @apiVersion 0.2.0
+ * @apiVersion 0.1.0
  * @apiName Search
  * @apiGroup Search
  * @apiDescription Search for movies, releases, links and users
