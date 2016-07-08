@@ -24,11 +24,12 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/movies/last/:nb', function(req, res) {
-    if (req.params.nb < 1 || req.params.nb > 100)
+  app.get(['/movies/last/:nb', '/movies/last'], function(req, res) {
+    let nb = req.params.nb || 15;
+    if (nb < 1 || nb > 100)
       sendResponse(res, 400, {message: 'Invalid number of movies provided'});
     else {
-      require('../models/movie.js').getLasts(req.params.nb, function(e, r) {
+      require('../models/movie.js').getLasts(nb, function(e, r) {
 	sendResponse(res, 200, r);
       });
     }

@@ -77,6 +77,14 @@ exports.last = {
     });
   },
 
+  default: function(test) {
+    request('/movies/last', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
   limits: {
     min: function(test) {
       request('/movies/last/1', function(res) {
