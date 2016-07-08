@@ -23,4 +23,14 @@ module.exports = function(app) {
 	sendResponse(res, 200, r);
     });
   });
+
+  app.get('/movies/last/:nb', function(req, res) {
+    if (req.params.nb < 1 || req.params.nb > 100)
+      sendResponse(res, 400, {message: 'Invalid number of movies provided'});
+    else {
+      require('../models/movie.js').getLasts(req.params.nb, function(e, r) {
+	sendResponse(res, 200, r);
+      });
+    }
+  });
 }
