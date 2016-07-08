@@ -59,3 +59,55 @@ exports.get = {
     });
   }
 };
+
+exports.last = {
+  unlogged: function(test) {
+    request('/movies/last/5', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request('/movies/last/5', global.token, undefined, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  limits: {
+    min: function(test) {
+      request('/movies/last/1', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    },
+
+    max: function(test) {
+      request('/movies/last/100', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    }
+  },
+
+  invalid: {
+    nbTooSmall: function(test) {
+      request('/movies/last/0', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    nbTooLarge: function(test) {
+      request('/movies/last/101', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    }
+  }
+}
