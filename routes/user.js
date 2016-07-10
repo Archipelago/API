@@ -14,9 +14,8 @@ module.exports = function(app) {
     require('../models/user.js').login(req.body, function(e, r) {
       if (e)
 	sendResponse(res, 400, {message: e});
-      else {
-	token.authenticate(res, r[0].id, req.body.login, 0);
-      }
+      else
+	token.authenticate(res, r.id, req.body.login, r.permissions);
     });
   });
 }
