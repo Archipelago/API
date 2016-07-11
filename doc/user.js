@@ -54,3 +54,34 @@
  * @apiUse UserDoesNotExist
  * @apiUse InvalidPassword
  */
+
+/**
+ * @api {get} /user/:id Get user informations
+ * @apiVersion 0.2.0
+ * @apiName GetUser
+ * @apiGroup User
+ * @apiDescription Get informations about an user, depending on its id. The more permissions you have, the more informations you will get.
+ * @apiPermission NONE
+ *
+ * @apiParam {Number} [id] Id of wanted user. If not specified, current logged in user informations will be retrieved.
+ *
+ * @apiSuccess(200) {String} login
+ * @apiSuccess(200) {String[]} permissions
+ * @apiSuccess(200) {String} [email] Only if you are retrieving your own infos
+ * @apiSuccess(200) {String} [bm] Only if you are retrieving your own infos
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "login": "foobar",
+ *       "permissions": [
+ *         "ADD_MOVIE",
+ *         "EDIT_MOVIE",
+ *         "ADD_RELEASE"
+ *       ],
+ *       "email": "foo@bar.com",
+ *       "bm": "BM-2cT6bVE4XnubEqXUQBf3GuZV1gjFMGrpFB"
+ *     }
+ *
+ * @apiUse InvalidParameter
+ * @apiUse NotFound
+ */
