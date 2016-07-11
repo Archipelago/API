@@ -63,7 +63,7 @@
  * @apiDescription Get informations about an user, depending on its id. The more permissions you have, the more informations you will get.
  * @apiPermission NONE
  *
- * @apiParam {Number} [id] Id of wanted user. If not specified, current logged in user informations will be retrieved.
+ * @apiParam {Number} [id] The id of the wanted user. If not specified, current logged in user informations will be retrieved
  *
  * @apiSuccess(200) {Number} id
  * @apiSuccess(200) {String} login
@@ -85,5 +85,33 @@
  *     }
  *
  * @apiUse InvalidParameter
+ * @apiUse NotFound
+ */
+
+/**
+ * @api {patch} /user/:id/permission Update permissions
+ * @apiVersion 0.2.0
+ * @apiName EditUserPermission
+ * @apiGroup User
+ * @apiDescription Edit permissions for a user. Note that you cannot edit your own permissions and you cannot grant permissions you do not have
+ * @apiPermission EDIT_PERMISSION
+ *
+ * @apiParam {Number} id The id of the user you want to change permissions
+ * @apiParam {Boolean} PERMISSION_NAME True to grant permission, false to revoke it
+ *
+ * @apiParamExample {json} Example:
+ *     {
+ *       "ADD_MOVIE": true,
+ *       "ADD_RELEASE": true,
+ *       "EDIT_MOVIE": false
+ *     }
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     {}
+ *
+ * @apiUse InvalidParameter
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
  * @apiUse NotFound
  */

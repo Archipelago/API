@@ -17,3 +17,7 @@
 /**
  * @apiDefine ADD_LINK Permission required to add releases
  */
+
+/**
+ * @apiDefine EDIT_PERMISSION Permission required to edit permissions
+ */
