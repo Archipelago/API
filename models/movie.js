@@ -1,7 +1,7 @@
-let rec_trim = require('../rec_trim');
+let epur = require('../epur');
 
 module.exports.add = function(infos, cb) {
-  infos = rec_trim(infos);
+  infos = epur(infos);
 
   if (infos.title === undefined
       || infos.title.length == 0)

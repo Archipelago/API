@@ -1,9 +1,9 @@
 let _ = require('lodash');
-let rec_trim = require('../rec_trim');
+let epur = require('../epur');
 
 // TODO: this code need refactorisation
 module.exports.add = function(infos, cb) {
-  infos = rec_trim(infos);
+  infos = epur(infos);
 
   if (infos.links.length == 0) {
     cb('Invalid parameter encountered');

@@ -1,10 +1,8 @@
 let crypto = require('crypto');
-let rec_trim = require('../rec_trim');
-let remove_empty = require('../remove_empty');
+let epur = require('../epur');
 
 module.exports.register = function(infos, cb) {
-  infos = rec_trim(infos);
-  infos = remove_empty(infos);
+  infos = epur(infos);
 
   if (infos.login === undefined)
     cb('Login must be provided');

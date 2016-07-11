@@ -1,6 +1,6 @@
 let filesize = require('file-size');
 let filesizeParser = require('filesize-parser');
-let rec_trim = require('../rec_trim');
+let epur = require('../epur');
 let listsCorres = {
   'audio_codec': 'audioCodecs',
   'video_codec': 'videoCodecs',
@@ -12,7 +12,7 @@ let listsCorres = {
 }
 
 module.exports.add = function(infos, cb) {
-  infos = rec_trim(infos);
+  infos = epur(infos);
 
   if (infos.name === undefined
       || infos.name.length == 0)
