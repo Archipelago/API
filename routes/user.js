@@ -25,6 +25,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else {
+	  r.permissions = token.getPermissions(r.permissions, r.id);
 	  sendResponse(res, 200, r);
 	}
       });
@@ -34,6 +35,7 @@ module.exports = function(app) {
 	  if (e)
 	    sendResponse(res, 404, {message: e});
 	  else {
+	    r.permissions = token.getPermissions(r.permissions, r.id);
 	    sendResponse(res, 200, r);
 	  }
 	});

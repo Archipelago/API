@@ -65,7 +65,7 @@ module.exports.search = function(query, cb) {
 }
 
 module.exports.getById = function(id, cb) {
-  db.query('SELECT `login`, `permissions`, `mail` AS "email", `bm` FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+  db.query('SELECT `id`, `login`, `permissions`, `mail` AS "email", `bm` FROM `Users` WHERE `id` = ?', [id], function(e, r) {
     if (r.info.numRows === '0')
       cb('Unable to find user with id "' + id + '"');
     else {
@@ -74,6 +74,7 @@ module.exports.getById = function(id, cb) {
 	if (r[0][i] === null)
 	  delete r[0][i];
       r[0].permissions = parseInt(r[0].permissions);
+      r[0].id = parseInt(r[0].id);
       cb(e, r[0]);
     }
   });

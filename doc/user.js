@@ -65,6 +65,7 @@
  *
  * @apiParam {Number} [id] Id of wanted user. If not specified, current logged in user informations will be retrieved.
  *
+ * @apiSuccess(200) {Number} id
  * @apiSuccess(200) {String} login
  * @apiSuccess(200) {String[]} permissions
  * @apiSuccess(200) {String} [email] Only if you are retrieving your own infos
@@ -72,6 +73,7 @@
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 200 OK
  *     {
+ *       "id": 1,
  *       "login": "foobar",
  *       "permissions": [
  *         "ADD_MOVIE",

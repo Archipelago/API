@@ -110,6 +110,8 @@ exports.get = {
   valid: function(test) {
     request('/user/1', function(res) {
       test.equal(res.statusCode, 200);
+      test.equal(res.body.id, 1);
+      test.equal(res.body.permissions.length > 0, true);
       test.done();
     });
   },
@@ -132,6 +134,7 @@ exports.get = {
     logged: function(test) {
       request('/user', global.token, undefined, function(res) {
 	test.equal(res.statusCode, 200);
+	test.equal(res.body.permissions.length, 0);
 	test.done();
       });
     },
@@ -140,6 +143,7 @@ exports.get = {
       request('/user', global.rootToken, undefined, function(res) {
 	test.equal(res.body.login, 'root');
 	test.equal(res.statusCode, 200);
+	test.equal(res.body.permissions.length > 0, true);
 	test.done();
       });
     }

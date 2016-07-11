@@ -48,6 +48,16 @@ module.exports = function() {
     return (permissionName === 'NONE' || user.id === 1 || user.permissions & permissions[permissionName] !== 0)
   }
 
+  this.getPermissions = function(value, id) {
+    let array = [];
+    let fakeUser = {id: id, permissions: value};
+    for (i in permissions) {
+      if (hasPermission(fakeUser, i))
+	array.push(i);
+    }
+    return array;
+  }
+
   this.checkPermission = function(req, res, permission, next) {
     if (req.headers.token === undefined)
       sendResponse(res, 401, {message: "You need to be logged to do it"});
