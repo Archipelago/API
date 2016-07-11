@@ -4,7 +4,7 @@
  * @apiName AddRelease
  * @apiGroup Release
  * @apiDescription Add a new release to a movie, giving a lot of informations about it. All of this, except name, have to match one in the database. You can get there possibles values with <a href="#api-List">/list routes</a>. They are case insensitive.
- * @apiPermission logged
+ * @apiPermission ADD_RELEASE
  *
  * @apiParam {Number} id The id of the movie you want to add a release.
  *
@@ -43,6 +43,7 @@
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
+ * @apiUse Forbidden
  * @apiUse NotFound
  */
 

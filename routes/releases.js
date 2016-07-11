@@ -3,8 +3,7 @@ let sendResponse = require('../sendResponse');
 module.exports = function(app) {
   //TODO: fix it, server crash if invalid parameters are provided
   app.post('/movie/:id/release', function(req, res) {
-    token.checkAuthentication(req, res, function(req, res) {
-      // TODO: add permission
+    token.checkPermission(req, res, 'ADD_RELEASE', function(req, res) {
       req.body.id = req.params.id;
       req.body.user_id = token.getId(req.headers.token);
       require('../models/releases.js').add(req.body, function(e, r) {

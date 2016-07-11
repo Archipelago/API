@@ -19,8 +19,24 @@ exports.add = {
     });
   },
 
-  valid: function(test) {
+  unauthorized: function(test) {
     request('/movie/1/release', global.token, {
+      "name": "foobar",
+      "size": "2.1GB",
+      "language": randomElem(global.lists.languages),
+      "audio_codec": randomElem(global.lists.audioCodecs),
+      "video_codec": randomElem(global.lists.videoCodecs),
+      "source": randomElem(global.lists.sources),
+      "quality": randomElem(global.lists.qualities),
+      "container": randomElem(global.lists.containers)
+    }, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request('/movie/1/release', global.rootToken, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
