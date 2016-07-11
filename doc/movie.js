@@ -37,6 +37,7 @@
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
+ * @apiUse Forbidden
  */
 
 /**

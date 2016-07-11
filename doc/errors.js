@@ -29,6 +29,16 @@
  */
 
 /**
+ * @apiDefine Forbidden
+ * @apiError (403) Forbidden You don't have the permission required to do that.
+ * @apiErrorExample Forbidden
+ *     HTTP/1.1 403 Forbidden
+ *     {
+ *       "message": "You don't have the permission required to do that"
+ *     }
+ */
+
+/**
  * @apiDefine NotFound
  * @apiError (404) NotFound The element does not exist
  * @apiErrorExample NotFound
