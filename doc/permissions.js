@@ -15,7 +15,7 @@
  */
 
 /**
- * @apiDefine ADD_LINK Permission required to add releases
+ * @apiDefine ADD_LINK Permission required to add links
  */
 
 /**
