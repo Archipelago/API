@@ -3,8 +3,7 @@ let sendResponse = require('../sendResponse');
 module.exports = function(app) {
   app.post('/video_release/:id/link', function(req, res) {
     req.body = {links: req.body};
-    token.checkAuthentication(req, res, function(req, res) {
-      // TODO: add permission
+    token.checkPermission(req, res, 'ADD_LINK', function(req, res) {
       req.body.user_id = token.getId(req.headers.token);
       req.body.release_type = 'movie';
       req.body.release_id = req.params.id;

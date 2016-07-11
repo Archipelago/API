@@ -13,3 +13,7 @@
 /**
  * @apiDefine ADD_RELEASE Permission required to add releases
  */
+
+/**
+ * @apiDefine ADD_LINK Permission required to add releases
+ */

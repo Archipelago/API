@@ -4,7 +4,7 @@
  * @apiName AddLink
  * @apiGroup Link
  * @apiDescription Add everal links to a release. You must provide an array containing either strings and/or arrays. Arrays are interpreted as several links for a single splitted release.
- * @apiPermission logged
+ * @apiPermission ADD_LINK
  *
  * @apiParam {Number} id The id of the video release you want to add links.
  *
@@ -29,6 +29,7 @@
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
+ * @apiUse Forbidden
  * @apiUse NotFound
  */
 
