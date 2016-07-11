@@ -39,8 +39,7 @@
  * @apiName GetLink
  * @apiGroup Link
  * @apiDescription Get the list of all the links for a release, depending on its id.
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {Number} id The id of the wanted release.
  *

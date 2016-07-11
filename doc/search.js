@@ -4,8 +4,7 @@
  * @apiName Search
  * @apiGroup Search
  * @apiDescription Search for movies, releases, links and users
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {String{3..}} query The terms of the query
  * @apiParam {String} q A shortcut for `query`

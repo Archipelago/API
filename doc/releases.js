@@ -53,8 +53,7 @@
  * @apiName GetRelease
  * @apiGroup Release
  * @apiDescription Get the list of all the releases for a movie, depending on its id. Empty fields are not retrived. The "size" field may differs from what you sent, because it's converted into MiB/GiB. It also returns the id of the release, which is used to retrieve links.
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {Number} id The id of the wanted movie.
  *

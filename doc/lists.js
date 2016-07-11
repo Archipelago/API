@@ -4,8 +4,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available audio codecs
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -23,8 +22,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available video codecs
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -42,8 +40,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available sources
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -61,8 +58,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available qualities
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -80,8 +76,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available containers
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -99,8 +94,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available languages
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response
@@ -118,8 +112,7 @@
  * @apiVersion 0.2.0
  * @apiGroup List
  * @apiDescription Get list of available compressions
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiSuccess (200) {Array} data
  * @apiSuccessExample Success-Response

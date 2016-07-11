@@ -46,8 +46,7 @@
  * @apiName GetMovie
  * @apiGroup Movie
  * @apiDescription Get informations about a movie, depending on its id. Empty fields are not retrieved.
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {Number} id The id of the wanted movie.
  *
@@ -69,8 +68,7 @@
  * @apiName GetLastMovies
  * @apiGroup Movie
  * @apiDescription Retrieve latest added` movies.
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
  *
@@ -94,8 +92,7 @@
  * @apiName GetLastMovieReleases
  * @apiGroup Movie
  * @apiDescription Get movies with latests added releases
- * @apiPermission logged
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
  *

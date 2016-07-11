@@ -4,7 +4,7 @@
  * @apiName Register
  * @apiGroup User
  * @apiDescription Register an account with a login, a password and some optional fields.
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {String} login Must be 4-32 chars long
  * @apiParam {String} password Must be at least 8 chars long
@@ -32,7 +32,7 @@
  * @apiName Login
  * @apiGroup User
  * @apiDescription Login into your account. Returns a token that will be used to all your signed-in actions. You will have to provide it within the header Token.
- * @apiPermission unlogged
+ * @apiPermission NONE
  *
  * @apiParam {String} login
  * @apiParam {String} password
