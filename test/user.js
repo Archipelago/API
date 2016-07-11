@@ -105,3 +105,43 @@ exports.token = {
     });
   }
 };
+
+exports.get = {
+  valid: function(test) {
+    request('/user/1', function(res) {
+      test.equal(res.statusCode, 200);
+      test.done();
+    });
+  },
+
+  invalid: function(test) {
+    request('/user/-1', function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  default: {
+    unlogged: function(test) {
+      request('/user', function(res) {
+	test.equal(res.statusCode, 401);
+	test.done();
+      });
+    },
+
+    logged: function(test) {
+      request('/user', global.token, undefined, function(res) {
+	test.equal(res.statusCode, 200);
+	test.done();
+      });
+    },
+
+    rootUser: function(test) {
+      request('/user', global.rootToken, undefined, function(res) {
+	test.equal(res.body.login, 'root');
+	test.equal(res.statusCode, 200);
+	test.done();
+      });
+    }
+  }
+};
