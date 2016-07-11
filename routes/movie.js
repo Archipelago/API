@@ -2,8 +2,7 @@ let sendResponse = require('../sendResponse');
 
 module.exports = function(app) {
   app.post('/movie', function(req, res) {
-    token.checkAuthentication(req, res, function(req, res) {
-      // TODO: add permission
+    token.checkPermission(req, res, 'ADD_ELEMENT', function(req, res) {
       req.body.user_id = token.getId(req.headers.token);
       require('../models/movie.js').add(req.body, function(e, r) {
 	if (e)

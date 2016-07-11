@@ -48,7 +48,7 @@ module.exports = function() {
     return (user.id === 1 || user.permissions & permissions[permissionName] !== 0)
   }
 
-  this.checkPermission = function(req, res, next) {
+  this.checkPermission = function(req, res, permission, next) {
     if (req.headers.token === undefined)
       sendResponse(res, 401, {message: "You need to be logged to do it"});
     else if (tokens[req.headers.token] === undefined)

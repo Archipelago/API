@@ -13,8 +13,19 @@ exports.add = {
     });
   },
 
-  valid: function(test) {
+  unauthorized: function(test) {
     request('/movie', global.token, {
+      "title": "foobar" + hash,
+      "release_date": "1999-03-31",
+      "production_year": 1998
+    }, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998
@@ -25,7 +36,7 @@ exports.add = {
   },
 
   duplicate: function(test) {
-    request('/movie', global.token, {
+    request('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998

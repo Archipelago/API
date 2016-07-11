@@ -52,15 +52,28 @@ exports.login = {
     });
   },
 
-  valid: function(test) {
-    request('/login', {
-      "login": "tmp" + hash,
-      "password": "foobar42"
-    }, function(res) {
-      global.token = res.body.token;
-      test.equal(res.statusCode, 200);
-      test.done();
-    });
+  valid: {
+    stdUser: function(test) {
+      request('/login', {
+	"login": "tmp" + hash,
+	"password": "foobar42"
+      }, function(res) {
+	global.token = res.body.token;
+	test.equal(res.statusCode, 200);
+	test.done();
+      });
+    },
+
+    root: function(test) {
+      request('/login', {
+	"login": "root",
+	"password": "foobar42"
+      }, function(res) {
+	global.rootToken = res.body.token;
+	test.equal(res.statusCode, 200);
+	test.done();
+      });
+    }
   }
 };
 
