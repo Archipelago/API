@@ -60,5 +60,19 @@ module.exports.search = function(query, cb) {
     delete r.info;
     cb(e, r);
   });
+}
 
+module.exports.getById = function(id, cb) {
+  db.query('SELECT `login`, `permissions`, `mail` AS "email", `bm` FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+    if (r.info.numRows === '0')
+      cb('Unable to find user with id "' + id + '"');
+    else {
+      delete r.info;
+      for (i in r[0])
+	if (r[0][i] === null)
+	  delete r[0][i];
+      r[0].permissions = parseInt(r[0].permissions);
+      cb(e, r[0]);
+    }
+  });
 }

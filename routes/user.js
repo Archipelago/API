@@ -18,4 +18,26 @@ module.exports = function(app) {
 	token.authenticate(res, r.id, req.body.login, r.permissions);
     });
   });
+
+  app.get(['/user', '/user/:id'], function(req, res) {
+    if (req.params.id) {
+      require('../models/user.js').getById(req.params.id, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else {
+	  sendResponse(res, 200, r);
+	}
+      });
+    } else {
+      token.checkPermission(req, res, 'NONE', function(e, r) {
+	require('../models/user.js').getById(token.getId(req.headers.token), function(e, r) {
+	  if (e)
+	    sendResponse(res, 404, {message: e});
+	  else {
+	    sendResponse(res, 200, r);
+	  }
+	});
+      });
+    }
+  });
 }
