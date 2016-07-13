@@ -97,13 +97,18 @@
  * @apiPermission EDIT_PERMISSION
  *
  * @apiParam {Number} id The id of the user you want to change permissions
- * @apiParam {Boolean} PERMISSION_NAME True to grant permission, false to revoke it
+ * @apiParam {Array} [add] THe permissions you want to grant
+ * @apiParam {Array} [remove] THe permissions you want to revoke
  *
  * @apiParamExample {json} Example:
  *     {
- *       "ADD_MOVIE": true,
- *       "ADD_RELEASE": true,
- *       "EDIT_MOVIE": false
+ *       "add": [
+ *         "ADD_MOVIE"
+ *         "ADD_RELEASE"
+ *       ],
+ *       "remove": [
+ *         "EDIT_MOVIE"
+ *       ]
  *     }
  *
  * @apiSuccessExample Success-Response
