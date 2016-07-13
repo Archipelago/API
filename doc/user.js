@@ -97,17 +97,17 @@
  * @apiPermission EDIT_PERMISSION
  *
  * @apiParam {Number} id The id of the user you want to change permissions
- * @apiParam {Array} [add] THe permissions you want to grant
- * @apiParam {Array} [remove] THe permissions you want to revoke
+ * @apiParam {Array} [add] The permissions you want to grant
+ * @apiParam {Array} [remove] The permissions you want to revoke
  *
  * @apiParamExample {json} Example:
  *     {
  *       "add": [
- *         "ADD_MOVIE"
+ *         "ADD_ELEMENT"
  *         "ADD_RELEASE"
  *       ],
  *       "remove": [
- *         "EDIT_MOVIE"
+ *         "EDIT_ELEMENT"
  *       ]
  *     }
  *
