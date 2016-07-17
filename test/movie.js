@@ -3,7 +3,7 @@ let hash = crypto.randomBytes(4).toString('hex');
 
 exports.add = {
   unlogged: function(test) {
-    request('/movie', {
+    request.post('/movie', {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998
@@ -14,7 +14,7 @@ exports.add = {
   },
 
   unauthorized: function(test) {
-    request('/movie', global.token, {
+    request.post('/movie', global.token, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998
@@ -25,7 +25,7 @@ exports.add = {
   },
 
   rootUser: function(test) {
-    request('/movie', global.rootToken, {
+    request.post('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998
@@ -36,7 +36,7 @@ exports.add = {
   },
 
   duplicate: function(test) {
-    request('/movie', global.rootToken, {
+    request.post('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
       "production_year": 1998
@@ -50,21 +50,21 @@ exports.add = {
 //This assume that the movie with id 1 exists. We must retrieve the last movie inserted
 exports.get = {
   unlogged: function(test) {
-    request('/movie/1', function(res) {
+    request.get('/movie/1', function(res) {
       test.equal(res.statusCode, 200);
       test.done();
     });
   },
 
   logged: function(test) {
-    request('/movie/1', global.token, undefined, function(res) {
+    request.get('/movie/1', global.token, function(res) {
       test.equal(res.statusCode, 200);
       test.done();
     });
   },
 
   notExisting: function(test) {
-    request('/movie/toto', global.token, undefined, function(res) {
+    request.get('/movie/toto', global.token, function(res) {
       test.equal(res.statusCode, 404);
       test.done();
     });
@@ -73,7 +73,7 @@ exports.get = {
 
 exports.last = {
   unlogged: function(test) {
-    request('/movies/last/5', function(res) {
+    request.get('/movies/last/5', function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
       test.done();
@@ -81,7 +81,7 @@ exports.last = {
   },
 
   logged: function(test) {
-    request('/movies/last/5', global.token, undefined, function(res) {
+    request.get('/movies/last/5', global.token, function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
       test.done();
@@ -89,7 +89,7 @@ exports.last = {
   },
 
   default: function(test) {
-    request('/movies/last', function(res) {
+    request.get('/movies/last', function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
       test.done();
@@ -98,7 +98,7 @@ exports.last = {
 
   limits: {
     min: function(test) {
-      request('/movies/last/1', function(res) {
+      request.get('/movies/last/1', function(res) {
 	test.equal(res.statusCode, 200);
 	test.equal(res.body instanceof Array, true);
 	test.done();
@@ -106,7 +106,7 @@ exports.last = {
     },
 
     max: function(test) {
-      request('/movies/last/100', function(res) {
+      request.get('/movies/last/100', function(res) {
 	test.equal(res.statusCode, 200);
 	test.equal(res.body instanceof Array, true);
 	test.done();
@@ -116,14 +116,14 @@ exports.last = {
 
   invalid: {
     nbTooSmall: function(test) {
-      request('/movies/last/0', function(res) {
+      request.get('/movies/last/0', function(res) {
 	test.equal(res.statusCode, 400);
 	test.done();
       });
     },
 
     nbTooLarge: function(test) {
-      request('/movies/last/101', function(res) {
+      request.get('/movies/last/101', function(res) {
 	test.equal(res.statusCode, 400);
 	test.done();
       });

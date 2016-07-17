@@ -4,7 +4,7 @@ function randomElem(array) {
 
 exports.add = {
   unlogged: function(test) {
-    request('/movie/1/release', {
+    request.post('/movie/1/release', {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -20,7 +20,7 @@ exports.add = {
   },
 
   unauthorized: function(test) {
-    request('/movie/1/release', global.token, {
+    request.post('/movie/1/release', global.token, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -36,7 +36,7 @@ exports.add = {
   },
 
   rootUser: function(test) {
-    request('/movie/1/release', global.rootToken, {
+    request.post('/movie/1/release', global.rootToken, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -54,7 +54,7 @@ exports.add = {
 
 exports.get = {
   unlogged: function(test) {
-    request('/movie/1/releases', function(res) {
+    request.get('/movie/1/releases', function(res) {
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);
       test.done();
@@ -62,7 +62,7 @@ exports.get = {
   },
 
   logged: function(test) {
-    request('/movie/1/releases', global.token, undefined, function(res) {
+    request.get('/movie/1/releases', global.token, function(res) {
       global.videoReleaseId = res.body[0].id;
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);

@@ -3,7 +3,7 @@ let hash = crypto.randomBytes(4).toString('hex');
 
 exports.add = {
   unlogged: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link', [
+    request.post('/video_release/' + global.videoReleaseId + '/link', [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -17,7 +17,7 @@ exports.add = {
   },
 
   unauthorized: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link', global.token, [
+    request.post('/video_release/' + global.videoReleaseId + '/link', global.token, [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -31,7 +31,7 @@ exports.add = {
   },
 
   rootUser: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link', global.rootToken, [
+    request.post('/video_release/' + global.videoReleaseId + '/link', global.rootToken, [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -45,7 +45,7 @@ exports.add = {
   },
 
   duplicate: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/link', global.rootToken, [
+    request.post('/video_release/' + global.videoReleaseId + '/link', global.rootToken, [
       "https://example.com/releases" + hash + ".mkv",
       [
 	"https://example.com/release.mkv" + hash + ".part1.rar",
@@ -61,7 +61,7 @@ exports.add = {
 
 exports.get = {
   unlogged: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/links', function(res) {
+    request.get('/video_release/' + global.videoReleaseId + '/links', function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
       test.done();
@@ -69,7 +69,7 @@ exports.get = {
   },
 
   logged: function(test) {
-    request('/video_release/' + global.videoReleaseId + '/links', global.token, undefined, function(res) {
+    request.get('/video_release/' + global.videoReleaseId + '/links', global.token, function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
       test.done();
