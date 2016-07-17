@@ -77,3 +77,9 @@ module.exports.getById = function(id, cb) {
     }
   });
 }
+
+module.exports.updatePermission = function(id, permissions, cb) {
+  db.query('UPDATE `Users` SET `permissions` = ? WHERE `id` = ?', [permissions, id], function(e, r) {
+    cb(e, r);
+  });
+}

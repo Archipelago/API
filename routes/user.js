@@ -19,6 +19,7 @@ module.exports = function(app) {
     });
   });
 
+  // TODO: manage data hiding (mail, bm...)
   app.get(['/user', '/user/:id'], function(req, res) {
     if (req.params.id) {
       require('../models/user.js').getById(req.params.id, function(e, r) {
@@ -41,5 +42,16 @@ module.exports = function(app) {
 	});
       });
     }
+  });
+
+  app.put('/user/:id/permission', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_PERMISSION', function(e, r) {
+      require('../models/user.js').getById(req.params.id, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  token.updatePermission(req, res, r);
+      });
+    });
   });
 }

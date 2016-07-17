@@ -58,6 +58,18 @@ module.exports = function() {
     return array;
   }
 
+  this.getPermissionInt = function(array, id) {
+    if (id === 1)
+      return ~0;
+    let ret = 0;
+    for (i in array) {
+      if (permissions[array[i]] === undefined)
+	return null;
+      ret |= permissions[array[i]];
+    }
+    return ret;
+  }
+
   this.checkPermission = function(req, res, permission, next) {
     if (req.headers.token === undefined)
       sendResponse(res, 401, {message: "You need to be logged to do it"});
@@ -67,5 +79,31 @@ module.exports = function() {
       sendResponse(res, 403, {message: "You don't have the permission to do that."});
     else
       next(req, res);
+  }
+
+  let canUpdatePermission = function(permissions, toUpdate) {
+    return permissions | toUpdate === permissions;
+  }
+
+  // TODO: cannot edit your own permissions
+  this.updatePermission = function(req, res, user) {
+    let addPermissions = this.getPermissionInt(req.body.add, req.params.id);
+    let removePermissions = this.getPermissionInt(req.body.remove, req.params.id);
+    let myRights = users[tokens[req.headers.token]].id === 1 ? ~0 : users[tokens[req.headers.token]].permissions;
+    if (addPermissions === null
+	|| removePermissions === null)
+      sendResponse(res, 400, "One of the given permissions is incorrect");
+    else if ((myRights | addPermissions) !== myRights
+	     || (myRights | removePermissions) !== myRights)
+      sendResponse(res, 403, "You don't have the permission to change those permissions");
+    else {
+      let newPermissions = (user.permissions & ~removePermissions) | addPermissions;
+      if (users[user.login] !== undefined) {
+	users[user.login].permissions = newPermissions;
+      }
+      require('./models/user.js').updatePermission(req.params.id, newPermissions, function(e, r) {
+	sendResponse(res, 200, 'Permissions successfully updated');
+      });
+    }
   }
 }
