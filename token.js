@@ -85,7 +85,6 @@ module.exports = function() {
     return permissions | toUpdate === permissions;
   }
 
-  // TODO: cannot edit your own permissions
   this.updatePermission = function(req, res, user) {
     let addPermissions = this.getPermissionInt(req.body.add, req.params.id);
     let removePermissions = this.getPermissionInt(req.body.remove, req.params.id);
@@ -93,6 +92,8 @@ module.exports = function() {
     if (addPermissions === null
 	|| removePermissions === null)
       sendResponse(res, 400, {message: "One of the given permissions is incorrect"});
+    else if (parseInt(req.params.id) === users[tokens[req.headers.token]].id)
+      sendResponse(res, 403, {message: "You cannot change your own permissions"});
     else if ((myRights | addPermissions) !== myRights
 	     || (myRights | removePermissions) !== myRights)
       sendResponse(res, 403, {message: "You don't have the permission to change those permissions"});

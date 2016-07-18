@@ -24,6 +24,17 @@ exports.grant = {
     });
   },
 
+  ownpermissions: function(test) {
+    request.put('/user/1/permission', global.rootToken, {
+      "add": [
+	"ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT"
+      ]
+    }, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
   rootUser: function(test) {
     request.put('/user/2/permission', global.rootToken, {
       "add": [
