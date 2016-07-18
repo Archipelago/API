@@ -92,17 +92,17 @@ module.exports = function() {
     let myRights = users[tokens[req.headers.token]].id === 1 ? ~0 : users[tokens[req.headers.token]].permissions;
     if (addPermissions === null
 	|| removePermissions === null)
-      sendResponse(res, 400, "One of the given permissions is incorrect");
+      sendResponse(res, 400, {message: "One of the given permissions is incorrect"});
     else if ((myRights | addPermissions) !== myRights
 	     || (myRights | removePermissions) !== myRights)
-      sendResponse(res, 403, "You don't have the permission to change those permissions");
+      sendResponse(res, 403, {message: "You don't have the permission to change those permissions"});
     else {
       let newPermissions = (user.permissions & ~removePermissions) | addPermissions;
       if (users[user.login] !== undefined) {
 	users[user.login].permissions = newPermissions;
       }
       require('./models/user.js').updatePermission(req.params.id, newPermissions, function(e, r) {
-	sendResponse(res, 200, 'Permissions successfully updated');
+	sendResponse(res, 200, {});
       });
     }
   }
