@@ -45,7 +45,7 @@ module.exports = function() {
 
   // User with id 1 has all permission
   let hasPermission = function(user, permissionName) {
-    return (permissionName === 'NONE' || user.id === 1 || user.permissions & permissions[permissionName] !== 0)
+    return (permissionName === 'NONE' || user.id === 1 || (user.permissions & permissions[permissionName]) !== 0)
   }
 
   this.getPermissions = function(value, id) {
