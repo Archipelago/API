@@ -20,7 +20,7 @@ module.exports.add = function(infos, cb) {
 	       || infos.production_year > 9999))
     cb('Invalid production year');
   else if (infos.image
-	   && !infos.image.match(/^https?:\/\/\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
+	   && !infos.image.match(/^https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
     cb('Invalid image url');
   else {
     let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
