@@ -18,9 +18,12 @@
  *       "bm": "BM-2cT6bVE4XnubEqXUQBf3GuZV1gjFMGrpFB"
  *     }
  *
+ * @apiSuccess(201) id The id of the newly created user
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 201 Created
- *     {}
+ *     {
+ *       "id": 3
+ *     }
  *
  * @apiUse InvalidParameter
  * @apiUse AlreadyExists

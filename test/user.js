@@ -8,6 +8,7 @@ exports.register = {
       "password": "foobar42"
     }, function(res) {
       test.equal(res.statusCode, 201);
+      test.equal(typeof res.body.id, 'number');
       test.done();
     });
   },
