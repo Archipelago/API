@@ -3,7 +3,7 @@
 
 exports.grant = {
   unlogged: function(test) {
-    request.put('/user/2/permission', {
+    request.patch('/user/2/permission', {
       "add": [
 	"ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT"
       ]
@@ -14,7 +14,7 @@ exports.grant = {
   },
 
   unauthorized: function(test) {
-    request.put('/user/2/permission', global.token, {
+    request.patch('/user/2/permission', global.token, {
       "add": [
 	"ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT"
       ]
@@ -25,7 +25,7 @@ exports.grant = {
   },
 
   ownpermissions: function(test) {
-    request.put('/user/1/permission', global.rootToken, {
+    request.patch('/user/1/permission', global.rootToken, {
       "add": [
 	"ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT"
       ]
@@ -36,7 +36,7 @@ exports.grant = {
   },
 
   rootUser: function(test) {
-    request.put('/user/2/permission', global.rootToken, {
+    request.patch('/user/2/permission', global.rootToken, {
       "add": [
 	"ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT"
       ]
@@ -57,7 +57,7 @@ exports.grant = {
 
 exports.revoke = {
   unlogged: function(test) {
-    request.put('/user/2/permission', {
+    request.patch('/user/2/permission', {
       "remove": [
 	"DELETE_ELEMENT"
       ]
@@ -68,7 +68,7 @@ exports.revoke = {
   },
 
   unauthorized: function(test) {
-    request.put('/user/2/permission', global.token, {
+    request.patch('/user/2/permission', global.token, {
       "remove": [
 	"DELETE_ELEMENT"
       ]
@@ -79,7 +79,7 @@ exports.revoke = {
   },
 
   ownpermissions: function(test) {
-    request.put('/user/1/permission', global.rootToken, {
+    request.patch('/user/1/permission', global.rootToken, {
       "remove": [
 	"DELETE_ELEMENT"
       ]
@@ -90,7 +90,7 @@ exports.revoke = {
   },
 
   rootUser: function(test) {
-    request.put('/user/2/permission', global.rootToken, {
+    request.patch('/user/2/permission', global.rootToken, {
       "remove": [
 	"DELETE_ELEMENT"
       ]

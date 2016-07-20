@@ -44,7 +44,7 @@ module.exports = function(app) {
     }
   });
 
-  app.put('/user/:id/permission', function(req, res) {
+  app.patch('/user/:id/permission', function(req, res) {
     token.checkPermission(req, res, 'EDIT_PERMISSION', function(e, r) {
       require('../models/user.js').getById(req.params.id, function(e, r) {
 	if (e)

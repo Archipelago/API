@@ -53,3 +53,10 @@ global.request.put = function(route, token, data, cb) {
   else
     request('PUT', route, token, data, cb);
 }
+
+global.request.patch = function(route, token, data, cb) {
+  if (cb === undefined)
+    request('PATCH', route, undefined, token, data);
+  else
+    request('PATCH', route, token, data, cb);
+}
