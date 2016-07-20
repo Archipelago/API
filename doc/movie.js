@@ -77,6 +77,7 @@
  *     HTTP/1.1 200 OK
  *     [
  *       {
+ *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
  *         "production_year": "1998"
@@ -101,6 +102,7 @@
  *     HTTP/1.1 200 OK
  *     [
  *       {
+ *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
  *         "production_year": "1998"
