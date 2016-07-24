@@ -111,3 +111,28 @@
  *
  * @apiUse InvalidParameter
  */
+
+/**
+ * @api {get} /movies/lastLinks/:nb Get latest movies (links)
+ * @apiVersion 0.2.0
+ * @apiName GetLastMovieLinks
+ * @apiGroup Movie
+ * @apiDescription Get movies with latests added links
+ * @apiPermission NONE
+ *
+ * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
+ *
+ * @apiSuccess (200) {Object[]} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *         "id": 1,
+ *         "title": "foobar",
+ *         "release_date": "1999-03-31",
+ *         "production_year": "1998"
+ *       }
+ *     ]
+ *
+ * @apiUse InvalidParameter
+ */
