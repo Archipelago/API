@@ -74,3 +74,16 @@ module.exports.getLasts = function(nb, cb) {
     cb(e, r);
   });
 }
+
+module.exports.getLastReleases = function(nb, cb) {
+  db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` WHERE `VideoReleases`.`element_type` = "Movies" GROUP BY `Movies`.`id` ORDER BY `VideoReleases`.`id` DESC LIMIT ' + parseInt(nb), function(e, r) {
+    for (i in r) {
+      for (j in r[i])
+	if (r[i][j] == null)
+	  delete r[i][j];
+      r[i].id = parseInt(r[i].id);
+    }
+    delete r.info;
+    cb(e, r);
+  });
+}

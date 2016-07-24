@@ -63,7 +63,7 @@
  */
 
 /**
- * @api {get} /movies/last/:nb Get latest added movies
+ * @api {get} /movies/last/:nb Get latest movies
  * @apiVersion 0.2.0
  * @apiName GetLastMovies
  * @apiGroup Movie
@@ -88,7 +88,7 @@
  */
 
 /**
- * @api {get} /movies/lastReleases/:nb Get latest movies releases
+ * @api {get} /movies/lastReleases/:nb Get latest movies (release)
  * @apiVersion 0.2.0
  * @apiName GetLastMovieReleases
  * @apiGroup Movie
