@@ -89,6 +89,7 @@
  *
  * @apiUse InvalidParameter
  * @apiUse NotFound
+ * @apiUse Unauthorized
  */
 
 /**
