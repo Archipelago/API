@@ -26,6 +26,42 @@ exports.add = {
     });
   },
 
+  missingFields: {
+    title: function(test) {
+      request.post('/movie', global.rootToken, {
+	"release_date": "1999-03-31",
+	"image": "https://example.com/" + hash + ".png",
+	"production_year": 1998
+      }, function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    releaseDate: function(test) {
+      request.post('/movie', global.token, {
+	"title": "foobar" + hash,
+	"release_date": "1999-03-31",
+	"image": "https://example.com/" + hash + ".png",
+	"production_year": 1998
+      }, function(res) {
+	test.equal(res.statusCode, 403);
+	test.done();
+      });
+    },
+
+    image: function(test) {
+      request.post('/movie', global.rootToken, {
+	"title": "foobar" + hash,
+	"release_date": "1999-03-31",
+	"production_year": 1998
+      }, function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    }
+  },
+
   rootUser: function(test) {
     request.post('/movie', global.rootToken, {
       "title": "foobar" + hash,
