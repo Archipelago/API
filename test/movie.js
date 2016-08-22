@@ -6,6 +6,7 @@ exports.add = {
     request.post('/movie', {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
       "production_year": 1998
     }, function(res) {
       test.equal(res.statusCode, 401);
@@ -17,6 +18,7 @@ exports.add = {
     request.post('/movie', global.token, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
       "production_year": 1998
     }, function(res) {
       test.equal(res.statusCode, 403);
@@ -28,6 +30,7 @@ exports.add = {
     request.post('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
       "production_year": 1998
     }, function(res) {
       test.equal(res.statusCode, 201);
@@ -39,6 +42,7 @@ exports.add = {
     request.post('/movie', global.rootToken, {
       "title": "foobar" + hash,
       "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
       "production_year": 1998
     }, function(res) {
       test.equal(res.statusCode, 400);

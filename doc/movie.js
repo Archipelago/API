@@ -8,7 +8,7 @@
  *
  * @apiParam {String} title
  * @apiParam {Date} release_date Format is YYYY-MM-DD
- * @apiParam {Url} [image]
+ * @apiParam {Url} image
  * @apiParam {Number{4}} [production_year]
  * @apiParam {Date} [original_release_date] Format is YYYY-MM-DD
  * @apiParam {String[]} [director]
@@ -26,6 +26,7 @@
  *     {
  *       "title": "foobar",
  *       "release_date": "1999-03-31",
+ *       "url": "https://example.com/image.png",
  *       "production_year": "1998"
  *     }
  *
@@ -56,6 +57,7 @@
  *     {
  *       "title": "foobar",
  *       "release_date": "1999-03-31",
+ *       "url": "https://example.com/image.png",
  *       "production_year": "1998"
  *     }
  *

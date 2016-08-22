@@ -8,6 +8,8 @@ module.exports.add = function(infos, cb) {
     cb('Title must be provided');
   else if (infos.release_date === undefined)
     cb('Release date must be provided');
+  else if (infos.image === undefined)
+    cb('Image url must be provided');
   else if (!infos.release_date.match(/^\d{4}(\-\d{2}){2}$/)
 	   || new Date(infos.release_date) == 'Invalid Date')
     cb('Invalid release date');
