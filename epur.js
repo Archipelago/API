@@ -3,8 +3,8 @@ let removeEmpty = function(obj) {
     for (i in obj)
       obj[i] = module.exports(obj[i]);
   }
-  else if (typeof obj === 'string' && obj === '')
-    obj = null;
+  else if (obj === '' || obj === null)
+    obj = undefined;
   return obj;
 }
 
