@@ -44,4 +44,15 @@ module.exports = function(app) {
       });
     }
   });
+
+  app.get(['/movies/lastLinks/:nb', '/movies/lastLinks'], function(req, res) {
+    let nb = req.params.nb || 15;
+    if (nb < 1 || nb > 100)
+      sendResponse(res, 400, {message: 'Invalid number of movies provided'});
+    else {
+      require('../models/movie.js').getLastLinks(nb, function(e, r) {
+	sendResponse(res, 200, r);
+      });
+    }
+  });
 }
