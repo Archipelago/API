@@ -20,4 +20,8 @@ module.exports = function(app) {
     initList(i);
     listRoute(app, i);
   }
+
+  app.get('/lists', function(req, res) {
+    sendResponse(res, 200, lists);
+  });
 }
