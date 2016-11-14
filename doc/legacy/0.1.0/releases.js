@@ -17,7 +17,7 @@
  * @apiParam {String} quality
  * @apiParam {String} container
  * @apiParam {String} [compression]
- * @apiParam {String} [informations[]] Informations that does not fit in any of the fields above.
+ * @apiParam {String[]} [informations] Informations that does not fit in any of the fields above.
  * @apiParamExample {json} Example:
  *     {
  *       "name": "foobar.en.720p.AC3.x264",
