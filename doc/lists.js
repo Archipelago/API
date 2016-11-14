@@ -1,4 +1,40 @@
 /**
+ * @api {get} /lists All
+ * @apiName ListAll
+ * @apiVersion 0.2.0
+ * @apiGroup List
+ * @apiDescription Get the list of all available metadata
+ * @apiPermission NONE
+ *
+ * @apiSuccess (200) {Object} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "audioCodecs": [
+ *         "mp3", "AC3", "DD"
+ *       ],
+ *       "videoCodecs": [
+ *         "XviD", "x264", "x265"
+ *       ],
+ *       "sources": [
+ *         "DVDRiP", "BDRiP", "Web-dl"
+ *       ],
+ *       "qualities": [
+ *         "SD", "720p", "1080p"
+ *       ],
+ *       "containers": [
+ *         "api", "mp4", "mkv"
+ *       ],
+ *       "languages": [
+ *         "en", "ru", "fr"
+ *       ],
+ *       "compressions": [
+ *         "rar", "zip"
+ *       ]
+ *     }
+ */
+
+/**
  * @api {get} /list/audioCodecs Audio codecs
  * @apiName ListAudioCodecs
  * @apiVersion 0.2.0
