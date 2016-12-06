@@ -102,3 +102,16 @@ module.exports.getLastLinks = function(nb, cb) {
     cb(e, r);
   });
 }
+
+module.exports.getAlpha = function(alpha, nb, page, cb) {
+  db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` WHERE `title` LIKE "' + alpha + '%" ORDER BY `title` ASC LIMIT ' + parseInt(nb + ' OFFSET ' + parseInt(page) * parseInt(nb)), function(e, r) {
+    for (i in r) {
+      for (j in r[i])
+	if (r[i][j] == null)
+	  delete r[i][j];
+      r[i].id = parseInt(r[i].id);
+    }
+    delete r.info;
+    cb(e, r);
+  });
+}
