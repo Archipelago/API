@@ -166,3 +166,123 @@ exports.last = {
     }
   }
 }
+
+exports.lastReleases = {
+  unlogged: function(test) {
+    request.get('/movies/lastReleases/5', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request.get('/movies/lastReleases/5', global.token, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  default: function(test) {
+    request.get('/movies/lastReleases', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  limits: {
+    min: function(test) {
+      request.get('/movies/lastReleases/1', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    },
+
+    max: function(test) {
+      request.get('/movies/lastReleases/100', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    }
+  },
+
+  invalid: {
+    nbTooSmall: function(test) {
+      request.get('/movies/lastReleases/0', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    nbTooLarge: function(test) {
+      request.get('/movies/lastReleases/101', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    }
+  }
+}
+
+exports.lastLinks = {
+  unlogged: function(test) {
+    request.get('/movies/lastLinks/5', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request.get('/movies/lastLinks/5', global.token, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  default: function(test) {
+    request.get('/movies/lastLinks', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  limits: {
+    min: function(test) {
+      request.get('/movies/lastLinks/1', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    },
+
+    max: function(test) {
+      request.get('/movies/lastLinks/100', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    }
+  },
+
+  invalid: {
+    nbTooSmall: function(test) {
+      request.get('/movies/lastLinks/0', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    nbTooLarge: function(test) {
+      request.get('/movies/lastLinks/101', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    }
+  }
+}
