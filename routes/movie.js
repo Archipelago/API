@@ -56,14 +56,18 @@ module.exports = function(app) {
     }
   });
 
-  // TODO: check if the letter is valid (single letter)
   app.get(['/movies/alpha/:letter', '/movies/alpha/:letter/:nb', '/movies/alpha/:letter/:nb/:page'], function(req, res) {
     let nb = req.params.nb || 15;
     let page = req.params.page || 1;
+    let letter = req.params.letter;
     if (nb < 1 || nb > 100)
       sendResponse(res, 400, {message: 'Invalid number of movies provided'});
+    else if (page < 1)
+      sendResponse(res, 400, {message: 'Invalid number of page provided'});
+    else if (!letter.match(/^[a-z\*]$/i))
+      sendResponse(res, 400, {message: 'Invalid letter provided'});
     else {
-      require('../models/movie.js').getAlpha(req.params.letter, nb, page, function(e, r) {
+      require('../models/movie.js').getAlpha(letter, nb, page, function(e, r) {
 	sendResponse(res, 200, r);
       });
     }
