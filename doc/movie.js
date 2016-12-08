@@ -82,6 +82,7 @@
  *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
+ *         "url": "https://example.com/image.png",
  *         "production_year": "1998"
  *       }
  *     ]
@@ -107,6 +108,7 @@
  *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
+ *         "url": "https://example.com/image.png",
  *         "production_year": "1998"
  *       }
  *     ]
@@ -132,6 +134,7 @@
  *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
+ *         "url": "https://example.com/image.png",
  *         "production_year": "1998"
  *       }
  *     ]
@@ -159,6 +162,7 @@
  *         "id": 1,
  *         "title": "foobar",
  *         "release_date": "1999-03-31",
+ *         "url": "https://example.com/image.png",
  *         "production_year": "1998"
  *       }
  *     ]
