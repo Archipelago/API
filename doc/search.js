@@ -8,7 +8,7 @@
  *
  * @apiParam {String{3..}} query The terms of the query
  * @apiParam {String} q A shortcut for `query`
- * @apiParam {String...="movie","release","link","user","*"} [type="*"] The maximum number of rows retrieved
+ * @apiParam {String...="movie","release","link","user","*"} [type="*"] The type of elements wanted
  * @apiParam {String...} [t] A shortcut for `type`
  *
  * @apiParamExample {querystring} Request-Example
