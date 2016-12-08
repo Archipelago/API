@@ -138,3 +138,30 @@
  *
  * @apiUse InvalidParameter
  */
+
+/**
+ * @api {get} /movies/alpha/:letter/:nb/:page Get movies by name
+ * @apiVersion 0.2.0
+ * @apiName GetMoviesAlpha
+ * @apiGroup Movie
+ * @apiDescription Get movies wich names start with the wanted letter
+ * @apiPermission NONE
+ *
+ * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
+ * @apiParam {Number} page=1 The page wanted (work as on offset)
+ * @apiParam {String{1}} The wanted letter. Use '*' for movies which name does not start with a letter.
+ *
+ * @apiSuccess (200) {Object[]} data
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     [
+ *       {
+ *         "id": 1,
+ *         "title": "foobar",
+ *         "release_date": "1999-03-31",
+ *         "production_year": "1998"
+ *       }
+ *     ]
+ *
+ * @apiUse InvalidParameter
+ */
