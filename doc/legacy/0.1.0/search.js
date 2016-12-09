@@ -32,7 +32,7 @@
  *         }
  *       ],
  *       "link": [
- *           "https://example.com/release.mkv"
+ *           "https://example.com/foobar.en.720p.AC3.x264.mkv"
  *       ],
  *       "user": [
  *         {
