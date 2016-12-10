@@ -8,7 +8,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, 400, {message: e});
 	else {
-	  sendResponse(res, 201, {});
+	  sendResponse(res, 201, {id: parseInt(r.info.insertId)});
 	}
       });
     });

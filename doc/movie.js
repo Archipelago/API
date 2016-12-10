@@ -30,9 +30,12 @@
  *       "production_year": "1998"
  *     }
  *
+ * @apiSuccess (201) {Number} id
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 201 Created
- *     {}
+ *     {
+ *       "id": 1
+ *     }
  *
  * @apiUse MissingParameter
  * @apiUse InvalidParameter

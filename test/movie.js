@@ -66,6 +66,7 @@ exports.add = {
       "production_year": 1998
     }, function(res) {
       test.equal(res.statusCode, 201);
+      test.equal(typeof res.body.id, 'number');
       test.done();
     });
   },
