@@ -152,7 +152,7 @@
  *
  * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
  * @apiParam {Number} page=1 The page wanted (work as on offset)
- * @apiParam {String{1}} The wanted letter. Use '*' for movies which name does not start with a letter.
+ * @apiParam {String{1}} letter The wanted letter. Use '*' for movies which name does not start with a letter.
  *
  * @apiSuccess (200) {Object[]} data
  * @apiSuccessExample Success-Response
