@@ -152,20 +152,26 @@
  *
  * @apiParam {Number{1..100}} nb=15 The number of movies that will be retrieved
  * @apiParam {Number} page=1 The page wanted (work as on offset)
- * @apiParam {String{1}} letter The wanted letter. Use '*' for movies which name does not start with a letter.
+ * @apiParam {String{1}} letter The wanted letter. Use '*' for movies which name start with a non-letter character.
  *
- * @apiSuccess (200) {Object[]} data
+ * @apiSuccess (200) {Number} pagesNumber The number of pages
+ * @apiSuccess (200) {Number} elementsNumber The number of elements that match the given letter
+ * @apiSuccess (200) {Object[]} elements
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 200 OK
- *     [
- *       {
- *         "id": 1,
- *         "title": "foobar",
- *         "release_date": "1999-03-31",
- *         "url": "https://example.com/image.png",
- *         "production_year": "1998"
- *       }
- *     ]
+ *     {
+ *       "pagesNumber": 1,
+ *       "elementsNumber": 1,
+ *       "elements": [
+ *         {
+ *           "id": 1,
+ *           "title": "foobar",
+ *           "release_date": "1999-03-31",
+ *           "url": "https://example.com/image.png",
+ *           "production_year": "1998"
+ *         }
+ *       ]
+ *     }
  *
  * @apiUse InvalidParameter
  */

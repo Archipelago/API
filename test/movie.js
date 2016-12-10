@@ -291,7 +291,9 @@ exports.alpha = {
   unlogged: function(test) {
     request.get('/movies/alpha/a', function(res) {
       test.equal(res.statusCode, 200);
-      test.equal(res.body instanceof Array, true);
+      test.strictEqual(res.body.pagesNumber, 0);
+      test.strictEqual(res.body.elementsNumber, 0);
+      test.equal(res.body.elements instanceof Array, true);
       test.done();
     });
   },
@@ -299,7 +301,9 @@ exports.alpha = {
   logged: function(test) {
     request.get('/movies/alpha/a', global.token, function(res) {
       test.equal(res.statusCode, 200);
-      test.equal(res.body instanceof Array, true);
+      test.strictEqual(res.body.pagesNumber, 0);
+      test.strictEqual(res.body.elementsNumber, 0);
+      test.equal(res.body.elements instanceof Array, true);
       test.done();
     });
   },
@@ -307,7 +311,9 @@ exports.alpha = {
   uppercase: function(test) {
     request.get('/movies/alpha/A', global.token, function(res) {
       test.equal(res.statusCode, 200);
-      test.equal(res.body instanceof Array, true);
+      test.strictEqual(res.body.pagesNumber, 0);
+      test.strictEqual(res.body.elementsNumber, 0);
+      test.equal(res.body.elements instanceof Array, true);
       test.done();
     });
   },
@@ -315,7 +321,19 @@ exports.alpha = {
   specialLetter: function(test) {
     request.get('/movies/alpha/*', global.token, function(res) {
       test.equal(res.statusCode, 200);
-      test.equal(res.body instanceof Array, true);
+      test.strictEqual(res.body.pagesNumber, 0);
+      test.strictEqual(res.body.elementsNumber, 0);
+      test.equal(res.body.elements instanceof Array, true);
+      test.done();
+    });
+  },
+
+  metadata: function(test) {
+    request.get('/movies/alpha/f', function(res) {
+      test.equal(res.statusCode, 200);
+      test.strictEqual(res.body.pagesNumber, 1);
+      test.strictEqual(res.body.elementsNumber, 1);
+      test.equal(res.body.elements instanceof Array, true);
       test.done();
     });
   },
@@ -324,7 +342,9 @@ exports.alpha = {
     minNb: function(test) {
       request.get('/movies/alpha/a/1', function(res) {
 	test.equal(res.statusCode, 200);
-	test.equal(res.body instanceof Array, true);
+	test.strictEqual(res.body.pagesNumber, 0);
+	test.strictEqual(res.body.elementsNumber, 0);
+	test.equal(res.body.elements instanceof Array, true);
 	test.done();
       });
     },
@@ -332,7 +352,9 @@ exports.alpha = {
     maxNb: function(test) {
       request.get('/movies/alpha/a/100', function(res) {
 	test.equal(res.statusCode, 200);
-	test.equal(res.body instanceof Array, true);
+	test.strictEqual(res.body.pagesNumber, 0);
+	test.strictEqual(res.body.elementsNumber, 0);
+	test.equal(res.body.elements instanceof Array, true);
 	test.done();
       });
     },
@@ -340,7 +362,9 @@ exports.alpha = {
     minPage: function(test) {
       request.get('/movies/alpha/a/100/1', function(res) {
 	test.equal(res.statusCode, 200);
-	test.equal(res.body instanceof Array, true);
+	test.strictEqual(res.body.pagesNumber, 0);
+	test.strictEqual(res.body.elementsNumber, 0);
+	test.equal(res.body.elements instanceof Array, true);
 	test.done();
       });
     }

@@ -104,19 +104,26 @@ module.exports.getLastLinks = function(nb, cb) {
 }
 
 module.exports.getAlpha = function(alpha, nb, page, cb) {
-  let query = 'SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` WHERE ';
+  let query = 'SELECT `id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations` FROM `Movies` WHERE ';
+  let where;
   if (alpha == '*')
-    query += 'SUBSTR(`title`, 1, 1) NOT BETWEEN "A" AND "Z"';
+    where = 'SUBSTR(`title`, 1, 1) NOT BETWEEN "A" AND "Z"';
   else
-    query += '`title` LIKE "' + alpha + '%"';
-  db.query(query + ' ORDER BY `title` ASC LIMIT ' + parseInt(nb + ' OFFSET ' + parseInt(page) * parseInt(nb)), function(e, r) {
-    for (i in r) {
-      for (j in r[i])
-	if (r[i][j] == null)
-	  delete r[i][j];
-      r[i].id = parseInt(r[i].id);
-    }
-    delete r.info;
-    cb(e, r);
+    where = '`title` LIKE "' + alpha + '%"';
+  db.query(query + where + ' ORDER BY `title` ASC LIMIT ' + parseInt(nb + ' OFFSET ' + parseInt(page) * parseInt(nb)), function(e, r) {
+    db.query('SELECT COUNT(*) AS "c" FROM `Movies` WHERE ' + where, function(_, count) {
+      for (i in r) {
+	for (j in r[i])
+	  if (r[i][j] == null)
+	    delete r[i][j];
+	r[i].id = parseInt(r[i].id);
+      }
+      delete r.info;
+      cb(e, {
+	pagesNumber: Math.ceil(parseInt(count[0].c) / page),
+	elementsNumber: parseInt(count[0].c),
+	elements: r
+      });
+    });
   });
 }
