@@ -81,3 +81,24 @@
  *
  * @apiUse NotFound
  */
+
+/**
+ * @api {delete} /video_release/:id Delete a release
+ * @apiVersion 0.2.0
+ * @apiName DeleteRelease
+ * @apiGroup Release
+ * @apiDescription Delete a release depending on its id
+ * @apiPermission DELETE_RELEASE
+ *
+ * @apiParam {Number} id The id of the video release that will be to deleted
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse InvalidParameter
+ * @apiUse MissingParameter
+ * @apiUse NotFound
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ */
+

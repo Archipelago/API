@@ -19,6 +19,10 @@
  */
 
 /**
+ * @apiDefine DELETE_RELEASE Permission required to delete releases
+ */
+
+/**
  * @apiDefine ADD_LINK Permission required to add links
  */
 
