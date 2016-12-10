@@ -4,7 +4,7 @@
  * @apiName AddMovie
  * @apiGroup Movie
  * @apiDescription Add a new movie. Title and release date are mandatory, and a lot of fields can be added (see below)
- * @apiPermission ADD_MOVIE
+ * @apiPermission ADD_ELEMENT
  *
  * @apiParam {String} title
  * @apiParam {Date} release_date Format is YYYY-MM-DD
@@ -174,4 +174,5 @@
  *     }
  *
  * @apiUse InvalidParameter
+ * @apiUse MissingParameter
  */

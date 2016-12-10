@@ -7,7 +7,7 @@
  */
 
 /**
- * @apiDefine ADD_MOVIE Permission required to add movies
+ * @apiDefine ADD_ELEMENT Permission required to add elements
  */
 
 /**

@@ -79,8 +79,8 @@
  *       "id": 1,
  *       "login": "foobar",
  *       "permissions": [
- *         "ADD_MOVIE",
- *         "EDIT_MOVIE",
+ *         "ADD_ELEMENT",
+ *         "EDIT_ELEMENT",
  *         "ADD_RELEASE"
  *       ],
  *       "email": "foo@bar.com",
