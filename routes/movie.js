@@ -29,7 +29,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
-	  sendResponse(res, 200, r);
+	  sendResponse(res, 204);
       });
     });
   });
