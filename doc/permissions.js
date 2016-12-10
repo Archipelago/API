@@ -11,6 +11,10 @@
  */
 
 /**
+ * @apiDefine DELETE_ELEMENT Permission required to delete elements
+ */
+
+/**
  * @apiDefine ADD_RELEASE Permission required to add releases
  */
 
