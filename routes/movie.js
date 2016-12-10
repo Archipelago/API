@@ -23,6 +23,17 @@ module.exports = function(app) {
     });
   });
 
+  app.delete('/movie/:id', function(req, res) {
+    token.checkPermission(req, res, 'DELETE_ELEMENT', function(req, res) {
+      require('../models/movie.js').delete(req.params.id, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 200, r);
+      });
+    });
+  });
+
   app.get(['/movies/last/:nb', '/movies/last'], function(req, res) {
     let nb = req.params.nb || 15;
     if (nb < 1 || nb > 100)
