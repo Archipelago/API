@@ -286,3 +286,107 @@ exports.lastLinks = {
     }
   }
 }
+
+exports.alpha = {
+  unlogged: function(test) {
+    request.get('/movies/alpha/a', function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  logged: function(test) {
+    request.get('/movies/alpha/a', global.token, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  uppercase: function(test) {
+    request.get('/movies/alpha/A', global.token, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  specialLetter: function(test) {
+    request.get('/movies/alpha/*', global.token, function(res) {
+      test.equal(res.statusCode, 200);
+      test.equal(res.body instanceof Array, true);
+      test.done();
+    });
+  },
+
+  limits: {
+    minNb: function(test) {
+      request.get('/movies/alpha/a/1', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    },
+
+    maxNb: function(test) {
+      request.get('/movies/alpha/a/100', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    },
+
+    minPage: function(test) {
+      request.get('/movies/alpha/a/100/1', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.done();
+      });
+    }
+  },
+
+  invalid: {
+    letter: function(test) {
+      request.get('/movies/alpha/1', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    severalLetters: function(test) {
+      request.get('/movies/alpha/aa', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    noParam: function(test) {
+      request.get('/movies/alpha', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    nbTooSmall: function(test) {
+      request.get('/movies/alpha/0', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    nbTooLarge: function(test) {
+      request.get('/movies/alpha/101', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    pageTooSmall: function(test) {
+      request.get('/movies/alpha/15/0', function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    }
+  }
+}
