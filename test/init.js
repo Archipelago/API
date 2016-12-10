@@ -22,7 +22,8 @@ function request(method, route, token, data, cb) {
       content += data;
     });
     res.on('end', function() {
-      res.body = JSON.parse(content);
+      if (content !== '')
+	res.body = JSON.parse(content);
       cb(res);
     });
   });
@@ -59,4 +60,11 @@ global.request.patch = function(route, token, data, cb) {
     request('PATCH', route, undefined, token, data);
   else
     request('PATCH', route, token, data, cb);
+}
+
+global.request.delete = function(route, token, cb) {
+  if (cb === undefined)
+    request('DELETE', route, undefined, undefined, token);
+  else
+    request('DELETE', route, token, undefined, cb);
 }

@@ -1,5 +1,6 @@
 let crypto = require('crypto');
 let hash = crypto.randomBytes(4).toString('hex');
+let id;
 
 exports.add = {
   unlogged: function(test) {
@@ -83,6 +84,51 @@ exports.add = {
     });
   }
 };
+
+exports.delete = {
+  init: function(test) {
+    request.post('/movie', global.rootToken, {
+      "title": "foobor" + hash,
+      "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
+      "production_year": 1998
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      test.equal(typeof res.body.id, 'number');
+      id = res.body.id;
+      test.done();
+    });
+  },
+
+  unlogged: function(test) {
+    request.delete('/movie/' + id, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.delete('/movie/' + id, global.token, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.delete('/movie/' + id, global.rootToken, function(res) {
+      test.equal(res.statusCode, 204);
+      test.strictEqual(res.body, undefined);
+      test.done();
+    });
+  },
+
+  nonExisting: function(test) {
+    request.delete('/movie/' + id, global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+}
 
 //This assume that the movie with id 1 exists. We must retrieve the last movie inserted
 exports.get = {
