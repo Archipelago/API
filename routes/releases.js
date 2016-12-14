@@ -10,7 +10,7 @@ module.exports = function(app) {
 	if (e)
 	  sendResponse(res, e.match('found') ? 404 : 400, {message: e});
 	else
-	  sendResponse(res, 201, {});
+	  sendResponse(res, 201, {id: parseInt(r.info.insertId)});
       });
     });
   });
