@@ -11,7 +11,7 @@ tmpDbName=$dbName.test
 port=$(./getPort.js)
 init=0
 
-if ! mysql -u $username -p$password $tmpDbName <&-; then
+if ! mysql -u $username -p$password $tmpDbName < /dev/null ; then
     init=1
     echo -n "Creating database \`$tmpDbName\`."
     mysqldump -d --skip-comments -u $username -p$password $dbName | sed 's/ AUTO_INCREMENT=[0-9]*//g' > $tmpDbFile

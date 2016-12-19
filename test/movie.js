@@ -378,8 +378,8 @@ exports.alpha = {
   metadata: function(test) {
     request.get('/movies/alpha/f', function(res) {
       test.equal(res.statusCode, 200);
-      test.strictEqual(res.body.pagesNumber, 1);
-      test.strictEqual(res.body.elementsNumber, 1);
+      test.strictEqual(res.body.pagesNumber > 0, true);
+      test.strictEqual(res.body.elementsNumber > 0, true);
       test.equal(res.body.elements instanceof Array, true);
       test.done();
     });
