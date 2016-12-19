@@ -14,6 +14,7 @@
  * @apiParam {String[]} [director]
  * @apiParam {String[]} [producer]
  * @apiParam {String[]} [scriptwriter]
+ * @apiParam {String} [duration] Format is 12h34m56s. Seconds can be omitted
  * @apiParam {String[]} [actor]
  * @apiParam {String[]} [gender]
  * @apiParam {String[]} [composer]

@@ -24,6 +24,9 @@ module.exports.add = function(infos, cb) {
   else if (infos.image
 	   && !infos.image.match(/^https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
     cb('Invalid image url');
+  else if (infos.duration
+	   && !infos.duration.match(/^\d{1,2}h[0-5]?\dm([0-5]?\ds?)?$/i))
+    cb('Invalid duration');
   else {
     let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
     for (i in fields) {
@@ -34,7 +37,7 @@ module.exports.add = function(infos, cb) {
       else if (infos[fields[i]])
 	infos[fields[i]] = infos[fields[i]].join(";");
     }
-    db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :actor, :gender, :composer, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
+    db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `duration`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :duration, :actor, :gender, :composer, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
       if (e && e.code == 1062)
 	cb('Movie "' + infos.title + '" already exists');
       else
