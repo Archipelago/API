@@ -1,3 +1,4 @@
+let duration = require('../duration');
 let epur = require('../epur');
 
 module.exports.add = function(infos, cb) {
@@ -25,7 +26,7 @@ module.exports.add = function(infos, cb) {
 	   && !infos.image.match(/^https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
     cb('Invalid image url');
   else if (infos.duration
-	   && !infos.duration.match(/^\d{1,2}h[0-5]?\dm([0-5]?\ds?)?$/i))
+	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
     let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
@@ -36,6 +37,9 @@ module.exports.add = function(infos, cb) {
       }
       else if (infos[fields[i]])
 	infos[fields[i]] = infos[fields[i]].join(";");
+    }
+    if (infos.duration) {
+      infos.duration = duration.parse(infos.duration);
     }
     db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `duration`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :duration, :actor, :gender, :composer, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
       if (e && e.code == 1062)
