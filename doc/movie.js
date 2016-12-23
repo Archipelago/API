@@ -189,7 +189,7 @@
  * @apiDescription Delete a movie depending on its id
  * @apiPermission DELETE_ELEMENT
  *
- * @apiParam {Number} id The id of the element that will be to deleted
+ * @apiParam {Number} id The id of the element that will be deleted
  *
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 204 No Content
