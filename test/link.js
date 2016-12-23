@@ -40,6 +40,8 @@ exports.add = {
       ]
     ], function(res) {
       test.equal(res.statusCode, 201);
+      test.equal(res.body instanceof Array, true);
+      test.equal(res.body.length, 4);
       test.done();
     });
   },

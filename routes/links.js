@@ -10,8 +10,12 @@ module.exports = function(app) {
       require('../models/links.js').add(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {message: e});
-	else
-	  sendResponse(res, 201, {});
+	else {
+	  let response = [];
+	  for (let i = 0; i < r.info.affectedRows; ++i)
+	    response.push(parseInt(r.info.insertId) + i);
+	  sendResponse(res, 201, response);
+	}
       });
     });
   });

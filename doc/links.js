@@ -21,9 +21,12 @@
  *       ]
  *     ]
  *
+ * @apiSuccess (201) {Array} ids
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 201 Created
- *     {}
+ *     [
+ *       3, 4, 5, 6
+ *     ]
  *
  * @apiUse MissingParameter
  * @apiUse InvalidParameter
