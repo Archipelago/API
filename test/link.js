@@ -42,6 +42,9 @@ exports.add = {
       test.equal(res.statusCode, 201);
       test.equal(res.body instanceof Array, true);
       test.equal(res.body.length, 4);
+      test.equal(res.body[1], res.body[0] + 1);
+      test.equal(res.body[2], res.body[0] + 2);
+      test.equal(res.body[3], res.body[0] + 3);
       test.done();
     });
   },
