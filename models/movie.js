@@ -141,11 +141,7 @@ module.exports.delete = function(id, cb) {
   db.query('DELETE FROM `Movies` WHERE `id` = ?', [id], function(e, r) {
     if (r.info.affectedRows < 1)
       cb('No movie found with id "' + id + '"');
-    else {
-      for (i in r[0])
-	if (r[0][i] == null)
-	  delete r[0][i];
+    else
       cb(e, r[0]);
-    }
   });
 }
