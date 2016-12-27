@@ -27,5 +27,9 @@
  */
 
 /**
+ * @apiDefine DELETE_LINK Permission required to delete links
+ */
+
+/**
  * @apiDefine EDIT_PERMISSION Permission required to edit permissions
  */
