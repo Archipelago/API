@@ -50,11 +50,23 @@
  * @apiSuccessExample Success-Response
  *     HTTP/1.1 200 OK
  *     [
- *       "https://example.com/release.mkv",
+ *       {
+ *         "id": 3,
+ *         "https://example.com/release.mkv"
+ *       },
  *       [
- *         "https://example.com/release.mkv.part1.rar",
- *         "https://example.com/release.mkv.part2.rar",
- *         "https://example.com/release.mkv.part3.rar"
+ *         {
+ *           "id": 4,
+ *           "url": "https://example.com/release.mkv.part1.rar",
+ *         },
+ *         {
+ *           "id": 5,
+ *           "url": "https://example.com/release.mkv.part2.rar",
+ *         },
+ *         {
+ *           "id": 6,
+ *           "url": "https://example.com/release.mkv.part3.rar"
+ *         }
  *       ]
  *     ]
  *

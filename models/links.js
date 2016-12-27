@@ -63,13 +63,13 @@ module.exports.add = function(infos, cb) {
 
 module.exports.getByRelease = function(id, cb) {
   //TODO: fin a way to know if release exists
-  let query = 'SELECT `Links`.`url`, `Links`.`multilink_id` FROM `Links` \
+  let query = 'SELECT `Links`.`id`, `Links`.`url`, `Links`.`multilink_id` FROM `Links` \
 INNER JOIN `Multilinks` ON `Multilinks`.`id` = `Links`.`multilink_id` \
 WHERE `Multilinks`.`release_id` = ? AND `Multilinks`.`release_type` = "movie"';
   db.query(query, [id], function(e, r) {
     delete r.info;
     r = _.reduce(r, function(r, v, k) {
-      (r[v.multilink_id] || (r[v.multilink_id] = [])).push(v.url);
+      (r[v.multilink_id] || (r[v.multilink_id] = [])).push({id: parseInt(v.id), url: v.url});
       return r;
     }, {});
     r = _.map(_.toArray(r), function(o) {
