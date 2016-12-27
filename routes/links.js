@@ -28,4 +28,15 @@ module.exports = function(app) {
 	sendResponse(res, 200, r);
     });
   });
+
+  app.delete('/link/:id', function(req, res) {
+    token.checkPermission(req, res, 'DELETE_LINK', function(req, res) {
+      require('../models/links.js').delete(req.params.id, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 204);
+      });
+    })
+  });
 }

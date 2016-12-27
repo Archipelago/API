@@ -88,3 +88,12 @@ module.exports.search = function(query, cb) {
     cb(e, r);
   });
 }
+
+module.exports.delete = function(id, cb) {
+  db.query('DELETE FROM `Links` WHERE `id` = ?', [id], function(e, r) {
+    if (r.info.affectedRows < 1)
+      cb('No link found with id "' + id + '"');
+    else
+      cb(e, r);
+  });
+}
