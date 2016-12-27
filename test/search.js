@@ -40,7 +40,7 @@ exports.parameters = {
       });
     },
 
-    shortQuery: function(test) {
+    shortType: function(test) {
       request.get('/search?q=foobar&t=movie', function(res) {
 	test.equal(res.statusCode, 200);
 	test.equal(_.size(res.body), 1);
