@@ -69,6 +69,11 @@ exports.get = {
     request.get('/video_release/' + global.videoReleaseId + '/links', function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
+      test.equal(res.body.length, 2);
+      test.equal(typeof res.body[0].id, 'number');
+      test.equal(typeof res.body[0].url, 'string');
+      test.equal(res.body[1] instanceof Array, true);
+      test.equal(res.body[1].length, 3);
       test.done();
     });
   },
@@ -77,6 +82,11 @@ exports.get = {
     request.get('/video_release/' + global.videoReleaseId + '/links', global.token, function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body instanceof Array, true);
+      test.equal(res.body.length, 2);
+      test.equal(typeof res.body[0].id, 'number');
+      test.equal(typeof res.body[0].url, 'string');
+      test.equal(res.body[1] instanceof Array, true);
+      test.equal(res.body[1].length, 3);
       test.done();
     });
   }

@@ -170,6 +170,7 @@ exports.add = {
     }, function(res) {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
+      global.videoReleaseId = res.body.id;
       test.done();
     });
   }
@@ -186,7 +187,6 @@ exports.get = {
 
   logged: function(test) {
     request.get('/movie/1/releases', global.token, function(res) {
-      global.videoReleaseId = res.body[0].id;
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);
       test.done();
