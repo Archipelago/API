@@ -90,6 +90,8 @@ module.exports.search = function(query, cb) {
   query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
   db.query('SELECT `name`, `id`  FROM `VideoReleases` WHERE `name` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
+    for (i in r[0])
+      r[0].id = parseInt(r[0].id);
     cb(e, r);
   });
 }
