@@ -38,6 +38,7 @@ exports.readable = function(test) {
     '12h34m02s': 45242,
     '12h01m00s': 43260,
     '12h00m00s': 43200,
+    '0h00m00s': 0
   };
   for (let i in tests) {
     test.equal(duration.readable(tests[i]), i, tests[i]);
