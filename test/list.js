@@ -62,3 +62,14 @@ exports.videoCodecs = function(test) {
     test.done();
   });
 };
+
+exports.all = function(test) {
+  request.get('/lists', function(res) {
+    test.equal(res.statusCode, 200);
+    let lists = ['audioCodecs', 'compressions', 'containers', 'languages', 'qualitites', 'sources', 'videoCodecs'];
+    for (let i in lists) {
+      test.deepEqual(res.body[lists[i]], global.lists[lists[i]]);
+    }
+    test.done();
+  });
+}
