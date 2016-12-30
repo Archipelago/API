@@ -1,6 +1,10 @@
 let crypto = require('crypto');
 let hash = crypto.randomBytes(4).toString('hex');
-let id;
+let id, releaseId, linkId;
+
+function randomElem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
 
 exports.add = {
   unlogged: function(test) {
@@ -97,7 +101,29 @@ exports.delete = {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
       id = res.body.id;
-      test.done();
+      request.post('/movie/' + id + '/release', global.rootToken, {
+	"name": "foobar",
+	"size": "2.1GB",
+	"language": randomElem(global.lists.languages),
+	"audio_codec": randomElem(global.lists.audioCodecs),
+	"video_codec": randomElem(global.lists.videoCodecs),
+	"source": randomElem(global.lists.sources),
+	"quality": randomElem(global.lists.qualities),
+	"container": randomElem(global.lists.containers)
+      }, function(res) {
+	test.equal(res.statusCode, 201);
+	test.equal(typeof res.body.id, 'number');
+	releaseId = res.body.id;
+	request.post('/video_release/' + releaseId + '/link', global.rootToken, [
+	  "https://foo.bar/releases" + hash + ".mkv",
+	], function(res) {
+	  test.equal(res.statusCode, 201);
+	  test.equal(res.body instanceof Array, true);
+	  test.equal(res.body.length, 1);
+	  linkId = res.body[0];
+	  test.done();
+	});
+      });
     });
   },
 
@@ -126,6 +152,16 @@ exports.delete = {
   nonExisting: function(test) {
     request.delete('/movie/' + id, global.rootToken, function(res) {
       test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  cascade: function(test) {
+    request.delete('/link/' + linkId, global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      request.delete('/video_release/' + releaseId, global.rootToken, function(res) {
+	test.equal(res.statusCode, 404);
+      });
       test.done();
     });
   }

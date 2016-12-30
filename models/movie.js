@@ -138,10 +138,14 @@ module.exports.getAlpha = function(alpha, nb, page, cb) {
 }
 
 module.exports.delete = function(id, cb) {
-  db.query('DELETE FROM `Movies` WHERE `id` = ?', [id], function(e, r) {
-    if (r.info.affectedRows < 1)
-      cb('No movie found with id "' + id + '"');
-    else
-      cb(e, r[0]);
+  db.query('DELETE `Multilinks`, `VideoReleases` FROM `Multilinks` \
+  RIGHT JOIN `VideoReleases` ON `Multilinks`.`release_id` = `VideoReleases`.`id` AND `Multilinks`.`release_type` = "movie" \
+  WHERE `VideoReleases`.`element_type` = "Movies" AND `VideoReleases`.`element_id` = ?', [id], function() {
+    db.query('DELETE FROM `Movies` WHERE `id` = ?', [id], function(e, r) {
+      if (r.info.affectedRows < 1)
+	cb('No movie found with id "' + id + '"');
+      else
+	cb(e, r[0]);
+    });
   });
 }
