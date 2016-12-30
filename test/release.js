@@ -8,7 +8,7 @@ function randomElem(array) {
 
 exports.add = {
   unlogged: function(test) {
-    request.post('/movie/1/release', {
+    request.post('/movie/' + global.movieId + '/release', {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -24,7 +24,7 @@ exports.add = {
   },
 
   unauthorized: function(test) {
-    request.post('/movie/1/release', global.token, {
+    request.post('/movie/' + global.movieId + '/release', global.token, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -41,7 +41,7 @@ exports.add = {
 
   missingField: {
     name: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
 	"audio_codec": randomElem(global.lists.audioCodecs),
@@ -56,7 +56,7 @@ exports.add = {
     },
 
     size: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"language": randomElem(global.lists.languages),
 	"audio_codec": randomElem(global.lists.audioCodecs),
@@ -71,7 +71,7 @@ exports.add = {
     },
 
     language: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"audio_codec": randomElem(global.lists.audioCodecs),
@@ -86,7 +86,7 @@ exports.add = {
     },
 
     audioCodec: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
@@ -101,7 +101,7 @@ exports.add = {
     },
 
     videoCodec: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
@@ -116,7 +116,7 @@ exports.add = {
     },
 
     source: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
@@ -131,7 +131,7 @@ exports.add = {
     },
 
     quality: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
@@ -146,7 +146,7 @@ exports.add = {
     },
 
     container: function(test) {
-      request.post('/movie/1/release', global.rootToken, {
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
@@ -162,7 +162,7 @@ exports.add = {
   },
 
   rootUser: function(test) {
-    request.post('/movie/1/release', global.rootToken, {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
@@ -182,7 +182,7 @@ exports.add = {
 
 exports.get = {
   unlogged: function(test) {
-    request.get('/movie/1/releases', function(res) {
+    request.get('/movie/' + global.movieId + '/releases', function(res) {
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);
       test.done();
@@ -190,7 +190,7 @@ exports.get = {
   },
 
   logged: function(test) {
-    request.get('/movie/1/releases', global.token, function(res) {
+    request.get('/movie/' + global.movieId + '/releases', global.token, function(res) {
       test.equal(res.body instanceof Array, true);
       test.equal(res.statusCode, 200);
       test.done();
@@ -200,7 +200,7 @@ exports.get = {
 
 exports.delete = {
   init: function(test) {
-    request.post('/movie/1/release', global.rootToken, {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),

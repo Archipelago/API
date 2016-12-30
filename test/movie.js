@@ -68,6 +68,7 @@ exports.add = {
     }, function(res) {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
+      global.movieId = res.body.id;
       test.done();
     });
   },
