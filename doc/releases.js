@@ -91,7 +91,7 @@
  * @apiVersion 0.2.0
  * @apiName DeleteRelease
  * @apiGroup Release
- * @apiDescription Delete a release depending on its id
+ * @apiDescription Delete a release depending on its id. All the associated links are also deleted
  * @apiPermission DELETE_RELEASE
  *
  * @apiParam {Number} id The id of the video release that will be to deleted

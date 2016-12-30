@@ -95,3 +95,15 @@ module.exports.search = function(query, cb) {
     cb(e, r);
   });
 }
+
+module.exports.delete = function(id, cb) {
+  // TODO: remove associated links
+  db.query('DELETE FROM `Multilinks` WHERE `release_type` = "movie" AND `release_id` = ?', [id], function() {
+    db.query('DELETE FROM `VideoReleases` WHERE `id` = ?', [id], function(e, r) {
+      if (r.info.affectedRows < 1)
+	cb('No release found with id "' + id + '"');
+      else
+	cb(e, r);
+    });
+  });
+}

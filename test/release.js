@@ -1,3 +1,7 @@
+let crypto = require('crypto');
+let hash = crypto.randomBytes(4).toString('hex');
+let releaseId, linkId;
+
 function randomElem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -193,3 +197,67 @@ exports.get = {
     });
   }
 };
+
+exports.delete = {
+  init: function(test) {
+    request.post('/movie/1/release', global.rootToken, {
+      "name": "foobar",
+      "size": "2.1GB",
+      "language": randomElem(global.lists.languages),
+      "audio_codec": randomElem(global.lists.audioCodecs),
+      "video_codec": randomElem(global.lists.videoCodecs),
+      "source": randomElem(global.lists.sources),
+      "quality": randomElem(global.lists.qualities),
+      "container": randomElem(global.lists.containers)
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      test.equal(typeof res.body.id, 'number');
+      releaseId = res.body.id;
+      request.post('/video_release/' + releaseId + '/link', global.rootToken, [
+	"https://foo.bar/releases" + hash + ".mkv",
+      ], function(res) {
+	test.equal(res.statusCode, 201);
+	test.equal(res.body instanceof Array, true);
+	test.equal(res.body.length, 1);
+	linkId = res.body[0];
+	test.done();
+      });
+    });
+  },
+
+  unlogged: function(test) {
+    request.delete('/video_release/' + releaseId, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.delete('/video_release/' + releaseId, global.token, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.delete('/video_release/' + releaseId, global.rootToken, function(res) {
+      test.equal(res.statusCode, 204);
+      test.strictEqual(res.body, undefined);
+      test.done();
+    });
+  },
+
+  nonExisting: function(test) {
+    request.delete('/video_release/' + releaseId, global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  cascade: function(test) {
+    request.delete('/link/' + linkId, global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+}

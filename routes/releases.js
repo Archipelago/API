@@ -23,4 +23,15 @@ module.exports = function(app) {
 	sendResponse(res, 200, r);
     });
   });
+
+  app.delete('/video_release/:id', function(req, res) {
+    token.checkPermission(req, res, 'DELETE_RELEASE', function(req, res) {
+      require('../models/releases.js').delete(req.params.id, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 204);
+      });
+    })
+  });
 }
