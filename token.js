@@ -19,7 +19,9 @@ module.exports = function() {
     'EDIT_USER': 1 << 9,
     'DELETE_USER': 1 << 10,
     'BAN_USER': 1 << 11,
-    'EDIT_PERMISSION': 1 << 12
+    'EDIT_PERMISSION': 1 << 12,
+    'GET_CONFIG': 1 << 13,
+    'EDIT_CONFIG': 1 << 14
   };
 
   this.getId = function(t) {
