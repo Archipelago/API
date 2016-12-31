@@ -1,8 +1,4 @@
 /**
- * @apiDefine LOGGED Require to be logged to do this
- */
-
-/**
  * @apiDefine NONE No permission is required to do this
  */
 
