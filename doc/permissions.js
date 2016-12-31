@@ -33,3 +33,11 @@
 /**
  * @apiDefine EDIT_PERMISSION Permission required to edit permissions
  */
+
+/**
+ * @apiDefine GET_CONFIG Permission required to retrieve configuration
+ */
+
+/**
+ * @apiDefine EDIT_CONFIG Permission required to edit configuration
+ */

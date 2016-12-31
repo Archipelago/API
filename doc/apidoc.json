@@ -6,6 +6,7 @@
     "Release",
     "Link",
     "Search",
-    "List"
+    "List",
+    "Config"
   ]
 }
