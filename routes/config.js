@@ -9,4 +9,15 @@ module.exports = function(app) {
       });
     });
   });
+
+  app.put('/config', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_CONFIG', function(req, res) {
+      require('../models/config.js').addOrUpdate(req.body, function(e, r) {
+	if (e)
+	  sendResponse(res, 400, e);
+	else
+	  sendResponse(res, 204);
+      });
+    });
+  });
 }
