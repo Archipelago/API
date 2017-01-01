@@ -37,3 +37,13 @@ module.exports.addOrUpdate = function(values, cb) {
     cb(e, r);
   });
 }
+
+
+module.exports.delete = function(name, cb) {
+  db.query('DELETE FROM `Config` WHERE `name` = ?', [name], function(e, r) {
+    if (r.info.affectedRows != 1)
+      cb('The variable "' + name + '" does not exist');
+    else
+      cb(e, r);
+  });
+}

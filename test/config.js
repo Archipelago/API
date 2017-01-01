@@ -86,3 +86,60 @@ exports.addOrUpdate = {
     },
   }
 }
+
+exports.delete = {
+  unlogged: function(test) {
+    request.delete('/config/randomUseless', function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.delete('/config/randomUseless', global.token, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.delete('/config/randomUseless', global.rootToken, function(res) {
+      test.equal(res.statusCode, 204);
+      test.done();
+    });
+  },
+
+  nonExisting: function(test) {
+    request.delete('/config/randomUseless', global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  clean: function(test) {
+    request.delete('/config/randomArray', global.rootToken, function(res) {
+      test.equal(res.statusCode, 204);
+      request.delete('/config/randomBoolean', global.rootToken, function(res) {
+	test.equal(res.statusCode, 204);
+	request.delete('/config/randomInt', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 204);
+	  request.delete('/config/randomObject', global.rootToken, function(res) {
+	    test.equal(res.statusCode, 204);
+	    request.delete('/config/randomString', global.rootToken, function(res) {
+	      test.equal(res.statusCode, 204);
+    	      request.get('/config', global.rootToken, function(res) {
+    		test.equal(res.statusCode, 200);
+    		test.strictEqual(res.body.randomArray, undefined);
+    		test.strictEqual(res.body.randomBoolean, undefined);
+    		test.strictEqual(res.body.randomInt, undefined);
+    		test.strictEqual(res.body.randomObject, undefined);
+    		test.strictEqual(res.body.randomString, undefined);
+    		test.done();
+    	      });
+	    });
+	  });
+	});
+      });
+    });
+  }
+}

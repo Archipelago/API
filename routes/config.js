@@ -20,4 +20,16 @@ module.exports = function(app) {
       });
     });
   });
+
+
+  app.delete('/config/:name', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_CONFIG', function(req, res) {
+      require('../models/config.js').delete(req.params.name, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 204);
+      });
+    });
+  });
 }
