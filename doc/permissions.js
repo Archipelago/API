@@ -3,6 +3,11 @@
  */
 
 /**
+ * @apiDefine DELETE_USER Permission required to delete users
+ * This permission is only needed to delete other user's accounts. To delete your own account, no permission is needed.
+ */
+
+/**
  * @apiDefine ADD_ELEMENT Permission required to add elements
  */
 

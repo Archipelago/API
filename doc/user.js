@@ -124,3 +124,22 @@
  * @apiUse Forbidden
  * @apiUse NotFound
  */
+
+/**
+ * @api {delete} /user/:id[/complete] Delete a user
+ * @apiVersion 0.2.0
+ * @apiName DeleteUser
+ * @apiGroup User
+ * @apiDescription Delete all personal data about a user, and all of its contributions if the argument `/complete` is provided. Eveybody can use this route on its own account. User with id 1 can not be deleted.
+ * @apiPermission DELETE_USER
+ *
+ * @apiParam {Number/String} id The id of the user that will be deleted or the string `"me"` to delete your own account.
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse InvalidParameter
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
+ */
