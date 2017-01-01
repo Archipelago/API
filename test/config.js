@@ -62,6 +62,15 @@ exports.addOrUpdate = {
       });
     },
 
+    invalidVarName: function(test) {
+      request.put('/config', global.rootToken, {
+	"This variable name is way too long. It's longer than 64 chars (108 to be exact) and the api should reject it": 42
+      }, function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
     updateSeveral: function(test) {
       request.put('/config', global.rootToken, {
     	"randomArray": [2, 3, 4],

@@ -23,6 +23,10 @@ module.exports.addOrUpdate = function(values, cb) {
   let query = 'INSERT INTO `Config`(`name`, `value`, `type`) VALUES';
   let vars = [];
   for (let i in values) {
+    if (i.length > 64) {
+      cb('Variable name "' + i + '" is too long');
+      return;
+    }
     vars.push(i);
     if (typeof values[i] !== 'string'
 	&& values[i] !== null)

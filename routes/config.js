@@ -14,7 +14,7 @@ module.exports = function(app) {
     token.checkPermission(req, res, 'EDIT_CONFIG', function(req, res) {
       require('../models/config.js').addOrUpdate(req.body, function(e, r) {
 	if (e)
-	  sendResponse(res, 400, e);
+	  sendResponse(res, 400, {message: e});
 	else
 	  sendResponse(res, 204);
       });
