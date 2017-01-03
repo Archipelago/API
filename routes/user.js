@@ -45,13 +45,32 @@ module.exports = function(app) {
   });
 
   app.patch('/user/:id/permission', function(req, res) {
-    token.checkPermission(req, res, 'EDIT_PERMISSION', function(e, r) {
+    token.checkPermission(req, res, 'EDIT_PERMISSION', function(req, res) {
       require('../models/user.js').getById(req.params.id, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
 	  token.updatePermission(req, res, r);
       });
+    });
+  });
+
+  app.delete('/user/:id', function(req, res) {
+    token.checkPermission(req, res, 'NONE', function(req, res) {
+      let cb = function(req, res) {
+	require('../models/user.js').deactivate(req.params.id, function(e, r) {
+	  sendResponse(res, 204);
+	});
+      }
+
+      if (req.params.id === 'me')
+	req.params.id = token.getId(req.headers.token);
+      if (req.params.id !== token.getId(req.headers.token))
+	token.checkPermission(req, res, 'DELETE_USER', function(req, res) {
+	  cb(req, res);
+	});
+      else
+	cb(req, res);
     });
   });
 }

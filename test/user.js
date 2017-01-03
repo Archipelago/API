@@ -1,5 +1,6 @@
 let crypto = require('crypto');
 let hash = crypto.randomBytes(4).toString('hex');
+global.usersToCollect = [];
 
 exports.register = {
   valid: function(test) {
@@ -150,3 +151,50 @@ exports.get = {
     }
   }
 };
+
+exports.delete = {
+  init: function(test) {
+    request.post('/register', {
+      "login": "tmp1" + hash,
+      "password": "foobar42"
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      let newUser = {id: res.body.id};
+      request.post('/login', {
+	"login": "tmp1" + hash,
+	"password": "foobar42"
+      }, function(res) {
+	test.equal(res.statusCode, 200);
+	newUser.token = res.body.token;
+	global.usersToCollect.push(newUser);
+	test.done();
+      });
+    });
+  },
+
+  deactivate: {
+    unlogged: function(test) {
+      request.delete('/user/' + usersToCollect[0].id, function(res) {
+	test.equal(res.statusCode, 401);
+	test.done();
+      });
+    },
+
+    unauthorized: function(test) {
+      request.delete('/user/' + usersToCollect[0].id, global.token, function(res) {
+	test.equal(res.statusCode, 403);
+	test.done();
+      });
+    },
+
+    rootUser: function(test) {
+      request.delete('/user/' + usersToCollect[0].id, global.rootToken, function(res) {
+	test.equal(res.statusCode, 204);
+	test.done();
+      });
+    }
+  }
+
+//TODO: login and retrieving data should fail after deactivation
+//TODO: root can not deleted its own account
+}

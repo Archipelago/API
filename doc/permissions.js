@@ -42,3 +42,7 @@
 /**
  * @apiDefine EDIT_CONFIG Permission required to edit configuration
  */
+
+/**
+ * @apiDefine GARBAGE Permission required to manage garbaging. See <a href="https://github.com/Archipelago/Wiki/wiki/Garbage">wiki</a> for more information.
+ */

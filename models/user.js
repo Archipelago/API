@@ -85,3 +85,35 @@ module.exports.updatePermission = function(id, permissions, cb) {
     cb(e, r);
   });
 }
+
+module.exports.deactivate = function(id, cb) {
+  db.query('UPDATE `Users` SET `login` = NULL, `salt` = NULL, `password` = NULL, `mail` = NULL, `bm` = NULL, `permissions` = 0, `deleted` = TRUE WHERE `id` = ?', [id], function(e, r) {
+    cb(e, r);
+  });
+}
+
+module.exports.delete = function(id, cb) {
+  db.query('DELETE FROM `Multilinks` WHERE `user_id` = ?', [id], function(e, r) {
+    if (e) {
+      cb(e, r);
+      return;
+    }
+    db.query('DELETE `VideoReleases` FROM `VideoReleases` \
+    LEFT JOIN `Multilinks` ON `Multilinks`.`release_id` = `VideoReleases`.`id` \
+    WHERE `VideoReleases`.`user_id` = ? AND `Multilinks`.`id` IS NULL', [id], function(e, r) {
+      if (e) {
+	cb(e, r);
+	return;
+      }
+      db.query('DELETE `Movies` FROM `Movies` \
+      LEFT JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` AND `VideoReleases`.`element_type` = "Movies" \
+      WHERE `VideoReleases`.`user_id` = 1 AND `VideoReleases`.`id` IS NULL', [id], function(e, r) {
+	if (e) {
+	  cb(e, r);
+	  return;
+	}
+	cb(e, r);
+      });
+    });
+  });
+}
