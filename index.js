@@ -32,3 +32,4 @@ require('./routes/links.js')(app);
 require('./routes/lists.js')(app);
 require('./routes/search.js')(app);
 require('./routes/config.js')(app);
+require('./routes/garbage.js')(app);
