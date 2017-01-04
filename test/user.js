@@ -155,7 +155,7 @@ exports.get = {
 
 exports.delete = {
   init: function(test) {
-    async.times(3, function(i, cb) {
+    async.times(6, function(i, cb) {
       request.post('/register', {
 	"login": "tmp" + i + hash,
 	"password": "foobar42"
@@ -223,8 +223,57 @@ exports.delete = {
 	});
       }
     }
-  }
+  },
 
+  complete: {
+    id: {
+      unlogged: function(test) {
+	request.delete('/user/' + usersToCollect[3].id + '/complete', function(res) {
+	  test.equal(res.statusCode, 401);
+	  test.done();
+	});
+      },
+
+      unauthorized: function(test) {
+	request.delete('/user/' + usersToCollect[3].id + '/complete', global.token, function(res) {
+	  test.equal(res.statusCode, 403);
+	  test.done();
+	});
+      },
+
+      rootUser: function(test) {
+	request.delete('/user/' + usersToCollect[3].id + '/complete', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
+      },
+
+      self: function(test) {
+	request.delete('/user/' + usersToCollect[4].id + '/complete', usersToCollect[4].token, function(res) {
+	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
+      }
+    },
+
+    me: {
+      unlogged: function(test) {
+	request.delete('/user/me/complete', function(res) {
+	  test.equal(res.statusCode, 401);
+	  test.done();
+	});
+      },
+
+      valid: function(test) {
+	request.delete('/user/me/complete', usersToCollect[5].token, function(res) {
+	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
+      }
+    }
+  }
 //TODO: login and retrieving data should fail after deactivation
 //TODO: root can not deleted its own account
+//TODO: invalidate token on account deletion
+//TODO: test deletion of related elements
 }

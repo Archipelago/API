@@ -112,7 +112,9 @@ module.exports.delete = function(id, cb) {
 	  cb(e, r);
 	  return;
 	}
-	cb(e, r);
+	db.query('DELETE FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+	  cb(e, r);
+	});
       });
     });
   });
