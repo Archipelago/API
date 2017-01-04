@@ -55,17 +55,23 @@ module.exports = function(app) {
     });
   });
 
-  app.delete('/user/:id', function(req, res) {
+  app.delete(['/user/:id/', '/user/:id/complete'], function(req, res) {
     token.checkPermission(req, res, 'NONE', function(req, res) {
       let cb = function(req, res) {
-	require('../models/user.js').deactivate(req.params.id, function(e, r) {
-	  sendResponse(res, 204);
-	});
+	if (req.originalUrl.match(/^\/*user\/+.*\/+complete\/*$/)) {
+	  require('../models/user.js').delete(req.params.id, function(e, r) {
+	    sendResponse(res, 204);
+	  });
+	} else {
+	  require('../models/user.js').deactivate(req.params.id, function(e, r) {
+	    sendResponse(res, 204);
+	  });
+	}
       }
 
       if (req.params.id === 'me')
 	req.params.id = token.getId(req.headers.token);
-      if (req.params.id !== token.getId(req.headers.token))
+      if (req.params.id != token.getId(req.headers.token))
 	token.checkPermission(req, res, 'DELETE_USER', function(req, res) {
 	  cb(req, res);
 	});
