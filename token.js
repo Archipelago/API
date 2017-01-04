@@ -21,7 +21,8 @@ module.exports = function() {
     'BAN_USER': 1 << 11,
     'EDIT_PERMISSION': 1 << 12,
     'GET_CONFIG': 1 << 13,
-    'EDIT_CONFIG': 1 << 14
+    'EDIT_CONFIG': 1 << 14,
+    'GARBAGE': 1 << 15
   };
 
   this.getId = function(t) {
