@@ -114,7 +114,7 @@ exports.get = {
     request.get('/user/1', function(res) {
       test.equal(res.statusCode, 200);
       test.equal(res.body.id, 1);
-      test.equal(res.body.permissions.length > 0, true);
+      test.deepEqual(res.body.permissions, ["ADD_ELEMENT", "EDIT_ELEMENT", "DELETE_ELEMENT", "ADD_RELEASE", "EDIT_RELEASE", "DELETE_RELEASE", "ADD_LINK", "EDIT_LINK", "DELETE_LINK", "EDIT_USER", "DELETE_USER", "BAN_USER", "EDIT_PERMISSION", "GET_CONFIG", "EDIT_CONFIG", "GARBAGE"]);
       test.done();
     });
   },
