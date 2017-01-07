@@ -15,3 +15,39 @@
  * @apiUse Unauthorized
  * @apiUse Forbidden
  */
+
+/**
+ * @api {post} /garbage/:id/save Save data
+ * @apiVersion 0.2.0
+ * @apiName SaveGarbage
+ * @apiGroup Garbage
+ * @apiDescription Save contributions of a user and delete it.
+ * @apiPermission GARBAGE
+ *
+ * @apiParam {number} id The id of the garbaged user
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
+ */
+
+/**
+ * @api {post} /garbage/:id/dismiss Dismiss data
+ * @apiVersion 0.2.0
+ * @apiName DismissGarbage
+ * @apiGroup Garbage
+ * @apiDescription Dismiss contributions of a user and delete it.
+ * @apiPermission GARBAGE
+ *
+ * @apiParam {number} id The id of the garbaged user
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
+ */
