@@ -1,7 +1,7 @@
 /**
  * @api {get} /garbage Get the list of all ids
  * @apiVersion 0.2.0
- * @apiName GetGarbage
+ * @apiName ListGarbage
  * @apiGroup Garbage
  * @apiDescription Retrieve the ids of all the removed users that are not garbaged yet. See [wiki](https://github.com/Archipelago/Wiki/wiki/Garbage) for more information.
  * @apiPermission GARBAGE
@@ -14,6 +14,29 @@
  *
  * @apiUse Unauthorized
  * @apiUse Forbidden
+ */
+
+/**
+ * @api {get} /garbage/:id Get contributions of a user
+ * @apiVersion 0.2.0
+ * @apiName GetGarbage
+ * @apiGroup Garbage
+ * @apiDescription Retrieve the ids of all the contributions of a user.
+ * @apiPermission GARBAGE
+ *
+ * @apiParam {number} id The id of the garbaged user
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "movies": [1, 2, 3],
+ *       "video_releases": [8, 9, 13],
+ *       "links": [27, 39, 40, 41, 42]
+ *     }
+ *
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
  */
 
 /**
