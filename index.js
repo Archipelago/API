@@ -21,6 +21,7 @@ global.lists = {
   'containers': []
 };
 global.otfConfig = {};
+require('./models/config.js').get(function(e, r) {});
 
 app.set('x-powered-by', false);
 app.listen(process.env.PORT || config.port);
