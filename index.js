@@ -20,6 +20,7 @@ global.lists = {
   'sources': [],
   'containers': []
 };
+global.otfConfig = {};
 
 app.set('x-powered-by', false);
 app.listen(process.env.PORT || config.port);

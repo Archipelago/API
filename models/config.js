@@ -15,6 +15,7 @@ module.exports.get = function(cb) {
       else
 	res[r[i].name] = r[i].value;
     }
+    global.otfConfigName = res;
     cb(e, res);
   });
 }
@@ -28,11 +29,14 @@ module.exports.addOrUpdate = function(values, cb) {
       return;
     }
     vars.push(i);
+    let value;
     if (typeof values[i] !== 'string'
 	&& values[i] !== null)
-      vars.push(JSON.stringify(values[i]));
+      value = JSON.stringify(values[i]);
     else
-      vars.push(values[i]);
+      value = values[i];
+    vars.push(value);
+    global.otfConfigName[i] = value;
     vars.push(getType(values[i]));
     query += '(?,?,?),';
   }
@@ -45,6 +49,7 @@ module.exports.addOrUpdate = function(values, cb) {
 
 module.exports.delete = function(name, cb) {
   db.query('DELETE FROM `Config` WHERE `name` = ?', [name], function(e, r) {
+    delete global.otfConfig[name];
     if (r.info.affectedRows != 1)
       cb('The variable "' + name + '" does not exist');
     else
