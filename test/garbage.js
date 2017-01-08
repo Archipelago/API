@@ -53,4 +53,35 @@ exports.save = {
   }
 };
 
+exports.dismiss = {
+  unlogged: function(test) {
+    request.post('/garbage/' + usersToCollect[1].id + '/save', {}, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.post('/garbage/' + usersToCollect[1].id + '/save', {}, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.post('/garbage/' + usersToCollect[1].id + '/save', global.rootToken, {}, function(res) {
+      test.equal(res.statusCode, 204);
+      test.done();
+    });
+  },
+
+  nonExisting: function(test) {
+    request.post('/garbage/' + usersToCollect[1].id + '/save', global.rootToken, {}, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+};
+
 //TODO: root user can not be collected/dismissed
+//TODO: check if contributions are really collected/dismissed
