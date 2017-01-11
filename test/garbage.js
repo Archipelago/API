@@ -23,6 +23,35 @@ exports.list = {
   }
 };
 
+exports.contribs = {
+  unlogged: function(test) {
+    request.get('/garbage/' + usersToCollect[0].id, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.get('/garbage/' + usersToCollect[0].id, global.token, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.get('/garbage/' + usersToCollect[0].id, global.rootToken, function(res) {
+      test.equal(res.statusCode, 200);
+      console.log(res.body);
+      test.equal(res.body.movies instanceof Array, true);
+      test.equal(res.body.video_releases instanceof Array, true);
+      test.equal(res.body.links instanceof Array, true);
+      test.done();
+    });
+  }
+
+  //TODO: not found
+};
+
 exports.save = {
   unlogged: function(test) {
     request.post('/garbage/' + usersToCollect[0].id + '/save', {}, function(res) {

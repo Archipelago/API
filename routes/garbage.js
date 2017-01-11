@@ -9,6 +9,14 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/garbage/:id', function(req, res) {
+    token.checkPermission(req, res, 'GARBAGE', function(req, res) {
+      require('../models/garbage.js').contribs(req.params.id, function(e, r) {
+	sendResponse(res, 200, r);
+      });
+    });
+  });
+
   app.post('/garbage/:id/save', function(req, res) {
     token.checkPermission(req, res, 'GARBAGE', function(req, res) {
       require('../models/garbage.js').save(req.params.id, global.otfConfig.garbageUserId, function(e, r) {

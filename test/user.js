@@ -276,4 +276,5 @@ exports.delete = {
 //TODO: root can not deleted its own account
 //TODO: invalidate token on account deletion
 //TODO: test deletion of related elements
+//TODO: route /user/:id should not work on deactivated user
 }
