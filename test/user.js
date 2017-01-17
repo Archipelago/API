@@ -253,6 +253,13 @@ exports.delete = {
 	  test.equal(res.statusCode, 204);
 	  test.done();
 	});
+      },
+
+      disconnected: function(test) {
+	request.get('/user', usersToCollect[4].token, function(res) {
+	  test.equal(res.statusCode, 401);
+	  test.done();
+	});
       }
     },
 
@@ -274,7 +281,6 @@ exports.delete = {
   }
 //TODO: login and retrieving data should fail after deactivation
 //TODO: root can not deleted its own account
-//TODO: invalidate token on account deletion
 //TODO: test deletion of related elements
 //TODO: route /user/:id should not work on deactivated user
 }

@@ -6,6 +6,8 @@ module.exports = function() {
   let tokens = {};
   // login: {token, id, permissions}
   let users = {};
+  // id: token
+  let ids = {};
   const permissions = {
     'ADD_ELEMENT': 1 << 0,
     'EDIT_ELEMENT': 1 << 1,
@@ -42,8 +44,15 @@ module.exports = function() {
       let t = crypto.randomBytes(32).toString('hex');
       users[login] = {token: t, id: parseInt(id), permissions: permissions}
       tokens[t] = login;
+      ids[parseInt(id)] = t;
       sendResponse(res, 200, {token: t});
     }
+  }
+
+  this.disconnect = function(id) {
+    delete users[tokens[ids[id]]];
+    delete tokens[ids[id]];
+    delete ids[id];
   }
 
   // User with id 1 has all permission

@@ -60,10 +60,12 @@ module.exports = function(app) {
       let cb = function(req, res) {
 	if (req.originalUrl.match(/^\/*user\/+.*\/+complete\/*$/)) {
 	  require('../models/user.js').delete(req.params.id, function(e, r) {
+	    token.disconnect(req.params.id);
 	    sendResponse(res, 204);
 	  });
 	} else {
 	  require('../models/user.js').deactivate(req.params.id, function(e, r) {
+	    token.disconnect(req.params.id);
 	    sendResponse(res, 204);
 	  });
 	}
