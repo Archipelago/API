@@ -161,7 +161,8 @@ exports.delete = {
 	"password": "foobar42"
       }, function(res) {
 	test.equal(res.statusCode, 201);
-	let newUser = {id: res.body.id};
+	let newUser = {id: res.body.id,
+		       login: "tmp" + i + hash};
 	request.post('/login', {
 	  "login": "tmp" + i + hash,
 	  "password": "foobar42"
@@ -260,6 +261,16 @@ exports.delete = {
 	  test.equal(res.statusCode, 401);
 	  test.done();
 	});
+      },
+
+      unableToLogin: function(test) {
+	request.post('/login', {
+	  "login": usersToCollect[4].login,
+	  "password": "foobar42"
+	}, function(res) {
+	  test.equal(res.statusCode, 400);
+	  test.done();
+	});
       }
     },
 
@@ -279,7 +290,6 @@ exports.delete = {
       }
     }
   }
-//TODO: login and retrieving data should fail after deactivation
 //TODO: root can not deleted its own account
 //TODO: test deletion of related elements
 //TODO: route /user/:id should not work on deactivated user
