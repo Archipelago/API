@@ -206,6 +206,13 @@ exports.delete = {
 	  test.equal(res.statusCode, 204);
 	  test.done();
 	});
+      },
+
+      rootUser: function(test) {
+	request.delete('/user/1', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 403);
+	  test.done();
+	});
       }
     },
 
@@ -220,6 +227,13 @@ exports.delete = {
       valid: function(test) {
 	request.delete('/user/me', usersToCollect[2].token, function(res) {
 	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
+      },
+
+      rootUser: function(test) {
+	request.delete('/user/me', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 403);
 	  test.done();
 	});
       }
@@ -256,6 +270,13 @@ exports.delete = {
 	});
       },
 
+      rootUser: function(test) {
+	request.delete('/user/1/complete', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 403);
+	  test.done();
+	});
+      },
+
       disconnected: function(test) {
 	request.get('/user', usersToCollect[4].token, function(res) {
 	  test.equal(res.statusCode, 401);
@@ -287,10 +308,16 @@ exports.delete = {
 	  test.equal(res.statusCode, 204);
 	  test.done();
 	});
+      },
+
+      rootUser: function(test) {
+	request.delete('/user/me/complete', global.rootToken, function(res) {
+	  test.equal(res.statusCode, 403);
+	  test.done();
+	});
       }
     }
   }
-//TODO: root can not deleted its own account
 //TODO: test deletion of related elements
 //TODO: route /user/:id should not work on deactivated user
 }

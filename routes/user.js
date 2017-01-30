@@ -73,7 +73,10 @@ module.exports = function(app) {
 
       if (req.params.id === 'me')
 	req.params.id = token.getId(req.headers.token);
-      if (req.params.id != token.getId(req.headers.token))
+      if (req.params.id == 1) {
+	sendResponse(res, 403, {message: 'This user can not be deleted'});
+      }
+      else if (req.params.id != token.getId(req.headers.token))
 	token.checkPermission(req, res, 'DELETE_USER', function(req, res) {
 	  cb(req, res);
 	});

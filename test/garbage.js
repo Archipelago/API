@@ -79,6 +79,13 @@ exports.save = {
       test.equal(res.statusCode, 404);
       test.done();
     });
+  },
+
+  garbageRootUser: function(test) {
+    request.post('/garbage/1/save', global.rootToken, {}, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
   }
 };
 
@@ -109,8 +116,13 @@ exports.dismiss = {
       test.equal(res.statusCode, 404);
       test.done();
     });
+  },
+
+  garbageRootUser: function(test) {
+    request.post('/garbage/1/save', global.rootToken, {}, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
   }
 };
-
-//TODO: root user can not be collected/dismissed
 //TODO: check if contributions are really collected/dismissed
