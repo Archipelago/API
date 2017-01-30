@@ -19,7 +19,7 @@ module.exports.save = function(sourceId, collectorId, cb) {
       `Multilinks`.`user_id` = :new, \
       `VideoReleases`.`user_id` = :new, \
       `Movies`.`user_id` = :new \
-  WHERE `Users`.`id` = :old', {new: collectorId, old: sourceId}, function(e, r) {
+  WHERE `Users`.`id` = :old AND `Users`.`deleted` = TRUE', {new: collectorId, old: sourceId}, function(e, r) {
     cb(e, r);
   });
 }

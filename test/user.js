@@ -292,6 +292,13 @@ exports.delete = {
 	  test.equal(res.statusCode, 400);
 	  test.done();
 	});
+      },
+
+      retrieveDeleted: function(test) {
+	request.get('/user/' + usersToCollect[4].id, function(res) {
+	  test.equal(res.statusCode, 404);
+	  test.done();
+	});
       }
     },
 

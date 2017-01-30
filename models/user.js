@@ -40,7 +40,7 @@ module.exports.login = function(infos, cb) {
   else if (infos.password === undefined)
     cb('Password must be provided');
   else {
-    db.query('SELECT `id`, `salt`, `password`, `permissions` FROM `Users` WHERE `login` = ?', [infos.login], function(e, r) {
+    db.query('SELECT `id`, `salt`, `password`, `permissions` FROM `Users` WHERE `login` = ? AND `deleted` = FALSE', [infos.login], function(e, r) {
       if (r.info.numRows != 1)
 	cb('User "' + infos.login + '" not found');
       else if (crypto.createHmac('sha256', r[0].salt + infos.password).digest('hex') != r[0].password)
@@ -56,7 +56,7 @@ module.exports.login = function(infos, cb) {
 
 module.exports.search = function(query, cb) {
   query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
-  db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q', {q: query}, function(e, r) {
+  db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q AND `deleted` = FALSE', {q: query}, function(e, r) {
     delete r.info;
     for (i in r[0])
       r[0].id = parseInt(r[0].id);
@@ -65,7 +65,7 @@ module.exports.search = function(query, cb) {
 }
 
 module.exports.getById = function(id, cb) {
-  db.query('SELECT `id`, `login`, `permissions`, `mail` AS "email", `bm` FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+  db.query('SELECT `id`, `login`, `permissions`, `mail` AS "email", `bm` FROM `Users` WHERE `id` = ?  AND `deleted` = FALSE', [id], function(e, r) {
     if (r.info.numRows === '0')
       cb('Unable to find user with id "' + id + '"');
     else {
@@ -81,13 +81,13 @@ module.exports.getById = function(id, cb) {
 }
 
 module.exports.updatePermission = function(id, permissions, cb) {
-  db.query('UPDATE `Users` SET `permissions` = ? WHERE `id` = ?', [permissions, id], function(e, r) {
+  db.query('UPDATE `Users` SET `permissions` = ? WHERE `id` = ? AND `deleted` = FALSE', [permissions, id], function(e, r) {
     cb(e, r);
   });
 }
 
 module.exports.deactivate = function(id, cb) {
-  db.query('UPDATE `Users` SET `login` = NULL, `salt` = NULL, `password` = NULL, `mail` = NULL, `bm` = NULL, `permissions` = 0, `deleted` = TRUE WHERE `id` = ?', [id], function(e, r) {
+  db.query('UPDATE `Users` SET `login` = NULL, `salt` = NULL, `password` = NULL, `mail` = NULL, `bm` = NULL, `permissions` = 0, `deleted` = TRUE WHERE `id` = ? AND `deleted` = FALSE', [id], function(e, r) {
     cb(e, r);
   });
 }
