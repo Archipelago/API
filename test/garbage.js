@@ -91,35 +91,35 @@ exports.save = {
 
 exports.dismiss = {
   unlogged: function(test) {
-    request.post('/garbage/' + usersToCollect[1].id + '/save', {}, function(res) {
+    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', {}, function(res) {
       test.equal(res.statusCode, 401);
       test.done();
     });
   },
 
   unauthorized: function(test) {
-    request.post('/garbage/' + usersToCollect[1].id + '/save', {}, function(res) {
+    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', {}, function(res) {
       test.equal(res.statusCode, 401);
       test.done();
     });
   },
 
   rootUser: function(test) {
-    request.post('/garbage/' + usersToCollect[1].id + '/save', global.rootToken, {}, function(res) {
+    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', global.rootToken, {}, function(res) {
       test.equal(res.statusCode, 204);
       test.done();
     });
   },
 
   nonExisting: function(test) {
-    request.post('/garbage/' + usersToCollect[1].id + '/save', global.rootToken, {}, function(res) {
+    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', global.rootToken, {}, function(res) {
       test.equal(res.statusCode, 404);
       test.done();
     });
   },
 
   garbageRootUser: function(test) {
-    request.post('/garbage/1/save', global.rootToken, {}, function(res) {
+    request.post('/garbage/1/dismiss', global.rootToken, {}, function(res) {
       test.equal(res.statusCode, 403);
       test.done();
     });
