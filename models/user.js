@@ -98,16 +98,12 @@ module.exports.delete = function(id, cb) {
       cb(e, r);
       return;
     }
-    db.query('DELETE `VideoReleases` FROM `VideoReleases` \
-    LEFT JOIN `Multilinks` ON `Multilinks`.`release_id` = `VideoReleases`.`id` \
-    WHERE `VideoReleases`.`user_id` = ? AND `Multilinks`.`id` IS NULL', [id], function(e, r) {
+    db.query('DELETE FROM `VideoReleases` WHERE `user_id` = ?', [id], function(e, r) {
       if (e) {
 	cb(e, r);
 	return;
       }
-      db.query('DELETE `Movies` FROM `Movies` \
-      LEFT JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` AND `VideoReleases`.`element_type` = "Movies" \
-      WHERE `VideoReleases`.`user_id` = 1 AND `VideoReleases`.`id` IS NULL', [id], function(e, r) {
+      db.query('DELETE FROM `Movies` WHERE `user_id` = ?', [id], function(e, r) {
 	if (e) {
 	  cb(e, r);
 	  return;
