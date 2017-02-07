@@ -3,6 +3,10 @@ let hash = crypto.randomBytes(4).toString('hex');
 let async = require('async');
 global.usersToCollect = [];
 
+function randomElem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 exports.register = {
   valid: function(test) {
     request.post('/register', {
@@ -156,6 +160,7 @@ exports.get = {
 exports.delete = {
   init: function(test) {
     async.times(6, function(i, cb) {
+      // Create users
       request.post('/register', {
 	"login": "tmp" + i + hash,
 	"password": "foobar42"
@@ -163,14 +168,54 @@ exports.delete = {
 	test.equal(res.statusCode, 201);
 	let newUser = {id: res.body.id,
 		       login: "tmp" + i + hash};
+	// Login users
 	request.post('/login', {
 	  "login": "tmp" + i + hash,
 	  "password": "foobar42"
 	}, function(res) {
 	  test.equal(res.statusCode, 200);
 	  newUser.token = res.body.token;
-	  global.usersToCollect.push(newUser);
-	  cb();
+	  // Grant them permissions
+	  request.patch('/user/' + newUser.id + '/permission', global.rootToken, {
+	    "add": [
+	      "ADD_ELEMENT", "ADD_RELEASE", "ADD_LINK"
+	    ]
+	  }, function(res) {
+	    test.equal(res.statusCode, 200);
+	    // Add movies
+	    request.post('/movie', newUser.token, {
+	      "title": "tmp" + i + hash,
+	      "release_date": "1999-03-31",
+	      "image": "https://example.com/" + i + hash + ".png",
+	      "production_year": 1998
+	    }, function(res) {
+	      test.equal(res.statusCode, 201);
+	      newUser.movieId = res.body.id;
+	      // Add releases
+	      request.post('/movie/' + newUser.movieId + '/release', newUser.token, {
+	      	"name": "foobar" + i + hash,
+	      	"size": "2.1GB",
+	      	"language": randomElem(global.lists.languages),
+	      	"audio_codec": randomElem(global.lists.audioCodecs),
+	      	"video_codec": randomElem(global.lists.videoCodecs),
+	      	"source": randomElem(global.lists.sources),
+	      	"quality": randomElem(global.lists.qualities),
+	      	"container": randomElem(global.lists.containers)
+	      }, function(res) {
+	      	test.equal(res.statusCode, 201);
+	      	newUser.videoReleaseId = res.body.id;
+		// Add links
+		request.post('/video_release/' + newUser.videoReleaseId + '/link', newUser.token, [
+		  "https://example.com/release" + i + hash + ".mkv"
+		], function(res) {
+		  test.equal(res.statusCode, 201);
+		  newUser.linkId = res.body[0];
+	      	  global.usersToCollect.push(newUser);
+		  cb();
+		});
+	      });
+	    });
+	  });
 	});
       });
     }, function() {
@@ -208,7 +253,7 @@ exports.delete = {
 	});
       },
 
-      rootUser: function(test) {
+      rootAccount: function(test) {
 	request.delete('/user/1', global.rootToken, function(res) {
 	  test.equal(res.statusCode, 403);
 	  test.done();
@@ -270,7 +315,7 @@ exports.delete = {
 	});
       },
 
-      rootUser: function(test) {
+      rootAccount: function(test) {
 	request.delete('/user/1/complete', global.rootToken, function(res) {
 	  test.equal(res.statusCode, 403);
 	  test.done();
