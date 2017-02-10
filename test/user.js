@@ -258,6 +258,32 @@ exports.delete = {
 	  test.equal(res.statusCode, 403);
 	  test.done();
 	});
+      },
+
+      elementsNotDeleted: {
+	movie: function(test) {
+	  request.get('/movie/' + usersToCollect[0].movieId, function(res) {
+	    test.equal(res.statusCode, 200);
+	    request.get('/movie/' + usersToCollect[1].movieId, function(res) {
+	      test.equal(res.statusCode, 200);
+	      test.done();
+	    });
+	  });
+	},
+
+	videoRelease: function(test) {
+	  request.get('/video_release/' + usersToCollect[0].videoReleaseId + '/links', function(res) {
+	    test.equal(res.statusCode, 200);
+	    test.equal(res.body instanceof Array, true);
+	    test.strictEqual(res.body[0].id, usersToCollect[0].linkId);
+	    request.get('/video_release/' + usersToCollect[1].videoReleaseId + '/links', function(res) {
+	      test.equal(res.statusCode, 200);
+	      test.equal(res.body instanceof Array, true);
+	      test.strictEqual(res.body[0].id, usersToCollect[1].linkId);
+	      test.done();
+	    });
+	  });
+	}
       }
     },
 
@@ -281,6 +307,24 @@ exports.delete = {
 	  test.equal(res.statusCode, 403);
 	  test.done();
 	});
+      },
+
+      elementsNotDeleted: {
+	movie: function(test) {
+	  request.get('/movie/' + usersToCollect[2].movieId, function(res) {
+	    test.equal(res.statusCode, 200);
+	    test.done();
+	  });
+	},
+
+	videoRelease: function(test) {
+	  request.get('/video_release/' + usersToCollect[2].videoReleaseId + '/links', function(res) {
+	    test.equal(res.statusCode, 200);
+	    test.equal(res.body instanceof Array, true);
+	    test.strictEqual(res.body[0].id, usersToCollect[2].linkId);
+	    test.done();
+	  });
+	}
       }
     }
   },
@@ -339,11 +383,38 @@ exports.delete = {
 	});
       },
 
-      retrieveDeleted: function(test) {
-	request.get('/user/' + usersToCollect[4].id, function(res) {
-	  test.equal(res.statusCode, 404);
-	  test.done();
-	});
+      elementsAreDeleted: {
+	user: function(test) {
+	  request.get('/user/' + usersToCollect[3].id, function(res) {
+	    test.equal(res.statusCode, 404);
+	    request.get('/user/' + usersToCollect[4].id, function(res) {
+	      test.equal(res.statusCode, 404);
+	      test.done();
+	    });
+	  });
+	},
+
+	movie: function(test) {
+	  request.get('/movie/' + usersToCollect[3].movieId, function(res) {
+	    test.equal(res.statusCode, 404);
+	    request.get('/movie/' + usersToCollect[4].movieId, function(res) {
+	      test.equal(res.statusCode, 404);
+	      test.done();
+	    });
+	  });
+	},
+
+	videoRelease: function(test) {
+	  request.get('/video_release/' + usersToCollect[3].videoReleaseId + '/links', function(res) {
+	    test.equal(res.statusCode, 200);
+	    test.deepEqual(res.body, []);
+	    request.get('/video_release/' + usersToCollect[4].videoReleaseId + '/links', function(res) {
+	      test.equal(res.statusCode, 200);
+	      test.deepEqual(res.body, []);
+	      test.done();
+	    });
+	  });
+	}
       }
     },
 
@@ -368,8 +439,31 @@ exports.delete = {
 	  test.done();
 	});
       }
+    },
+
+    elementsAreDeleted: {
+      user: function(test) {
+	request.get('/user/' + usersToCollect[5].id, function(res) {
+	  test.equal(res.statusCode, 404);
+	  test.done();
+	});
+      },
+
+      movie: function(test) {
+	request.get('/movie/' + usersToCollect[5].movieId, function(res) {
+	  test.equal(res.statusCode, 404);
+	  test.done();
+	});
+      },
+
+      videoRelease: function(test) {
+	request.get('/video_release/' + usersToCollect[5].videoReleaseId + '/links', function(res) {
+	  test.equal(res.statusCode, 200);
+	  test.deepEqual(res.body, []);
+	  test.done();
+	});
+      }
     }
   }
-//TODO: test deletion of related elements
 //TODO: route /user/:id should not work on deactivated user
 }
