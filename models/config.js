@@ -15,7 +15,7 @@ module.exports.get = function(cb) {
       else
 	res[r[i].name] = r[i].value;
     }
-    global.otfConfigName = res;
+    global.otfConfig = res;
     cb(e, res);
   });
 }
@@ -36,7 +36,7 @@ module.exports.addOrUpdate = function(values, cb) {
     else
       value = values[i];
     vars.push(value);
-    global.otfConfigName[i] = value;
+    global.otfConfig[i] = value;
     vars.push(getType(values[i]));
     query += '(?,?,?),';
   }
