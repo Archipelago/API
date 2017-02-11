@@ -60,8 +60,8 @@ exports.save = {
   },
 
   unauthorized: function(test) {
-    request.post('/garbage/' + usersToCollect[0].id + '/save', {}, function(res) {
-      test.equal(res.statusCode, 401);
+    request.post('/garbage/' + usersToCollect[0].id + '/save', global.token, {}, function(res) {
+      test.equal(res.statusCode, 403);
       test.done();
     });
   },
@@ -122,8 +122,8 @@ exports.dismiss = {
   },
 
   unauthorized: function(test) {
-    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', {}, function(res) {
-      test.equal(res.statusCode, 401);
+    request.post('/garbage/' + usersToCollect[1].id + '/dismiss', global.token, {}, function(res) {
+      test.equal(res.statusCode, 403);
       test.done();
     });
   },
