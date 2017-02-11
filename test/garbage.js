@@ -46,9 +46,21 @@ exports.contribs = {
       test.equal(res.body.links instanceof Array, true);
       test.done();
     });
-  }
+  },
 
-  //TODO: not found
+  nonDeactivated: function(test) {
+    request.get('/garbage/1', global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  nonExisting: function(test) {
+    request.get('/garbage/' + usersToCollect[3].id, global.rootToken, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
 };
 
 exports.save = {

@@ -26,26 +26,36 @@ module.exports.save = function(sourceId, collectorId, cb) {
 
 module.exports.contribs = function(id, cb) {
   let res = {movies: [], video_releases: [], links: []};
-  db.query('SELECT `id` FROM `Movies` WHERE `user_id` = ?', [id], function(e, movies) {
+  db.query('SELECT `id` FROM `Users` WHERE `id` = ? AND `deleted` = TRUE', [id], function(e, r) {
     if (e) {
-      cb(e, movies);
+      cb(e, r);
       return;
     }
-    db.query('SELECT `id` FROM `VideoReleases` WHERE `user_id` = ?', [id], function(e, videoReleases) {
+    else if (r.info.numRows == 0) {
+      cb ('User with id "' + id + '" not found');
+      return;
+    }
+    db.query('SELECT `id` FROM `Movies` WHERE `user_id` = ?', [id], function(e, movies) {
       if (e) {
-	cb(e, videoReleases);
+	cb(e, movies);
 	return;
       }
-      db.query('SELECT `id` FROM `Links` WHERE `user_id` = ?', [id], function(e, links) {
-	if (e)
-	  cb(e, links);
-	else {
-	  let epur = function(x) { return x.id; };
-	  res.movies = _.map(movies, epur);
-	  res.video_releases = _.map(videoReleases, epur);
-	  res.links = _.map(links, epur);
-	  cb(e, res);
+      db.query('SELECT `id` FROM `VideoReleases` WHERE `user_id` = ?', [id], function(e, videoReleases) {
+	if (e) {
+	  cb(e, videoReleases);
+	  return;
 	}
+	db.query('SELECT `id` FROM `Links` WHERE `user_id` = ?', [id], function(e, links) {
+	  if (e)
+	    cb(e, links);
+	  else {
+	    let epur = function(x) { return x.id; };
+	    res.movies = _.map(movies, epur);
+	    res.video_releases = _.map(videoReleases, epur);
+	    res.links = _.map(links, epur);
+	    cb(e, res);
+	  }
+	});
       });
     });
   });

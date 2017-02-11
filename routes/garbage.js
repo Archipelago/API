@@ -12,7 +12,10 @@ module.exports = function(app) {
   app.get('/garbage/:id', function(req, res) {
     token.checkPermission(req, res, 'GARBAGE', function(req, res) {
       require('../models/garbage.js').contribs(req.params.id, function(e, r) {
-	sendResponse(res, 200, r);
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 200, r);
       });
     });
   });
