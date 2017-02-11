@@ -260,6 +260,16 @@ exports.delete = {
 	});
       },
 
+      unavailableUser: function(test) {
+	request.get('/user/' + usersToCollect[0].id, function(res) {
+	  test.equal(res.statusCode, 404);
+	  request.get('/user/' + usersToCollect[1].id, function(res) {
+	    test.equal(res.statusCode, 404);
+	    test.done();
+	  });
+	});
+      },
+
       elementsNotDeleted: {
 	movie: function(test) {
 	  request.get('/movie/' + usersToCollect[0].movieId, function(res) {
@@ -305,6 +315,13 @@ exports.delete = {
       rootUser: function(test) {
 	request.delete('/user/me', global.rootToken, function(res) {
 	  test.equal(res.statusCode, 403);
+	  test.done();
+	});
+      },
+
+      unavailableUser: function(test) {
+	request.get('/user/' + usersToCollect[2].id, function(res) {
+	  test.equal(res.statusCode, 404);
 	  test.done();
 	});
       },
@@ -438,32 +455,31 @@ exports.delete = {
 	  test.equal(res.statusCode, 403);
 	  test.done();
 	});
-      }
-    },
-
-    elementsAreDeleted: {
-      user: function(test) {
-	request.get('/user/' + usersToCollect[5].id, function(res) {
-	  test.equal(res.statusCode, 404);
-	  test.done();
-	});
       },
 
-      movie: function(test) {
-	request.get('/movie/' + usersToCollect[5].movieId, function(res) {
-	  test.equal(res.statusCode, 404);
-	  test.done();
-	});
-      },
+      elementsAreDeleted: {
+	user: function(test) {
+	  request.get('/user/' + usersToCollect[5].id, function(res) {
+	    test.equal(res.statusCode, 404);
+	    test.done();
+	  });
+	},
 
-      videoRelease: function(test) {
-	request.get('/video_release/' + usersToCollect[5].videoReleaseId + '/links', function(res) {
-	  test.equal(res.statusCode, 200);
-	  test.deepEqual(res.body, []);
-	  test.done();
-	});
+	movie: function(test) {
+	  request.get('/movie/' + usersToCollect[5].movieId, function(res) {
+	    test.equal(res.statusCode, 404);
+	    test.done();
+	  });
+	},
+
+	videoRelease: function(test) {
+	  request.get('/video_release/' + usersToCollect[5].videoReleaseId + '/links', function(res) {
+	    test.equal(res.statusCode, 200);
+	    test.deepEqual(res.body, []);
+	    test.done();
+	  });
+	}
       }
     }
   }
-//TODO: route /user/:id should not work on deactivated user
 }
