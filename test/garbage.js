@@ -41,7 +41,6 @@ exports.contribs = {
   rootUser: function(test) {
     request.get('/garbage/' + usersToCollect[0].id, global.rootToken, function(res) {
       test.equal(res.statusCode, 200);
-      console.log(res.body);
       test.equal(res.body.movies instanceof Array, true);
       test.equal(res.body.video_releases instanceof Array, true);
       test.equal(res.body.links instanceof Array, true);
@@ -86,6 +85,31 @@ exports.save = {
       test.equal(res.statusCode, 403);
       test.done();
     });
+  },
+
+  userIsDeleted: function(test) {
+    request.get('/user/' + usersToCollect[0].id, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+
+  elementsAreSaved: {
+    movie: function(test) {
+      request.get('/movie/' + usersToCollect[0].movieId, function(res) {
+	test.equal(res.statusCode, 200);
+	test.done();
+      });
+    },
+
+    videoRelease: function(test) {
+      request.get('/video_release/' + usersToCollect[0].videoReleaseId + '/links', function(res) {
+	test.equal(res.statusCode, 200);
+	test.equal(res.body instanceof Array, true);
+	test.strictEqual(res.body[0].id, usersToCollect[0].linkId);
+	test.done();
+      });
+    }
   }
 };
 
@@ -123,6 +147,28 @@ exports.dismiss = {
       test.equal(res.statusCode, 403);
       test.done();
     });
+  },
+
+  elementsAreDeleted: {
+    user: function(test) {
+      request.get('/user/' + usersToCollect[1].id, function(res) {
+	test.equal(res.statusCode, 404);
+	test.done();
+      });
+    },
+
+    movie: function(test) {
+      request.get('/movie/' + usersToCollect[1].movieId, function(res) {
+	test.done();
+      });
+    },
+
+    videoRelease: function(test) {
+      request.get('/video_release/' + usersToCollect[1].videoReleaseId + '/links', function(res) {
+	test.equal(res.statusCode, 200);
+	test.deepEqual(res.body, []);
+	test.done();
+      });
+    }
   }
 };
-//TODO: check if contributions are really collected/dismissed
