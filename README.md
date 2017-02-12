@@ -4,9 +4,17 @@
 ```sh
 npm install
 cp config.json.default config.json
+mysql -u root -p <<< 'CREATE DATABASE archipelago'
+mysql -u root -p archipelago < db.sql
 ```
 
-You also need to install the [database](https://github.com/Archipelago/Database).
+Note that it requires MariaDB 5.6.5 or superior.
+
+To insert data in table `VideoReleases`, you will need to fill all the `List*` tables. A dataset is available to avoid filling it yourself:
+
+```sh
+mysql -u root -p archipelago < lists.sql
+```
 
 ## Tests
 
