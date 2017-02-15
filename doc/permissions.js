@@ -3,12 +3,21 @@
  */
 
 /**
+ * @apiDefine EDIT_USER Permission required to modify users
+ * This permission is only needed to modify other user's accounts. To modify your own account, no permission is needed.
+ */
+
+/**
  * @apiDefine DELETE_USER Permission required to delete users
  * This permission is only needed to delete other user's accounts. To delete your own account, no permission is needed.
  */
 
 /**
  * @apiDefine ADD_ELEMENT Permission required to add elements
+ */
+
+/**
+ * @apiDefine EDIT_ELEMENT Permission required to modify existing elements
  */
 
 /**
@@ -20,11 +29,19 @@
  */
 
 /**
+ * @apiDefine EDIT_RELEASE Permission required to modify existing releases
+ */
+
+/**
  * @apiDefine DELETE_RELEASE Permission required to delete releases
  */
 
 /**
  * @apiDefine ADD_LINK Permission required to add links
+ */
+
+/**
+ * @apiDefine EDIT_LINK Permission required to modify existing links
  */
 
 /**
