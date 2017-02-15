@@ -74,6 +74,31 @@
  */
 
 /**
+ * @api {patch} /link/:id Edit a link
+ * @apiVersion 0.2.0
+ * @apiName EditLink
+ * @apiGroup Link
+ * @apiDescription Edit an existing link.
+ * @apiPermission EDIT_LINK
+ *
+ * @apiParam {Number} id The id of the video release you want to add links.
+ *
+ * @apiParam {String} link The new link
+ * @apiParamExample {string} Example:
+ *     "https://example.com/release.mkv"
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse MissingParameter
+ * @apiUse InvalidParameter
+ * @apiUse AlreadyExists
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
+ */
+
+/**
  * @api {delete} /link/:id Delete a link
  * @apiVersion 0.2.0
  * @apiName DeleteLink
