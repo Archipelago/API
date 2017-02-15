@@ -182,6 +182,51 @@
  */
 
 /**
+ * @api {patch} /movie/:id Edit a movie
+ * @apiVersion 0.2.0
+ * @apiName EditMovie
+ * @apiGroup Movie
+ * @apiDescription Edit an existing movie.
+ * @apiPermission EDIT_ELEMENT
+ *
+ * @apiParam {Number} id The id of the movie to modify
+ * @apiParam {String} [title]
+ * @apiParam {Date} [release_date] Format is YYYY-MM-DD
+ * @apiParam {Url} [image]
+ * @apiParam {Number{4}} [production_year]
+ * @apiParam {Date} [original_release_date] Format is YYYY-MM-DD
+ * @apiParam {String[]} [director]
+ * @apiParam {String[]} [producer]
+ * @apiParam {String[]} [scriptwriter]
+ * @apiParam {String} [duration] Format is 12h34m56s. Seconds can be omitted
+ * @apiParam {String[]} [actor]
+ * @apiParam {String[]} [gender]
+ * @apiParam {String[]} [composer]
+ * @apiParam {String} [original_title]
+ * @apiParam {String} [other_title]
+ * @apiParam {String} [gender]
+ * @apiParam {String} [plot]
+ * @apiParam {String} [informations]
+ * @apiParamExample {json} Example:
+ *     {
+ *       "actor": [
+ *         "George Clooney", "Quentin Tarantino"
+ *       ],
+ *       "gender": [
+ *         "horror", "fantastic"
+ *       ]
+ *     }
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse InvalidParameter
+ * @apiUse AlreadyExists
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ */
+
+/**
  * @api {delete} /movies/:id Delete a movie
  * @apiVersion 0.2.0
  * @apiName DeleteMovie
