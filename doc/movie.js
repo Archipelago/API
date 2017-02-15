@@ -224,6 +224,7 @@
  * @apiUse AlreadyExists
  * @apiUse Unauthorized
  * @apiUse Forbidden
+ * @apiUse NotFound
  */
 
 /**
