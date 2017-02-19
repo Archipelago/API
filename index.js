@@ -25,7 +25,8 @@ require('./models/config.js').get(function(e, r) {});
 
 app.set('x-powered-by', false);
 app.listen(process.env.PORT || config.port);
-app.use(bodyParser.json({type: '*/*'}));
+app.use(bodyParser.json({type: '*/*',
+			 strict: false}));
 
 require('./routes/user.js')(app);
 require('./routes/movie.js')(app);
