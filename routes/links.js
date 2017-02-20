@@ -39,4 +39,17 @@ module.exports = function(app) {
       });
     })
   });
+
+  app.patch('/link/:id', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_LINK', function(res, res) {
+      require('../models/links.js').update(req.params.id, req.body, function(e, r) {
+	if (e)
+	  sendResponse(res, 400, {message: 'This link is a duplicate.'});
+	else if (r.info.affectedRows != 1)
+	  sendResponse(res, 404, {message: 'No link with id "' + req.params.id + '" found.'});
+	else
+	  sendResponse(res, 204);
+      });
+    });
+  });
 }

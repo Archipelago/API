@@ -97,3 +97,9 @@ module.exports.delete = function(id, cb) {
       cb(e, r);
   });
 }
+
+module.exports.update = function(id, url, cb) {
+  db.query('UPDATE `Links` SET `url` = ? WHERE `id` = ?', [url, id], function(e, r) {
+    cb(e, r);
+  });
+}
