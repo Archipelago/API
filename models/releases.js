@@ -106,3 +106,57 @@ module.exports.delete = function(id, cb) {
     });
   });
 }
+
+
+module.exports.update = function(id, infos, cb) {
+  infos = epur(infos);
+
+  let query = 'UPDATE `VideoReleases` SET';
+  if (infos.name !== undefined) {
+    if (infos.name.length == 0) {
+      cb('Release name cannot be empty');
+      return;
+    }
+    else
+      query += ' `name` = :name,';
+  }
+  if (infos.size !== undefined) {
+    try {
+      infos.size = filesizeParser(infos.size, {base: infos.size.match(/i/i) ? 2 : 10});
+      query += ' `size` = :size,';
+    } catch(e) {
+      cb('"' + infos.size + '" does not appear to be a valid size"');
+      return;
+    }
+  }
+  for (i in listsCorres) {
+    if (infos[i] !== undefined) {
+      for (j in lists[listsCorres[i]]) {
+	if (typeof infos[i] === 'string'
+	    && infos[i].toLowerCase() == lists[listsCorres[i]][j].toLowerCase()) {
+	  infos[i] = parseInt(j) + 1;
+	  query += ' `' + i + '` = :' + i + ',';
+	}
+      }
+      if (typeof infos[i] !== 'number') {
+	cb('Invalid parameter ' + i + '. GET /list/' + listsCorres[i] + ' to get available possibilities');
+	return;
+      }
+    }
+  }
+  if (infos.informations
+      && infos.informations instanceof Array) {
+    infos.informations = infos.informations.join(';');
+    query += '`informations` = :informations,';
+  }
+
+  query = query.split(/,$/)[0];
+  infos.id = id;
+  db.query(query + ' WHERE id = :id', infos, function(e, r) {
+    if (e)
+      cb(e, r);
+    else if (r.info.affectedRows != 1)
+      e = 'No release with id "' + id + '" found.';
+    cb(e, r);
+  });
+}
