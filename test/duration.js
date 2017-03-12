@@ -1,4 +1,4 @@
-let duration = require('../duration.js');
+let duration = require('../lib/duration');
 
 exports.validation = {
   pass: function(test) {

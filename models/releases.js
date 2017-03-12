@@ -1,6 +1,6 @@
 let filesize = require('file-size');
 let filesizeParser = require('filesize-parser');
-let epur = require('../epur');
+let epur = require('../lib/epur');
 let listsCorres = {
   'audio_codec': 'audioCodecs',
   'video_codec': 'videoCodecs',

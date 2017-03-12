@@ -1,5 +1,5 @@
 let _ = require('lodash');
-let epur = require('../epur');
+let epur = require('../lib/epur');
 
 // TODO: this code need refactorisation
 module.exports.add = function(infos, cb) {

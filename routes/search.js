@@ -1,5 +1,5 @@
 let _ = require('lodash');
-let sendResponse = require('../sendResponse');
+let sendResponse = require('../lib/sendResponse');
 let models = {
   'movie': require('../models/movie'),
   'release': require('../models/releases'),

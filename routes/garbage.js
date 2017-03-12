@@ -1,4 +1,4 @@
-let sendResponse = require('../sendResponse');
+let sendResponse = require('../lib/sendResponse');
 
 module.exports = function(app) {
   app.get('/garbage', function(req, res) {

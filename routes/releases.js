@@ -1,4 +1,4 @@
-let sendResponse = require('../sendResponse');
+let sendResponse = require('../lib/sendResponse');
 
 module.exports = function(app) {
   //TODO: fix it, server crash if invalid parameters are provided

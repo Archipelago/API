@@ -4,7 +4,7 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let app = express();
 let Maria = require('mariasql');
-let Token = require('./token');
+let Token = require('./lib/token');
 global.config = require(process.env.CONFIG_FILE || './config.json');
 global.db = new Maria({host: config.db.host,
 		       user: config.db.user,

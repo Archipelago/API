@@ -1,5 +1,5 @@
 let crypto = require('crypto');
-let epur = require('../epur');
+let epur = require('../lib/epur');
 
 module.exports.register = function(infos, cb) {
   infos = epur(infos);
