@@ -22,6 +22,10 @@ exports.hash = {
     test.equal(hash.method, 'sha256-salt');
     test.equal(hash.salt.length, 32);
     test.equal(hash.hash.length, 64);
+    hash = password.hash('azerty42', 'sha255-salt');
+    test.equal(hash.method, 'sha256-salt');
+    test.equal(hash.salt.length, 32);
+    test.equal(hash.hash.length, 64);
     test.done();
   }
 }
