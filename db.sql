@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS `Passwords`;
 DROP TABLE IF EXISTS `Users`;
 DROP TABLE IF EXISTS `Movies`;
 DROP TABLE IF EXISTS `ListAudioCodecs`;
@@ -16,11 +17,18 @@ DROP TABLE IF EXISTS `Config`;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+CREATE TABLE `Passwords` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `salt` char(32) DEFAULT NULL,
+  `hash` varchar(128) DEFAULT NULL,
+  `method` varchar(32) DEFAULT "sha256-salt",
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `Users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(32) DEFAULT NULL,
-  `salt` char(32) DEFAULT NULL,
-  `password` varchar(128) DEFAULT NULL,
+  `password_id` int(11) NOT NULL,
   `mail` varchar(255) DEFAULT NULL,
   `bm` varchar(37) DEFAULT NULL,
   `permissions` int(11) NOT NULL,
@@ -28,7 +36,9 @@ CREATE TABLE `Users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `login` (`login`)
+  UNIQUE KEY `login` (`login`),
+  KEY `password_id` (`password_id`),
+  CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`password_id`) REFERENCES `Passwords` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Movies` (
@@ -55,7 +65,7 @@ CREATE TABLE `Movies` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `duplicates` (`title`,`production_year`),
-  KEY `Movies_ibfk_1` (`user_id`),
+  KEY `user_id` (`user_id`),
   CONSTRAINT `Movies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

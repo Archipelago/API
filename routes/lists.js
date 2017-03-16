@@ -1,4 +1,4 @@
-let sendResponse = require('../sendResponse');
+let sendResponse = require('../lib/sendResponse');
 
 function listRoute(app, routeName) {
   app.get('/list/' + routeName, function(req, res) {

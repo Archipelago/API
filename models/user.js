@@ -1,5 +1,6 @@
 let crypto = require('crypto');
-let epur = require('../epur');
+let epur = require('../lib/epur');
+let pw = require('../lib/password');
 
 module.exports.register = function(infos, cb) {
   infos = epur(infos);
@@ -20,13 +21,18 @@ module.exports.register = function(infos, cb) {
   else {
     if (infos.bm && infos.bm.substr(0, 3) !== 'BM-')
       infos.bm = 'BM-' + infos.bm;
-    infos.salt = crypto.randomBytes(16).toString('hex');
-    infos.password = crypto.createHmac('sha256', infos.salt + infos.password).digest('hex');
-    db.query('INSERT INTO `Users`(`login`, `salt`, `password`, `mail`, `bm`) VALUES(:login, :salt, :password, :mail, :bm)', infos, function(e, r) {
-      if (e && e.code == 1062)
-	cb('User "' + infos.login + '" already exists');
-      else
-	cb(e, r);
+    let hash = pw.hash(infos.password);
+    db.query('INSERT INTO `Passwords`(`salt`, `hash`, `method`) VALUES(:salt, :hash, :method)', hash, function(e, r) {
+      infos.password_id = r.info.insertId;
+      db.query('INSERT INTO `Users`(`login`, `password_id`, `mail`, `bm`) VALUES(:login, :password_id, :mail, :bm)', infos, function(e, r) {
+	if (e && e.code == 1062) {
+	  db.query('DELETE FROM `Passwords` WHERE `id` = :password_id', infos, function() {
+	    cb('User "' + infos.login + '" already exists');
+	  });
+	}
+	else
+	  cb(e, r);
+      });
     });
   }
 }
@@ -40,14 +46,20 @@ module.exports.login = function(infos, cb) {
   else if (infos.password === undefined)
     cb('Password must be provided');
   else {
-    db.query('SELECT `id`, `salt`, `password`, `permissions` FROM `Users` WHERE `login` = ? AND `deleted` = FALSE', [infos.login], function(e, r) {
+    db.query('SELECT `Users`.`id`, `Passwords`.`salt`, `Passwords`.`hash`, `Passwords`.`method`, `Users`.`permissions` FROM `Users` LEFT JOIN `Passwords` ON `Passwords`.`id` = `Users`.`password_id` WHERE `Users`.`login` = ? AND `Users`.`deleted` = FALSE', [infos.login], function(e, r) {
       if (r.info.numRows != 1)
 	cb('User "' + infos.login + '" not found');
-      else if (crypto.createHmac('sha256', r[0].salt + infos.password).digest('hex') != r[0].password)
+      else if (!pw.check(infos.password, r[0].hash, r[0].salt, r[0].method))
 	cb('Invalid password');
       else {
-	delete r[0].password;
+	let hash = pw.hash(infos.password);
+	hash.password_id = r[0].id;
+	if (r[0].method != pw.preferred()) {
+	  db.query('UPDATE `Passwords` SET `salt` = :salt, `hash` = :hash, `method` = :method WHERE `id` = :password_id', hash, function(e, r) {});
+	}
+	delete r[0].hash;
 	delete r[0].salt;
+	delete r[0].method;
 	cb(e, r[0]);
       }
     });
@@ -87,7 +99,10 @@ module.exports.updatePermission = function(id, permissions, cb) {
 }
 
 module.exports.deactivate = function(id, cb) {
-  db.query('UPDATE `Users` SET `login` = NULL, `salt` = NULL, `password` = NULL, `mail` = NULL, `bm` = NULL, `permissions` = 0, `deleted` = TRUE WHERE `id` = ? AND `deleted` = FALSE', [id], function(e, r) {
+  db.query('UPDATE `Users` \
+  LEFT JOIN `Passwords` ON `Users`.`password_id` = `Passwords`.`id` \
+  SET `Users`.`login` = NULL, `Users`.`mail` = NULL, `Users`.`bm` = NULL, `Users`.`permissions` = 0, `Users`.`deleted` = TRUE, `Passwords`.`salt` = NULL, `Passwords`.`hash` = NULL, `Passwords`.`method` = NULL \
+  WHERE `Users`.`id` = ? AND `Users`.`deleted` = FALSE', [id], function(e, r) {
     cb(e, r);
   });
 }
@@ -108,7 +123,7 @@ module.exports.delete = function(id, cb) {
 	  cb(e, r);
 	  return;
 	}
-	db.query('DELETE FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+	db.query('DELETE `Users`, `Passwords` FROM `Users` RIGHT JOIN `Passwords` ON `Passwords`.`id` = `Users`.`password_id` WHERE `Users`.`id` = ?', [id], function(e, r) {
 	  cb(e, r);
 	});
       });

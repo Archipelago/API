@@ -1,5 +1,5 @@
-let duration = require('../duration');
-let epur = require('../epur');
+let duration = require('../lib/duration');
+let epur = require('../lib/epur');
 
 module.exports.add = function(infos, cb) {
   infos = epur(infos);

@@ -1,8 +1,9 @@
-let duration = require('../duration.js');
+let duration = require('../lib/duration');
 
 exports.validation = {
   pass: function(test) {
-    let tests = ['12h34m56s', '12h34m56', '12h34m', '12h34'];
+    let tests = ['12h34m56s', '12h34m56', '12h34m', '12h34',
+		 '12H34M56S', '12H34M56', '12H34M', '12H34'];
     for (let i in tests) {
       test.equal(duration.validate(tests[i]), true, i);
     }
@@ -10,7 +11,8 @@ exports.validation = {
   },
 
   fail: function(test) {
-    let tests = ['12h60m', '12h100m', '12h34m60s', '12h34m100s', '12h56s', '12h', '12'];
+    let tests = ['12h60m', '12h100m', '12h34m60s', '12h34m100s', '12h56s', '12h', '12',
+		 '12H60M', '12H100M', '12H34M60S', '12H34M100S', '12H56S', '12h', '12'];
     for (let i in tests) {
       test.equal(duration.validate(tests[i]), false, i);
     }

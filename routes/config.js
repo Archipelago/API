@@ -1,5 +1,5 @@
 let _ = require('lodash');
-let sendResponse = require('../sendResponse');
+let sendResponse = require('../lib/sendResponse');
 
 module.exports = function(app) {
   app.get('/config', function(req, res) {
