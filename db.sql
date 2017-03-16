@@ -37,7 +37,7 @@ CREATE TABLE `Users` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
-  KEY `Users_ibfk_1` (`password_id`),
+  KEY `password_id` (`password_id`),
   CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`password_id`) REFERENCES `Passwords` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -65,7 +65,7 @@ CREATE TABLE `Movies` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `duplicates` (`title`,`production_year`),
-  KEY `Movies_ibfk_1` (`user_id`),
+  KEY `user_id` (`user_id`),
   CONSTRAINT `Movies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
