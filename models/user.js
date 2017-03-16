@@ -49,8 +49,10 @@ module.exports.login = function(infos, cb) {
       else if (!pw.check(infos.password, r[0].hash, r[0].salt, r[0].method))
 	cb('Invalid password');
       else {
+	let hash = pw.hash(infos.password);
+	hash.password_id = r[0].id;
 	if (r[0].method != pw.preferred()) {
-	  db.query('UPDATE `Passwords` SET `salt` = :salt, `hash` = :hash, `method` = :method', pw.hash(infos.password), function(e, r) {});
+	  db.query('UPDATE `Passwords` SET `salt` = :salt, `hash` = :hash, `method` = :method WHERE `id` = :password_id', hash, function(e, r) {});
 	}
 	delete r[0].hash;
 	delete r[0].salt;
