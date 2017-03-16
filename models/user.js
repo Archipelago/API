@@ -25,8 +25,11 @@ module.exports.register = function(infos, cb) {
     db.query('INSERT INTO `Passwords`(`salt`, `hash`, `method`) VALUES(:salt, :hash, :method)', hash, function(e, r) {
       infos.password_id = r.info.insertId;
       db.query('INSERT INTO `Users`(`login`, `password_id`, `mail`, `bm`) VALUES(:login, :password_id, :mail, :bm)', infos, function(e, r) {
-	if (e && e.code == 1062)
-	  cb('User "' + infos.login + '" already exists');
+	if (e && e.code == 1062) {
+	  db.query('DELETE FROM `Passwords` WHERE `id` = :password_id', infos, function() {
+	    cb('User "' + infos.login + '" already exists');
+	  });
+	}
 	else
 	  cb(e, r);
       });
@@ -120,7 +123,7 @@ module.exports.delete = function(id, cb) {
 	  cb(e, r);
 	  return;
 	}
-	db.query('DELETE FROM `Users` WHERE `id` = ?', [id], function(e, r) {
+	db.query('DELETE `Users`, `Passwords` FROM `Users` RIGHT JOIN `Passwords` ON `Passwords`.`id` = `Users`.`password_id` WHERE `Users`.`id` = ?', [id], function(e, r) {
 	  cb(e, r);
 	});
       });
