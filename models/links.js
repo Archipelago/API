@@ -80,7 +80,7 @@ WHERE `Multilinks`.`release_id` = ? AND `Multilinks`.`release_type` = "movie"';
 }
 
 module.exports.search = function(query, cb) {
-  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `id`, `url` FROM `Links` WHERE `url` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
     for (i in r[0])

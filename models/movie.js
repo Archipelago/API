@@ -100,7 +100,7 @@ module.exports.update = function(id, infos, cb) {
 }
 
 module.exports.search = function(query, cb) {
-  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `title`, `id`  FROM `Movies` WHERE `plot` LIKE :q OR `title` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
     for (i in r[0])

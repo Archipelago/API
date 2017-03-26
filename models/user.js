@@ -103,7 +103,7 @@ module.exports.update = function(id, infos, cb) {
 }
 
 module.exports.search = function(query, cb) {
-  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q AND `deleted` = FALSE', {q: query}, function(e, r) {
     delete r.info;
     for (i in r[0])

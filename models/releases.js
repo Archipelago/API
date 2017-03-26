@@ -87,7 +87,7 @@ WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
 }
 
 module.exports.search = function(query, cb) {
-  query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
+  query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `name`, `id`  FROM `VideoReleases` WHERE `name` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
     for (i in r[0])
