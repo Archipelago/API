@@ -4,7 +4,7 @@
 
 /**
  * @apiDefine EDIT_USER Permission required to modify users
- * This permission is only needed to modify other user's accounts. To modify your own account, no permission is needed. Some fields cannot be modified for other user's accounts, as "login", "password", "email" and "bm".
+ * This permission is only needed to modify other user's accounts. To modify your own account, no permission is needed.
  * Field "permission" can not be changed with this permission.
  */
 

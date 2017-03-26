@@ -66,6 +66,42 @@ module.exports.login = function(infos, cb) {
   }
 }
 
+module.exports.update = function(id, infos, cb) {
+  infos = epur(infos);
+
+  infos.id = id;
+  if (infos.password
+	   && infos.password.length < 8)
+    cb('Password must be at least 8 chars long');
+  else if (infos.email && !infos.email.match(/^[\w\.\-]+\@[\w\.\-]+\.[\w]{2,}$/i))
+    cb('Invalid email address');
+  else if (infos.bm && !infos.bm.match(/^(BM-)?[a-zA-Z0-9]{32,34}$/))
+    cb('Invalid bitmessage address');
+  else {
+    if (infos.bm && infos.bm.substr(0, 3) !== 'BM-')
+      infos.bm = 'BM-' + infos.bm;
+    let callback = cb;
+    if (infos.password) {
+      callback = function(e, r) {
+	let hash = pw.hash(infos.password);
+	hash.id = id;
+	db.query('UPDATE `Passwords` LEFT JOIN `Users` ON `Passwords`.`id` = `Users`.`password_id` SET `Passwords`.`salt` = :salt, `Passwords`.`hash` = :hash, `Passwords`.`method` = :method WHERE `Users`.`id` = :id', hash, function(e, r) {
+	  cb(e, r);
+	});
+      };
+    }
+
+    let query = 'UPDATE `Users` SET';
+    if (infos["email"])
+      query += ' `mail` = :email,';
+    if (infos["bm"])
+      query += ' `bm` = :bm,';
+    db.query(query.split(/,$/)[0] + ' WHERE `id` = :id', infos, function(e, r) {
+      callback(e, r);
+    });
+  }
+}
+
 module.exports.search = function(query, cb) {
   query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
   db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q AND `deleted` = FALSE', {q: query}, function(e, r) {
