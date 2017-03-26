@@ -14,7 +14,7 @@ module.exports.register = function(infos, cb) {
     cb('Password must be provided');
   else if (infos.password.length < 8)
     cb('Password must be at least 8 chars long');
-  else if (infos.mail && !infos.mail.match(/^[\w\.\-]+\@[\w\.\-]+\.[\w]{2,}$/i))
+  else if (infos.email && !infos.email.match(/^[\w\.\-]+\@[\w\.\-]+\.[\w]{2,}$/i))
     cb('Invalid email address');
   else if (infos.bm && !infos.bm.match(/^(BM-)?[a-zA-Z0-9]{32,34}$/))
     cb('Invalid bitmessage address');
@@ -24,7 +24,7 @@ module.exports.register = function(infos, cb) {
     let hash = pw.hash(infos.password);
     db.query('INSERT INTO `Passwords`(`salt`, `hash`, `method`) VALUES(:salt, :hash, :method)', hash, function(e, r) {
       infos.password_id = r.info.insertId;
-      db.query('INSERT INTO `Users`(`login`, `password_id`, `mail`, `bm`) VALUES(:login, :password_id, :mail, :bm)', infos, function(e, r) {
+      db.query('INSERT INTO `Users`(`login`, `password_id`, `mail`, `bm`) VALUES(:login, :password_id, :email, :bm)', infos, function(e, r) {
 	if (e && e.code == 1062) {
 	  db.query('DELETE FROM `Passwords` WHERE `id` = :password_id', infos, function() {
 	    cb('User "' + infos.login + '" already exists');
