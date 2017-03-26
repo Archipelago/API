@@ -55,6 +55,29 @@ module.exports = function(app) {
     });
   });
 
+  app.patch(['/user', '/user/:id'], function(req, res) {
+    token.checkPermission(req, res, 'NONE', function(req, res) {
+      let cb = function(req, res) {
+	require('../models/user.js').update(req.params.id, req.body, function(e, r) {
+	  if (e)
+	    sendResponse(res, 400, {message: e});
+	  else if (r.info.affectedRows != 1)
+	    sendResponse(res, 404, {message: "No user with id '" + req.params.id + "' found."});
+	  else sendResponse(res, 204);
+	});
+      }
+      if (!req.params.id)
+	req.params.id = token.getId(req.headers.token);
+      if (req.params.id != token.getId(req.headers.token)) {
+	token.checkPermission(req, res, 'EDIT_USER', function(req, res) {
+	  cb(req, res);
+	});
+      }
+      else
+	cb(req, res);
+    });
+  });
+
   app.delete(['/user/:id/', '/user/:id/complete'], function(req, res) {
     token.checkPermission(req, res, 'NONE', function(req, res) {
       let cb = function(req, res) {

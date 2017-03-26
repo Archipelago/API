@@ -498,3 +498,59 @@ exports.alpha = {
     }
   }
 }
+
+exports.update = {
+  init: function(test) {
+    request.post('/movie', global.rootToken, {
+      "title": "foobar" + hash + "edit",
+      "release_date": "1999-03-31",
+      "image": "https://example.com/" + hash + ".png",
+      "production_year": 1998
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      id = res.body.id;
+      test.done();
+    });
+  },
+
+  unlogged: function(test) {
+    request.patch('/movie/' + id, {
+      "name": "foobar" + hash + "edited!",
+      "release_date": "2002-03-12"
+    }, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.patch('/movie/' + id, global.token, {
+      "name": "foobar" + hash + "edited!",
+      "release_date": "2002-03-12"
+    }, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.patch('/movie/' + id, global.rootToken, {
+      "name": "foobar" + hash + "edited!",
+      "release_date": "2002-03-12"
+    }, function(res) {
+      test.equal(res.statusCode, 204);
+      test.strictEqual(res.body, undefined);
+      test.done();
+    });
+  },
+
+  notFound: function(test) {
+    request.patch('/movie/-1', global.rootToken, {
+      "name": "foobar" + hash + "edited!",
+      "release_date": "2002-03-12"
+    }, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+}

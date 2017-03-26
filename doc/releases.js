@@ -87,6 +87,43 @@
  */
 
 /**
+ * @api {patch} /video_release/:id Edit a release
+ * @apiVersion 0.2.0
+ * @apiName EditRelease
+ * @apiGroup Release
+ * @apiDescription Edit an existing release
+ * @apiPermission EDIT_RELEASE
+ *
+ * @apiParam {Number} id The id of the release to modify
+ *
+ * @apiParam {String} [name]
+ * @apiParam {String} [size] Note that "b" means "bits" while "B" means "Bytes". Note that 1KiB = 1024B while 1KB = 1000B.
+ * @apiParam {String} [language]
+ * @apiParam {String} [audio_codec]
+ * @apiParam {String} [video_codec]
+ * @apiParam {String} [source]
+ * @apiParam {String} [quality]
+ * @apiParam {String} [container]
+ * @apiParam {String} [compression]
+ * @apiParam {String[]} [informations] Informations that does not fit in any of the fields above.
+ * @apiParamExample {json} Example:
+ *     {
+ *       "size": "1.4GiB",
+ *       "quality": "1080p",
+ *     }
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ *
+ * @apiUse InvalidParameter
+ * @apiUse AlreadyExists
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ * @apiUse NotFound
+ */
+
+/**
  * @api {delete} /video_release/:id Delete a release
  * @apiVersion 0.2.0
  * @apiName DeleteRelease

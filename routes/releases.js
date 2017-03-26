@@ -34,4 +34,15 @@ module.exports = function(app) {
       });
     })
   });
+
+  app.patch('/video_release/:id', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_RELEASE', function(req, res) {
+      require('../models/releases.js').update(req.params.id, req.body, function(e, r) {
+	if (e)
+	  sendResponse(res, 404, {message: e});
+	else
+	  sendResponse(res, 204);
+      });
+    })
+  });
 }

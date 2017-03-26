@@ -34,6 +34,19 @@ module.exports = function(app) {
     });
   });
 
+  app.patch('/movie/:id', function(req, res) {
+    token.checkPermission(req, res, 'EDIT_MOVIE', function(req, res) {
+      require('../models/movie.js').update(req.params.id, req.body, function(e, r) {
+	if (e)
+	  sendResponse(res, 400, e);
+	else if (r.info.affectedRows != 1)
+	  sendResponse(res, 404, {message: "No movie with id '" + req.params.id + '" found.'});
+	else
+	  sendResponse(res, 204);
+      });
+    });
+  });
+
   app.get(['/movies/last/:nb', '/movies/last'], function(req, res) {
     let nb = req.params.nb || 15;
     if (nb < 1 || nb > 100)

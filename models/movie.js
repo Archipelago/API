@@ -50,6 +50,55 @@ module.exports.add = function(infos, cb) {
   }
 }
 
+module.exports.update = function(id, infos, cb) {
+  infos = epur(infos);
+
+  let query = 'UPDATE `Movies` SET';
+  if (infos.release_date
+      && !infos.release_date.match(/^\d{4}(\-\d{2}){2}$/)
+      && new Date(infos.release_date) == 'Invalid Date')
+    cb('Invalid release date');
+  else if (infos.original_release_date
+	   && (!infos.original_release_date.match(/^\d{4}(\-\d{2}){2}$/)
+	       || new Date(infos.original_release_date) == 'Invalid Date'))
+    return cb('Invalid original release date');
+  else if (infos.production_year
+	   && (infos.production_year < 1890
+	       || infos.production_year > 9999))
+    cb('Invalid production year');
+  else if (infos.image
+	   && !infos.image.match(/^https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/))
+    cb('Invalid image url');
+  else if (infos.duration
+	   && !duration.validate(infos.duration))
+    cb('Invalid duration');
+  else {
+    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
+    for (i in fields) {
+      if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
+	cb("Invalid " + fields[i]);
+	return;
+      }
+      else if (infos[fields[i]])
+	infos[fields[i]] = infos[fields[i]].join(";");
+    }
+    if (infos.duration) {
+      infos.duration = duration.parse(infos.duration);
+    }
+    fields = ['title', 'image', 'production_year', 'release_date', 'original_release_date', 'director', 'producer', 'scriptwriter', 'duration', 'actor', 'gender', 'composer', 'original_title', 'other_title', 'plot', 'informations'];
+    for (let i in fields) {
+      if (infos[fields[i]]) {
+	query += ' `' + fields[i] + '` = :' + fields[i] + ',';
+      }
+    }
+    query = query.split(/,$/)[0];
+    infos.id = id;
+    db.query(query + ' WHERE `id` = :id', infos, function(e, r) {
+      cb(e, r);
+    });
+  }
+}
+
 module.exports.search = function(query, cb) {
   query = '%' + query.replace(/[\s\t]+/g, '%') + '%';
   db.query('SELECT `title`, `id`  FROM `Movies` WHERE `plot` LIKE :q OR `title` LIKE :q', {q: query}, function(e, r) {

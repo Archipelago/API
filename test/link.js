@@ -135,3 +135,53 @@ exports.delete = {
     });
   }
 }
+
+exports.patch = {
+  init: function(test) {
+    request.post('/video_release/' + global.videoReleaseId + '/link', global.rootToken, [
+      "https://foo.bar/releases1" + hash + ".mkv",
+    ], function(res) {
+      test.equal(res.statusCode, 201);
+      test.equal(res.body instanceof Array, true);
+      test.equal(res.body.length, 1);
+      id = res.body[0];
+      test.done();
+    });
+  },
+
+  unlogged: function(test) {
+    request.patch('/link/' + id, "https://bar.foo/releases" + hash + ".mkv", function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.patch('/link/' + id, global.token, "https://bar.foo/releases" + hash + ".mkv", function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.patch('/link/' + id, global.rootToken, "https://bar.foo/releases" + hash + ".mkv", function(res) {
+      test.equal(res.statusCode, 204);
+      test.strictEqual(res.body, undefined);
+      test.done();
+    });
+  },
+
+  duplicate: function(test) {
+    request.patch('/link/' + id, global.rootToken, "https://example.com/releases" + hash + ".mkv", function(res) {
+      test.equal(res.statusCode, 400);
+      test.done();
+    });
+  },
+
+  notFound: function(test) {
+    request.patch('/link/-1', global.rootToken, "https://example.com/releases" + hash + ".mkv", function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  }
+}

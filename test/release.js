@@ -261,3 +261,65 @@ exports.delete = {
     });
   }
 }
+
+
+exports.update = {
+  init: function(test) {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
+      "name": "foobar",
+      "size": "2.1GB",
+      "language": randomElem(global.lists.languages),
+      "audio_codec": randomElem(global.lists.audioCodecs),
+      "video_codec": randomElem(global.lists.videoCodecs),
+      "source": randomElem(global.lists.sources),
+      "quality": randomElem(global.lists.qualities),
+      "container": randomElem(global.lists.containers)
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      test.equal(typeof res.body.id, 'number');
+      releaseId = res.body.id;
+      test.done();
+    });
+  },
+
+  unlogged: function(test) {
+    request.patch('/video_release/' + releaseId, {
+      "name": "foobar.REPACK",
+      "size": "1.4GiB"
+    }, function(res) {
+      test.equal(res.statusCode, 401);
+      test.done();
+    });
+  },
+
+  unauthorized: function(test) {
+    request.patch('/video_release/' + releaseId, global.token, {
+      "name": "foobar.REPACK",
+      "size": "1.4GiB"
+    }, function(res) {
+      test.equal(res.statusCode, 403);
+      test.done();
+    });
+  },
+
+  rootUser: function(test) {
+    request.patch('/video_release/' + releaseId, global.rootToken, {
+      "name": "foobar.REPACK",
+      "size": "1.4GiB"
+    }, function(res) {
+      test.equal(res.statusCode, 204);
+      test.strictEqual(res.body, undefined);
+      test.done();
+    });
+  },
+
+  notFound: function(test) {
+    request.patch('/video_release/-1', global.rootToken, {
+      "name": "foobar.REPACK",
+      "size": "1.4GiB"
+    }, function(res) {
+      test.equal(res.statusCode, 404);
+      test.done();
+    });
+  },
+}

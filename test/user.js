@@ -1,6 +1,7 @@
 let crypto = require('crypto');
 let hash = crypto.randomBytes(4).toString('hex');
 let async = require('async');
+let id, token;
 global.usersToCollect = [];
 
 function randomElem(array) {
@@ -479,6 +480,108 @@ exports.delete = {
 	    test.done();
 	  });
 	}
+      }
+    }
+  }
+}
+
+exports.update = {
+  init: function(test) {
+    request.post('/register', {
+      "login": "tmp" + hash + "update",
+      "password": "foobar42"
+    }, function(res) {
+      test.equal(res.statusCode, 201);
+      id = res.body.id;
+      test.equal(typeof res.body.id, 'number');
+      request.post('/login', {
+	"login": "tmp" + hash + "update",
+	"password": "foobar42"
+      }, function(res) {
+	test.equal(res.statusCode, 200);
+	token = res.body.token;
+	test.done();
+      });
+    });
+  },
+
+  self: {
+    unlogged: function(test) {
+      request.patch('/user', {
+	"email": "default@example.com"
+      }, function(res) {
+	test.equal(res.statusCode, 401);
+	test.done();
+      });
+    },
+
+    invalid: function(test) {
+      request.patch('/user', token, {
+	"email": "@example.com"
+      }, function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    valid: function(test) {
+      request.patch('/user', token, {
+	"email": "default@example.com",
+	"password": "b3tt3r_P4SSw0rD"
+      }, function(res) {
+	test.equal(res.statusCode, 204);
+	test.done();
+      });
+    }
+  },
+
+  id:  {
+    unlogged: function(test) {
+      request.patch('/user/' + id, {
+	"email": "default@example.com"
+      }, function(res) {
+	test.equal(res.statusCode, 401);
+	test.done();
+      });
+    },
+
+    unauthorized: function(test) {
+      request.patch('/user/' + id, global.token, {
+	"email": "default@example.com"
+      }, function(res) {
+	test.equal(res.statusCode, 403);
+	test.done();
+      });
+    },
+
+    invalid: function(test) {
+      request.patch('/user/' + id, global.rootToken, {
+	"email": "@example.com"
+      }, function(res) {
+	test.equal(res.statusCode, 400);
+	test.done();
+      });
+    },
+
+    valid: {
+      self: function(test) {
+	request.patch('/user/' + id, token, {
+	  "email": "default@example.com",
+	  "password": "b3tt3r_P4SSw0rD"
+	}, function(res) {
+	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
+      },
+
+      rootUser: function(test) {
+	request.patch('/user/' + id, global.rootToken, {
+	  "email": "default@example.com",
+	  "password": "b3tt3r_P4SSw0rD"
+	}, function(res) {
+	  test.equal(res.statusCode, 204);
+	  test.done();
+	});
       }
     }
   }

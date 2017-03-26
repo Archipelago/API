@@ -126,6 +126,35 @@
  */
 
 /**
+ * @api {patch} /user/:id Edit user account
+ * @apiVersion 0.2.0
+ * @apiName EditUser
+ * @apiGroup User
+ * @apiDescription Edit an existing account
+ * @apiPermission EDIT_USER
+ *
+ * @apiParam {Number} [id] The id of the account you want to modify, or yours if not specified
+ * @apiParam {String} [password] Must be at least 8 chars long
+ * @apiParam {String} [email] Email address
+ * @apiParam {String} [bm] Bitmessage address
+ * @apiParamExample {json} Example:
+ *     {
+ *       "password": "p4S5w0RD",
+ *       "email": "foo@bar.com",
+ *       "bm": "BM-2cT6bVE4XnubEqXUQBf3GuZV1gjFMGrpFB"
+ *     }
+ *
+ * @apiSuccessExample Success-Response
+ *     HTTP/1.1 204 No Content
+ *
+ * @apiUse InvalidParameter
+ * @apiUse AlreadyExists
+ * @apiUse NotFound
+ * @apiUse Unauthorized
+ * @apiUse Forbidden
+ */
+
+/**
  * @api {delete} /user/:id[/complete] Delete a user
  * @apiVersion 0.2.0
  * @apiName DeleteUser
