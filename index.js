@@ -5,6 +5,7 @@ let bodyParser = require('body-parser');
 let app = express();
 let Maria = require('mariasql');
 let Token = require('./lib/token');
+let epur = require('./lib/epur');
 global.config = require(process.env.CONFIG_FILE || './config.json');
 global.db = new Maria({host: config.db.host,
 		       user: config.db.user,
@@ -27,6 +28,11 @@ app.set('x-powered-by', false);
 app.listen(process.env.PORT || config.port);
 app.use(bodyParser.json({type: '*/*',
 			 strict: false}));
+app.use(function(req, res, next) {
+  if (req.body)
+    req.body = epur(req.body);
+  next();
+});
 
 require('./routes/user.js')(app);
 require('./routes/movie.js')(app);

@@ -1,6 +1,5 @@
 let filesize = require('file-size');
 let filesizeParser = require('filesize-parser');
-let epur = require('../lib/epur');
 let listsCorres = {
   'audio_codec': 'audioCodecs',
   'video_codec': 'videoCodecs',
@@ -12,8 +11,6 @@ let listsCorres = {
 }
 
 module.exports.add = function(infos, cb) {
-  infos = epur(infos);
-
   if (infos.name === undefined
       || infos.name.length == 0)
     cb('Release name must be provided');
@@ -109,8 +106,6 @@ module.exports.delete = function(id, cb) {
 
 
 module.exports.update = function(id, infos, cb) {
-  infos = epur(infos);
-
   let query = 'UPDATE `VideoReleases` SET';
   if (infos.name !== undefined) {
     if (infos.name.length == 0) {

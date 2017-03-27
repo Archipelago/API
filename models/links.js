@@ -1,10 +1,7 @@
 let _ = require('lodash');
-let epur = require('../lib/epur');
 
 // TODO: this code need refactorisation
 module.exports.add = function(infos, cb) {
-  infos = epur(infos);
-
   if (infos.links.length == 0) {
     cb('Invalid parameter encountered');
     return;

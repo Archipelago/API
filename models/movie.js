@@ -1,9 +1,6 @@
 let duration = require('../lib/duration');
-let epur = require('../lib/epur');
 
 module.exports.add = function(infos, cb) {
-  infos = epur(infos);
-
   if (infos.title === undefined
       || infos.title.length == 0)
     cb('Title must be provided');
@@ -51,8 +48,6 @@ module.exports.add = function(infos, cb) {
 }
 
 module.exports.update = function(id, infos, cb) {
-  infos = epur(infos);
-
   let query = 'UPDATE `Movies` SET';
   if (infos.release_date
       && !infos.release_date.match(/^\d{4}(\-\d{2}){2}$/)

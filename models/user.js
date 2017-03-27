@@ -1,10 +1,7 @@
 let crypto = require('crypto');
-let epur = require('../lib/epur');
 let pw = require('../lib/password');
 
 module.exports.register = function(infos, cb) {
-  infos = epur(infos);
-
   if (infos.login === undefined)
     cb('Login must be provided');
   else if (infos.login.length < 4
@@ -67,8 +64,6 @@ module.exports.login = function(infos, cb) {
 }
 
 module.exports.update = function(id, infos, cb) {
-  infos = epur(infos);
-
   infos.id = id;
   if (infos.password
 	   && infos.password.length < 8)
