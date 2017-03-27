@@ -46,7 +46,6 @@ module.exports.addOrUpdate = function(values, cb) {
   });
 }
 
-
 module.exports.delete = function(name, cb) {
   db.query('DELETE FROM `Config` WHERE `name` = ?', [name], function(e, r) {
     delete global.otfConfig[name];
