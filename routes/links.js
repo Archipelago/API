@@ -7,7 +7,7 @@ module.exports = function(app) {
       req.body.user_id = token.getId(req.headers.token);
       req.body.release_type = 'movie';
       req.body.release_id = req.params.id;
-      models.Links.add(req.body, function(e, r) {
+      models.Link.add(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {message: e});
 	else {
@@ -21,7 +21,7 @@ module.exports = function(app) {
   });
 
   app.get('/video_release/:id/links', function(req, res) {
-    models.Links.getByRelease(req.params.id, function(e, r) {
+    models.Link.getByRelease(req.params.id, function(e, r) {
       if (e)
 	sendResponse(res, 404, {message: e});
       else
@@ -31,7 +31,7 @@ module.exports = function(app) {
 
   app.delete('/link/:id', function(req, res) {
     token.checkPermission(req, res, 'DELETE_LINK', function(req, res) {
-      models.Links.delete(req.params.id, function(e, r) {
+      models.Link.delete(req.params.id, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
@@ -42,7 +42,7 @@ module.exports = function(app) {
 
   app.patch('/link/:id', function(req, res) {
     token.checkPermission(req, res, 'EDIT_LINK', function(res, res) {
-      models.Links.update(req.params.id, req.body, function(e, r) {
+      models.Link.update(req.params.id, req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {message: 'This link is a duplicate.'});
 	else if (r.info.affectedRows != 1)

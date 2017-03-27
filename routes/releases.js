@@ -6,7 +6,7 @@ module.exports = function(app) {
     token.checkPermission(req, res, 'ADD_RELEASE', function(req, res) {
       req.body.id = req.params.id;
       req.body.user_id = token.getId(req.headers.token);
-      models.Releases.add(req.body, function(e, r) {
+      models.Release.add(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, e.match('found') ? 404 : 400, {message: e});
 	else
@@ -16,7 +16,7 @@ module.exports = function(app) {
   });
 
   app.get('/movie/:id/releases', function(req, res) {
-    models.Releases.getByMovie(req.params.id, function(e, r) {
+    models.Release.getByMovie(req.params.id, function(e, r) {
       if (e)
 	sendResponse(res, 404, {message: e});
       else
@@ -26,7 +26,7 @@ module.exports = function(app) {
 
   app.delete('/video_release/:id', function(req, res) {
     token.checkPermission(req, res, 'DELETE_RELEASE', function(req, res) {
-      models.Releases.delete(req.params.id, function(e, r) {
+      models.Release.delete(req.params.id, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
@@ -37,7 +37,7 @@ module.exports = function(app) {
 
   app.patch('/video_release/:id', function(req, res) {
     token.checkPermission(req, res, 'EDIT_RELEASE', function(req, res) {
-      models.Releases.update(req.params.id, req.body, function(e, r) {
+      models.Release.update(req.params.id, req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
