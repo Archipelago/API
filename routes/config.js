@@ -4,7 +4,7 @@ let sendResponse = require('../lib/sendResponse');
 module.exports = function(app) {
   app.get('/config', function(req, res) {
     token.checkPermission(req, res, 'GET_CONFIG', function(req, res) {
-      require('../models/config.js').get(function(e, r) {
+      models.Config.get(function(e, r) {
 	sendResponse(res, 200, r);
       });
     });
@@ -12,7 +12,7 @@ module.exports = function(app) {
 
   app.put('/config', function(req, res) {
     token.checkPermission(req, res, 'EDIT_CONFIG', function(req, res) {
-      require('../models/config.js').addOrUpdate(req.body, function(e, r) {
+      models.Config.addOrUpdate(req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {message: e});
 	else
@@ -23,7 +23,7 @@ module.exports = function(app) {
 
   app.delete('/config/:name', function(req, res) {
     token.checkPermission(req, res, 'EDIT_CONFIG', function(req, res) {
-      require('../models/config.js').delete(req.params.name, function(e, r) {
+      models.Config.delete(req.params.name, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else

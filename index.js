@@ -22,6 +22,7 @@ global.lists = {
   'containers': []
 };
 global.otfConfig = {};
+global.models = require('./models');
 require('./models/config.js').get(function(e, r) {});
 
 app.set('x-powered-by', false);

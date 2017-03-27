@@ -1,10 +1,10 @@
 let _ = require('lodash');
 let sendResponse = require('../lib/sendResponse');
 let models = {
-  'movie': require('../models/movie'),
-  'release': require('../models/releases'),
-  'user': require('../models/user'),
-  'link': require('../models/links')
+  'movie': global.models.Movie,
+  'release': global.models.Releases,
+  'user': global.models.User,
+  'link': global.models.Links
 }
 
 function getType(query) {

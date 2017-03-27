@@ -2,7 +2,7 @@ let sendResponse = require('../lib/sendResponse');
 
 module.exports = function(app) {
   app.post('/register', function(req, res) {
-    require('../models/user.js').register(req.body, function(e, r) {
+    models.User.register(req.body, function(e, r) {
       if (e)
 	sendResponse(res, 400, {message: e});
       else
@@ -11,7 +11,7 @@ module.exports = function(app) {
   });
 
   app.post('/login', function(req, res) {
-    require('../models/user.js').login(req.body, function(e, r) {
+    models.User.login(req.body, function(e, r) {
       if (e)
 	sendResponse(res, 400, {message: e});
       else
@@ -22,7 +22,7 @@ module.exports = function(app) {
   // TODO: manage data hiding (mail, bm...)
   app.get(['/user', '/user/:id'], function(req, res) {
     if (req.params.id) {
-      require('../models/user.js').getById(req.params.id, function(e, r) {
+      models.User.getById(req.params.id, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else {
@@ -32,7 +32,7 @@ module.exports = function(app) {
       });
     } else {
       token.checkPermission(req, res, 'NONE', function(e, r) {
-	require('../models/user.js').getById(token.getId(req.headers.token), function(e, r) {
+	models.User.getById(token.getId(req.headers.token), function(e, r) {
 	  if (e)
 	    sendResponse(res, 404, {message: e});
 	  else {
@@ -46,7 +46,7 @@ module.exports = function(app) {
 
   app.patch('/user/:id/permission', function(req, res) {
     token.checkPermission(req, res, 'EDIT_PERMISSION', function(req, res) {
-      require('../models/user.js').getById(req.params.id, function(e, r) {
+      models.User.getById(req.params.id, function(e, r) {
 	if (e)
 	  sendResponse(res, 404, {message: e});
 	else
@@ -58,7 +58,7 @@ module.exports = function(app) {
   app.patch(['/user', '/user/:id'], function(req, res) {
     token.checkPermission(req, res, 'NONE', function(req, res) {
       let cb = function(req, res) {
-	require('../models/user.js').update(req.params.id, req.body, function(e, r) {
+	models.User.update(req.params.id, req.body, function(e, r) {
 	  if (e)
 	    sendResponse(res, 400, {message: e});
 	  else if (r.info.affectedRows != 1)
@@ -82,12 +82,12 @@ module.exports = function(app) {
     token.checkPermission(req, res, 'NONE', function(req, res) {
       let cb = function(req, res) {
 	if (req.originalUrl.match(/^\/*user\/+.*\/+complete\/*$/)) {
-	  require('../models/user.js').delete(req.params.id, function(e, r) {
+	  models.User.delete(req.params.id, function(e, r) {
 	    token.disconnect(req.params.id);
 	    sendResponse(res, 204);
 	  });
 	} else {
-	  require('../models/user.js').deactivate(req.params.id, function(e, r) {
+	  models.User.deactivate(req.params.id, function(e, r) {
 	    token.disconnect(req.params.id);
 	    sendResponse(res, 204);
 	  });
