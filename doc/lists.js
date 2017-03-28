@@ -35,7 +35,7 @@
  */
 
 /**
- * @api {get} /list/audioCodecs Audio codecs
+ * @api {get} /list/audio_codecs Audio codecs
  * @apiName ListAudioCodecs
  * @apiVersion 0.2.0
  * @apiGroup List
@@ -53,7 +53,7 @@
  */
 
 /**
- * @api {get} /list/videoCodecs Video codecs
+ * @api {get} /list/video_codecs Video codecs
  * @apiName ListVideoCodecs
  * @apiVersion 0.2.0
  * @apiGroup List

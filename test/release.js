@@ -12,8 +12,8 @@ exports.add = {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audioCodecs),
-      "video_codec": randomElem(global.lists.videoCodecs),
+      "audio_codec": randomElem(global.lists.audio_codecs),
+      "video_codec": randomElem(global.lists.video_codecs),
       "source": randomElem(global.lists.sources),
       "quality": randomElem(global.lists.qualities),
       "container": randomElem(global.lists.containers)
@@ -28,8 +28,8 @@ exports.add = {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audioCodecs),
-      "video_codec": randomElem(global.lists.videoCodecs),
+      "audio_codec": randomElem(global.lists.audio_codecs),
+      "video_codec": randomElem(global.lists.video_codecs),
       "source": randomElem(global.lists.sources),
       "quality": randomElem(global.lists.qualities),
       "container": randomElem(global.lists.containers)
@@ -44,8 +44,8 @@ exports.add = {
       request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
@@ -59,8 +59,8 @@ exports.add = {
       request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
@@ -74,8 +74,8 @@ exports.add = {
       request.post('/movie/' + global.movieId + '/release', global.rootToken, {
 	"name": "foobar",
 	"size": "2.1GB",
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
@@ -90,7 +90,7 @@ exports.add = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
@@ -105,7 +105,7 @@ exports.add = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
@@ -120,8 +120,8 @@ exports.add = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)
       }, function(res) {
@@ -135,8 +135,8 @@ exports.add = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"container": randomElem(global.lists.containers)
       }, function(res) {
@@ -150,8 +150,8 @@ exports.add = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
       }, function(res) {
@@ -166,8 +166,8 @@ exports.add = {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audioCodecs),
-      "video_codec": randomElem(global.lists.videoCodecs),
+      "audio_codec": randomElem(global.lists.audio_codecs),
+      "video_codec": randomElem(global.lists.video_codecs),
       "source": randomElem(global.lists.sources),
       "quality": randomElem(global.lists.qualities),
       "container": randomElem(global.lists.containers)
@@ -204,8 +204,8 @@ exports.delete = {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audioCodecs),
-      "video_codec": randomElem(global.lists.videoCodecs),
+      "audio_codec": randomElem(global.lists.audio_codecs),
+      "video_codec": randomElem(global.lists.video_codecs),
       "source": randomElem(global.lists.sources),
       "quality": randomElem(global.lists.qualities),
       "container": randomElem(global.lists.containers)
@@ -269,8 +269,8 @@ exports.update = {
       "name": "foobar",
       "size": "2.1GB",
       "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audioCodecs),
-      "video_codec": randomElem(global.lists.videoCodecs),
+      "audio_codec": randomElem(global.lists.audio_codecs),
+      "video_codec": randomElem(global.lists.video_codecs),
       "source": randomElem(global.lists.sources),
       "quality": randomElem(global.lists.qualities),
       "container": randomElem(global.lists.containers)

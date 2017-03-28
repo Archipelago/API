@@ -1,8 +1,8 @@
 global.lists = {};
 
-exports.audioCodecs = function(test) {
-  request.get('/list/audioCodecs', function(res) {
-    global.lists.audioCodecs = res.body;
+exports.audio_codecs = function(test) {
+  request.get('/list/audio_codecs', function(res) {
+    global.lists.audio_codecs = res.body;
     test.equal(res.body instanceof Array, true);
     test.equal(res.statusCode, 200);
     test.done();
@@ -54,9 +54,9 @@ exports.sources = function(test) {
   });
 };
 
-exports.videoCodecs = function(test) {
-  request.get('/list/videoCodecs', function(res) {
-    global.lists.videoCodecs = res.body;
+exports.video_codecs = function(test) {
+  request.get('/list/video_codecs', function(res) {
+    global.lists.video_codecs = res.body;
     test.equal(res.body instanceof Array, true);
     test.equal(res.statusCode, 200);
     test.done();
@@ -66,7 +66,7 @@ exports.videoCodecs = function(test) {
 exports.all = function(test) {
   request.get('/lists', function(res) {
     test.equal(res.statusCode, 200);
-    let lists = ['audioCodecs', 'compressions', 'containers', 'languages', 'qualitites', 'sources', 'videoCodecs'];
+    let lists = ['audio_codecs', 'compressions', 'containers', 'languages', 'qualitites', 'sources', 'video_codecs'];
     for (let i in lists) {
       test.deepEqual(res.body[lists[i]], global.lists[lists[i]]);
     }

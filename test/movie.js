@@ -105,8 +105,8 @@ exports.delete = {
 	"name": "foobar",
 	"size": "2.1GB",
 	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audioCodecs),
-	"video_codec": randomElem(global.lists.videoCodecs),
+	"audio_codec": randomElem(global.lists.audio_codecs),
+	"video_codec": randomElem(global.lists.video_codecs),
 	"source": randomElem(global.lists.sources),
 	"quality": randomElem(global.lists.qualities),
 	"container": randomElem(global.lists.containers)

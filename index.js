@@ -13,8 +13,8 @@ global.db = new Maria({host: config.db.host,
 		       db: config.db.name});
 global.token = new Token;
 global.lists = {
-  'audioCodecs': [],
-  'videoCodecs': [],
+  'audio_codecs': [],
+  'video_codecs': [],
   'compressions': [],
   'languages': [],
   'qualities': [],

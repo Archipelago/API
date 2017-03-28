@@ -1,8 +1,17 @@
 let sendResponse = require('../lib/sendResponse');
+let map = {
+  'audio_codecs': 'AudioCodecs',
+  'compressions': 'Compressions',
+  'containers': 'Containers',
+  'languages': 'Languages',
+  'qualities': 'Qualities',
+  'sources': 'Sources',
+  'video_codecs': 'VideoCodecs'
+}
 
 function listRoute(app, routeName) {
   app.get('/list/' + routeName, function(req, res) {
-    models.List.get(routeName[0].toUpperCase() + routeName.slice(1), function(e, r) {
+    models.List.get(map[routeName], function(e, r) {
       sendResponse(res, 200, r);
     });
   });
@@ -10,7 +19,7 @@ function listRoute(app, routeName) {
 
 // TODO: find a way to update it.
 function initList(listName) {
-  models.List.get(listName[0].toUpperCase() + listName.slice(1), function(e, r) {
+  models.List.get(map[listName], function(e, r) {
     lists[listName] = r;
   });
 }

@@ -1,8 +1,8 @@
 let filesize = require('file-size');
 let filesizeParser = require('filesize-parser');
 let listsCorres = {
-  'audio_codec': 'audioCodecs',
-  'video_codec': 'videoCodecs',
+  'audio_codec': 'audio_codecs',
+  'video_codec': 'video_codecs',
   'compression': 'compressions',
   'language': 'languages',
   'quality': 'qualities',
