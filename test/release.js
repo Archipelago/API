@@ -1,4 +1,5 @@
 let crypto = require('crypto');
+let async = require('async');
 let hash = crypto.randomBytes(4).toString('hex');
 let releaseId, linkId;
 
@@ -6,172 +7,50 @@ function randomElem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+function generateRelease() {
+  return {
+    "name": "foobar",
+    "size": "2.1GB",
+    "audio_codec": randomElem(global.lists.audio_codecs),
+    "container": randomElem(global.lists.containers),
+    "language": randomElem(global.lists.languages),
+    "quality": randomElem(global.lists.qualities),
+    "source": randomElem(global.lists.sources),
+    "video_codec": randomElem(global.lists.video_codecs)
+  };
+}
+
 exports.add = {
   unlogged: function(test) {
-    request.post('/movie/' + global.movieId + '/release', {
-      "name": "foobar",
-      "size": "2.1GB",
-      "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audio_codecs),
-      "video_codec": randomElem(global.lists.video_codecs),
-      "source": randomElem(global.lists.sources),
-      "quality": randomElem(global.lists.qualities),
-      "container": randomElem(global.lists.containers)
-    }, function(res) {
+    request.post('/movie/' + global.movieId + '/release', generateRelease(), function(res) {
       test.equal(res.statusCode, 401);
       test.done();
     });
   },
 
   unauthorized: function(test) {
-    request.post('/movie/' + global.movieId + '/release', global.token, {
-      "name": "foobar",
-      "size": "2.1GB",
-      "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audio_codecs),
-      "video_codec": randomElem(global.lists.video_codecs),
-      "source": randomElem(global.lists.sources),
-      "quality": randomElem(global.lists.qualities),
-      "container": randomElem(global.lists.containers)
-    }, function(res) {
+    request.post('/movie/' + global.movieId + '/release', global.token, generateRelease(), function(res) {
       test.equal(res.statusCode, 403);
       test.done();
     });
   },
 
-  missingField: {
-    name: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
+  missingFields: function(test) {
+    let fields = ['name', 'size', 'audio_codec', 'container', 'language', 'quality', 'source', 'video_codec'];
+    async.eachSeries(fields, function(f, cb) {
+      let data = generateRelease();
+      delete data[f];
+      request.post('/movie/' + global.movieId + '/release', global.rootToken, data, function(res) {
 	test.equal(res.statusCode, 400);
-	test.done();
+	cb();
       });
-    },
-
-    size: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    language: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    audioCodec: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    videoCodec: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    source: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"quality": randomElem(global.lists.qualities),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    quality: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"container": randomElem(global.lists.containers)
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    },
-
-    container: function(test) {
-      request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-	"name": "foobar",
-	"size": "2.1GB",
-	"language": randomElem(global.lists.languages),
-	"audio_codec": randomElem(global.lists.audio_codecs),
-	"video_codec": randomElem(global.lists.video_codecs),
-	"source": randomElem(global.lists.sources),
-	"quality": randomElem(global.lists.qualities),
-      }, function(res) {
-	test.equal(res.statusCode, 400);
-	test.done();
-      });
-    }
+    }, function() {
+      test.done();
+    });
   },
 
   rootUser: function(test) {
-    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-      "name": "foobar",
-      "size": "2.1GB",
-      "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audio_codecs),
-      "video_codec": randomElem(global.lists.video_codecs),
-      "source": randomElem(global.lists.sources),
-      "quality": randomElem(global.lists.qualities),
-      "container": randomElem(global.lists.containers)
-    }, function(res) {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, generateRelease(), function(res) {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
       global.videoReleaseId = res.body.id;
@@ -200,16 +79,7 @@ exports.get = {
 
 exports.delete = {
   init: function(test) {
-    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-      "name": "foobar",
-      "size": "2.1GB",
-      "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audio_codecs),
-      "video_codec": randomElem(global.lists.video_codecs),
-      "source": randomElem(global.lists.sources),
-      "quality": randomElem(global.lists.qualities),
-      "container": randomElem(global.lists.containers)
-    }, function(res) {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, generateRelease(), function(res) {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
       releaseId = res.body.id;
@@ -265,16 +135,7 @@ exports.delete = {
 
 exports.update = {
   init: function(test) {
-    request.post('/movie/' + global.movieId + '/release', global.rootToken, {
-      "name": "foobar",
-      "size": "2.1GB",
-      "language": randomElem(global.lists.languages),
-      "audio_codec": randomElem(global.lists.audio_codecs),
-      "video_codec": randomElem(global.lists.video_codecs),
-      "source": randomElem(global.lists.sources),
-      "quality": randomElem(global.lists.qualities),
-      "container": randomElem(global.lists.containers)
-    }, function(res) {
+    request.post('/movie/' + global.movieId + '/release', global.rootToken, generateRelease(), function(res) {
       test.equal(res.statusCode, 201);
       test.equal(typeof res.body.id, 'number');
       releaseId = res.body.id;
