@@ -26,7 +26,7 @@ module.exports.add = function(infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
+    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer", "country"]
     for (i in fields) {
       if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
 	cb("Invalid " + fields[i]);
@@ -38,7 +38,7 @@ module.exports.add = function(infos, cb) {
     if (infos.duration) {
       infos.duration = duration.parse(infos.duration);
     }
-    db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `duration`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :duration, :actor, :gender, :composer, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
+    db.query('INSERT INTO `Movies`(`title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `duration`, `actor`, `gender`, `composer`, `country`, `original_title`, `other_title`, `plot`, `informations`, `user_id`) VALUES(:title, :image, :production_year, :release_date, :original_release_date, :director, :producer, :scriptwriter, :duration, :actor, :gender, :composer, :country, :original_title, :other_title, :plot, :informations, :user_id)', infos, function(e, r) {
       if (e && e.code == 1062)
 	cb('Movie "' + infos.title + '" already exists');
       else
@@ -68,7 +68,7 @@ module.exports.update = function(id, infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer"]
+    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer", "country"]
     for (i in fields) {
       if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
 	cb("Invalid " + fields[i]);
@@ -80,7 +80,7 @@ module.exports.update = function(id, infos, cb) {
     if (infos.duration) {
       infos.duration = duration.parse(infos.duration);
     }
-    fields = ['title', 'image', 'production_year', 'release_date', 'original_release_date', 'director', 'producer', 'scriptwriter', 'duration', 'actor', 'gender', 'composer', 'original_title', 'other_title', 'plot', 'informations'];
+    fields = ['title', 'image', 'production_year', 'release_date', 'original_release_date', 'director', 'producer', 'scriptwriter', 'duration', 'actor', 'gender', 'composer', 'country', 'original_title', 'other_title', 'plot', 'informations'];
     for (let i in fields) {
       if (infos[fields[i]]) {
 	query += ' `' + fields[i] + '` = :' + fields[i] + ',';

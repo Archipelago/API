@@ -18,6 +18,7 @@
  * @apiParam {String[]} [actor]
  * @apiParam {String[]} [gender]
  * @apiParam {String[]} [composer]
+ * @apiParam {String[]} [country]
  * @apiParam {String} [original_title]
  * @apiParam {String} [other_title]
  * @apiParam {String} [gender]
