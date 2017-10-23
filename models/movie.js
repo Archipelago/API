@@ -1,4 +1,5 @@
 let duration = require('../lib/duration');
+let arrayFields = ["director", "producer", "scriptwriter", "actor", "gender", "composer", "country"]
 
 module.exports.add = function(infos, cb) {
   if (infos.title === undefined
@@ -26,14 +27,13 @@ module.exports.add = function(infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer", "country"]
-    for (i in fields) {
-      if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
-	cb("Invalid " + fields[i]);
+    for (i in arrayFields) {
+      if (infos[arrayFields[i]] && !(infos[arrayFields[i]] instanceof Array)) {
+	cb("Invalid " + arrayFields[i]);
 	return;
       }
-      else if (infos[fields[i]])
-	infos[fields[i]] = infos[fields[i]].join(";");
+      else if (infos[arrayFields[i]])
+	infos[arrayFields[i]] = JSON.stringify(infos[arrayFields[i]]);
     }
     if (infos.duration) {
       infos.duration = duration.parse(infos.duration);
@@ -68,19 +68,18 @@ module.exports.update = function(id, infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    let fields = ["director", "producer", "scriptwriter", "actor", "gender", "composer", "country"]
-    for (i in fields) {
-      if (infos[fields[i]] && !(infos[fields[i]] instanceof Array)) {
-	cb("Invalid " + fields[i]);
+    for (i in arrayFields) {
+      if (infos[arrayFields[i]] && !(infos[arrayFields[i]] instanceof Array)) {
+	cb("Invalid " + arrayFields[i]);
 	return;
       }
-      else if (infos[fields[i]])
-	infos[fields[i]] = infos[fields[i]].join(";");
+      else if (infos[arrayFields[i]])
+	infos[arrayFields[i]] = JSON.stringify(infos[arrayFields[i]]);
     }
     if (infos.duration) {
       infos.duration = duration.parse(infos.duration);
     }
-    fields = ['title', 'image', 'production_year', 'release_date', 'original_release_date', 'director', 'producer', 'scriptwriter', 'duration', 'actor', 'gender', 'composer', 'country', 'original_title', 'other_title', 'plot', 'informations'];
+    let fields = ['title', 'image', 'production_year', 'release_date', 'original_release_date', 'director', 'producer', 'scriptwriter', 'duration', 'actor', 'gender', 'composer', 'country', 'original_title', 'other_title', 'plot', 'informations'];
     for (let i in fields) {
       if (infos[fields[i]]) {
 	query += ' `' + fields[i] + '` = :' + fields[i] + ',';
@@ -109,9 +108,12 @@ module.exports.getById = function(id, cb) {
     if (r.length < 1)
       cb('No movie found with id "' + id + '"');
     else {
-      for (i in r[0])
+      for (i in r[0]) {
 	if (r[0][i] == null)
 	  delete r[0][i];
+	else if (arrayFields.includes(i))
+	  r[0][i] = JSON.parse(r[0][i]);
+      }
       cb(e, r[0]);
     }
   });
@@ -120,9 +122,12 @@ module.exports.getById = function(id, cb) {
 module.exports.getLasts = function(nb, cb) {
   db.query('SELECT `id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations` FROM `Movies` ORDER BY `id` DESC LIMIT ' + parseInt(nb), function(e, r) {
     for (i in r) {
-      for (j in r[i])
+      for (j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
+	else if (arrayFields.includes(j))
+	  r[i][j] = JSON.parse(r[i][j]);
+      }
       r[i].id = parseInt(r[i].id);
     }
     delete r.info;
@@ -133,9 +138,12 @@ module.exports.getLasts = function(nb, cb) {
 module.exports.getLastReleases = function(nb, cb) {
   db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` WHERE `VideoReleases`.`element_type` = "Movies" GROUP BY `Movies`.`id` ORDER BY `VideoReleases`.`id` DESC LIMIT ' + parseInt(nb), function(e, r) {
     for (i in r) {
-      for (j in r[i])
+      for (j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
+	else if (arrayFields.includes(j))
+	  r[i][j] = JSON.parse(r[i][j]);
+      }
       r[i].id = parseInt(r[i].id);
     }
     delete r.info;
@@ -146,9 +154,12 @@ module.exports.getLastReleases = function(nb, cb) {
 module.exports.getLastLinks = function(nb, cb) {
   db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` JOIN `Multilinks` ON `Multilinks`.`release_id` = `VideoReleases`.`id` WHERE `VideoReleases`.`element_type` = "Movies" AND `Multilinks`.`release_type` = "movie" GROUP BY `Movies`.`id` ORDER BY `VideoReleases`.`id` DESC LIMIT ' + parseInt(nb), function(e, r) {
     for (i in r) {
-      for (j in r[i])
+      for (j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
+	else if (arrayFields.includes(j))
+	  r[i][j] = JSON.parse(r[i][j]);
+      }
       r[i].id = parseInt(r[i].id);
     }
     delete r.info;
@@ -166,9 +177,12 @@ module.exports.getAlpha = function(alpha, nb, page, cb) {
   db.query(query + where + ' ORDER BY `title` ASC LIMIT ' + parseInt(nb + ' OFFSET ' + parseInt(page) * parseInt(nb)), function(e, r) {
     db.query('SELECT COUNT(*) AS "c" FROM `Movies` WHERE ' + where, function(_, count) {
       for (i in r) {
-	for (j in r[i])
+	for (j in r[i]) {
 	  if (r[i][j] == null)
 	    delete r[i][j];
+	  else if (arrayFields.includes(j))
+	    r[i][j] = JSON.parse(r[i][j]);
+	}
 	r[i].id = parseInt(r[i].id);
       }
       delete r.info;
