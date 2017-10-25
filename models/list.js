@@ -4,7 +4,7 @@ module.exports.get = function(listName, cb) {
       return cb(e, r);
     delete r.info;
     let res = [];
-    for (i in r)
+    for (let i in r)
       res.push(r[i].name);
     cb(e, res);
   });

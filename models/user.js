@@ -35,7 +35,7 @@ module.exports.register = function(infos, cb) {
 }
 
 module.exports.login = function(infos, cb) {
-  for (i in infos)
+  for (let i in infos)
     infos[i] = infos[i].trim();
 
   if (infos.login === undefined)
@@ -101,7 +101,7 @@ module.exports.search = function(query, cb) {
   query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `login`, `id`  FROM `Users` WHERE `login` LIKE :q AND `deleted` = FALSE', {q: query}, function(e, r) {
     delete r.info;
-    for (i in r[0])
+    for (let i in r[0])
       r[0].id = parseInt(r[0].id);
     cb(e, r);
   });
@@ -113,7 +113,7 @@ module.exports.getById = function(id, cb) {
       cb('Unable to find user with id "' + id + '"');
     else {
       delete r.info;
-      for (i in r[0])
+      for (let i in r[0])
 	if (r[0][i] === null)
 	  delete r[0][i];
       r[0].permissions = parseInt(r[0].permissions);

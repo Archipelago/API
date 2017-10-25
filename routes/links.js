@@ -41,7 +41,7 @@ module.exports = function(app) {
   });
 
   app.patch('/link/:id', function(req, res) {
-    token.checkPermission(req, res, 'EDIT_LINK', function(res, res) {
+    token.checkPermission(req, res, 'EDIT_LINK', function(req, res) {
       models.Link.update(req.params.id, req.body, function(e, r) {
 	if (e)
 	  sendResponse(res, 400, {message: 'This link is a duplicate.'});

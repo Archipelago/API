@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./test/run.sh",
-    "start": "node index.js"
+    "start": "node --use_strict index.js"
   },
   "author": "Niovad",
   "license": "BSD-2-Clause",

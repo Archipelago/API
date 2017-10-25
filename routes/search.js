@@ -12,7 +12,7 @@ function getType(query) {
   if (type instanceof Array)
     type = type[type.length - 1];
   type = type.split(',');
-  for (i in type) {
+  for (let i in type) {
     if (type[i] === '*')
       return _.keys(models);
     else if (models[type[i]] === undefined)
@@ -24,7 +24,7 @@ function getType(query) {
 function searchTypes(query, types, cb) {
   let data = {};
   let j = 0;
-  for (i in types) {
+  for (let i in types) {
     let type = types[i];
     if (models[type].search) {
       ++j;

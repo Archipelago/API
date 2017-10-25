@@ -27,7 +27,7 @@ module.exports.add = function(infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    for (i in arrayFields) {
+    for (let i in arrayFields) {
       if (infos[arrayFields[i]] && !(infos[arrayFields[i]] instanceof Array)) {
 	cb("Invalid " + arrayFields[i]);
 	return;
@@ -68,7 +68,7 @@ module.exports.update = function(id, infos, cb) {
 	   && !duration.validate(infos.duration))
     cb('Invalid duration');
   else {
-    for (i in arrayFields) {
+    for (let i in arrayFields) {
       if (infos[arrayFields[i]] && !(infos[arrayFields[i]] instanceof Array)) {
 	cb("Invalid " + arrayFields[i]);
 	return;
@@ -153,8 +153,8 @@ module.exports.getLastReleases = function(nb, cb) {
 
 module.exports.getLastLinks = function(nb, cb) {
   db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` JOIN `Multilinks` ON `Multilinks`.`release_id` = `VideoReleases`.`id` WHERE `VideoReleases`.`element_type` = "Movies" AND `Multilinks`.`release_type` = "movie" GROUP BY `Movies`.`id` ORDER BY `VideoReleases`.`id` DESC LIMIT ' + parseInt(nb), function(e, r) {
-    for (i in r) {
-      for (j in r[i]) {
+    for (let i in r) {
+      for (let j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
 	else if (arrayFields.includes(j))

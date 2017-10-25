@@ -9,7 +9,7 @@ module.exports.add = function(infos, cb) {
 
   let query = 'INSERT INTO `Multilinks`(`release_type`, `release_id`, `parts`, `user_id`) VALUES';
   let links = infos.links;
-  for (i in links) {
+  for (let i in links) {
     if (typeof links[i] === 'string')
       infos['link' + i] = 1;
     else if (links[i] instanceof Array
@@ -27,7 +27,7 @@ module.exports.add = function(infos, cb) {
   db.query(query, infos, function(e, r) {
     let query = 'INSERT IGNORE INTO `Links`(`url`, `multilink_id`, `part`, `user_id`) VALUES';
     let linkNb = 0;
-    for (i in links) {
+    for (let i in links) {
       infos['multilink' + i] = parseInt(r.info.insertId) + parseInt(i);
       if (typeof links[i] === 'string') {
 	infos['url' + ++linkNb] = links[i];
@@ -35,7 +35,7 @@ module.exports.add = function(infos, cb) {
 	query += '(:url' + linkNb + ', :multilink' + i + ', :part' + linkNb + ', :user_id),';
       }
       else {
-	for (j in links[i]) {
+	for (let j in links[i]) {
 	  infos['url' + ++linkNb] = links[i][j];
 	  infos['part' + linkNb] = parseInt(j) + 1;
 	  query += '(:url' + linkNb + ', :multilink' + i + ', :part' + linkNb + ', :user_id),';
@@ -80,7 +80,7 @@ module.exports.search = function(query, cb) {
   query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `id`, `url` FROM `Links` WHERE `url` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
-    for (i in r[0])
+    for (let i in r[0])
       r[0].id = parseInt(r[0].id);
     cb(e, r);
   });

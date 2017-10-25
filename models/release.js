@@ -23,7 +23,7 @@ module.exports.add = function(infos, cb) {
       cb('"' + infos.size + '" does not appear to be a valid size"');
       return;
     }
-    for (i in listsCorres) {
+    for (let i in listsCorres) {
       if (infos[i] === undefined
 	  && i !== 'compression'
 	  && i !== 'informations') {
@@ -31,7 +31,7 @@ module.exports.add = function(infos, cb) {
 	return;
       }
       else if (infos[i] !== undefined) {
-	for (j in lists[listsCorres[i]]) {
+	for (let j in lists[listsCorres[i]]) {
 	  if (typeof infos[i] === 'string'
 	      && infos[i].toLowerCase() == lists[listsCorres[i]][j].toLowerCase())
 	    infos[i] = parseInt(j) + 1;
@@ -71,8 +71,8 @@ LEFT OUTER JOIN `ListCompressions` ON `ListCompressions`.`id` = `VideoReleases`.
 INNER JOIN `Movies` ON `Movies`.`id` = `VideoReleases`.`element_id`\
 WHERE `Movies`.`id` = ? AND `VideoReleases`.`element_type` = "Movies"';
   db.query(query, [id], function(e, r) {
-    for (i in r) {
-      for (j in r[i])
+    for (let i in r) {
+      for (let j in r[i])
 	if (r[i][j] == null)
 	  delete r[i][j];
       if (r[i].informations)
@@ -87,7 +87,7 @@ module.exports.search = function(query, cb) {
   query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `name`, `id`  FROM `VideoReleases` WHERE `name` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
-    for (i in r[0])
+    for (let i in r[0])
       r[0].id = parseInt(r[0].id);
     cb(e, r);
   });
@@ -124,9 +124,9 @@ module.exports.update = function(id, infos, cb) {
       return;
     }
   }
-  for (i in listsCorres) {
+  for (let i in listsCorres) {
     if (infos[i] !== undefined) {
-      for (j in lists[listsCorres[i]]) {
+      for (let j in lists[listsCorres[i]]) {
 	if (typeof infos[i] === 'string'
 	    && infos[i].toLowerCase() == lists[listsCorres[i]][j].toLowerCase()) {
 	  infos[i] = parseInt(j) + 1;

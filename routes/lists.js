@@ -25,7 +25,7 @@ function initList(listName) {
 }
 
 module.exports = function(app) {
-  for (i in lists) {
+  for (let i in lists) {
     initList(i);
     listRoute(app, i);
   }
