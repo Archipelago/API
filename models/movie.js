@@ -97,7 +97,7 @@ module.exports.search = function(query, cb) {
   query = '%' + query.replace(/\s+/g, '%') + '%';
   db.query('SELECT `title`, `id`  FROM `Movies` WHERE `plot` LIKE :q OR `title` LIKE :q', {q: query}, function(e, r) {
     delete r.info;
-    for (i in r[0])
+    for (let i in r[0])
       r[0].id = parseInt(r[0].id);
     cb(e, r);
   });
@@ -108,7 +108,7 @@ module.exports.getById = function(id, cb) {
     if (r.length < 1)
       cb('No movie found with id "' + id + '"');
     else {
-      for (i in r[0]) {
+      for (let i in r[0]) {
 	if (r[0][i] == null)
 	  delete r[0][i];
 	else if (arrayFields.includes(i))
@@ -121,8 +121,8 @@ module.exports.getById = function(id, cb) {
 
 module.exports.getLasts = function(nb, cb) {
   db.query('SELECT `id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `informations` FROM `Movies` ORDER BY `id` DESC LIMIT ' + parseInt(nb), function(e, r) {
-    for (i in r) {
-      for (j in r[i]) {
+    for (let i in r) {
+      for (let j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
 	else if (arrayFields.includes(j))
@@ -137,8 +137,8 @@ module.exports.getLasts = function(nb, cb) {
 
 module.exports.getLastReleases = function(nb, cb) {
   db.query('SELECT `Movies`.`id`, `title`, `image`, `production_year`, `release_date`, `original_release_date`, `director`, `producer`, `scriptwriter`, `actor`, `gender`, `composer`, `original_title`, `other_title`, `plot`, `Movies`.`informations` FROM `Movies` JOIN `VideoReleases` ON `VideoReleases`.`element_id` = `Movies`.`id` WHERE `VideoReleases`.`element_type` = "Movies" GROUP BY `Movies`.`id` ORDER BY `VideoReleases`.`id` DESC LIMIT ' + parseInt(nb), function(e, r) {
-    for (i in r) {
-      for (j in r[i]) {
+    for (let i in r) {
+      for (let j in r[i]) {
 	if (r[i][j] == null)
 	  delete r[i][j];
 	else if (arrayFields.includes(j))
@@ -176,8 +176,8 @@ module.exports.getAlpha = function(alpha, nb, page, cb) {
     where = '`title` LIKE "' + alpha + '%"';
   db.query(query + where + ' ORDER BY `title` ASC LIMIT ' + parseInt(nb + ' OFFSET ' + parseInt(page) * parseInt(nb)), function(e, r) {
     db.query('SELECT COUNT(*) AS "c" FROM `Movies` WHERE ' + where, function(_, count) {
-      for (i in r) {
-	for (j in r[i]) {
+      for (let i in r) {
+	for (let j in r[i]) {
 	  if (r[i][j] == null)
 	    delete r[i][j];
 	  else if (arrayFields.includes(j))
